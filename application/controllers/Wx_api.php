@@ -8,7 +8,7 @@
 
  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once "wx_controller.php";
+require_once "Wx_controller.php";
 class Wx_api extends CI_controller {
     private $return_success = array('status' => 1, 'msg' => '', 'result' => array());
     private $return_fail = array('status' => -1, 'msg' => '操作失败!', 'result' => array());
