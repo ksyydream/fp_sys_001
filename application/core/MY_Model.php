@@ -540,6 +540,24 @@ class MY_Model extends CI_Model{
 
         return $file_name;
     }
+
+    /**
+     *********************************************************************************************
+     * 以下代码日志类方法,公共调用
+     *********************************************************************************************
+     */
+
+    public function save_admin_log($admin_id){
+        $data = array(
+            'admin_id' => $admin_id,
+            'action_url' => $_SERVER['PHP_SELF'],
+            'post_json' => json_encode($this->input->post()),
+            'get_json' => json_encode($this->input->get()),
+            'cdate' => date('Y-m-d H:i:s',time())
+        );
+        $this->db->insert('admin_log',$data);
+
+    }
 }
 
 /* End of file MY_Model.php */

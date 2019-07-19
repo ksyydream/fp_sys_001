@@ -399,3 +399,17 @@ function create_captcha($data = '', $font_path = '')
     // return array('word' => $word, 'time' => $now, 'image' => $img);
 
 }
+
+/**
+ * 函数：加密
+ * @param string            密码
+ * @return string           加密后的密码
+ */
+function password($password = '')
+{
+    /*
+    *后续整强有力的加密函数
+    */
+    return md5('Q' . $password . 'W');
+
+}
