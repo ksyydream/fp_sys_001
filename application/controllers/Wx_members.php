@@ -8,7 +8,7 @@
 
  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once "wx_controller.php";
+require_once "Wx_controller.php";
 class Wx_members extends Wx_controller {
     private $m_id;
     private $m_info = [];

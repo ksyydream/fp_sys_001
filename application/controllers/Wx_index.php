@@ -8,7 +8,7 @@
 
  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once "wx_controller.php";
+require_once "Wx_controller.php";
 class Wx_index extends Wx_controller {
 
     public function __construct()
