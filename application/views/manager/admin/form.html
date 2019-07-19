@@ -27,8 +27,8 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 用户名 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="user" name="user" class="rcol-xs-10 col-sm-5" value="{{$data.user}}">
-                                    <input type="hidden" id="admin_id" name="admin_id" value="{{$data.admin_id}}">
+                                    <input type="text" id="user" name="user" class="rcol-xs-10 col-sm-5" value="{{$data.user|default:''}}">
+                                    <input type="hidden" id="admin_id" name="admin_id" value="{{$data.admin_id|default:''}}">
                                     <span class="help-inline col-xs-12 col-sm-7"></span>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                                     <select id="group_id" name="group_id" class="rcol-xs-10 col-sm-5">
                                         <option value="">——请选择——</option>
                                         {{foreach from=$groups key=k item=v}}
-                                        <option value="{{$v.id}}" {{if $data.group_id == $v.id}}selected="selected"{{/if}}>{{$v.title}}</option>
+                                        <option value="{{$v.id}}" {{if $data.group_id|default:'' == $v.id}}selected="selected"{{/if}}>{{$v.title}}</option>
                                         {{/foreach}}
                                     </select>
                                     <span class="help-inline col-xs-12 col-sm-7">
@@ -57,7 +57,7 @@
                                 <div class="col-sm-9">
                                     <input type="password" name="password" id="password" placeholder="用户密码"
                                            class="col-xs-10 col-sm-5" value="">
-                                    <span class="help-inline col-xs-12 col-sm-7">{{if $data.admin_id >= 1}}<span class="middle">留空不修改</span>{{/if}}</span>
+                                    <span class="help-inline col-xs-12 col-sm-7">{{if $data.admin_id|default:0 >= 1}}<span class="middle">留空不修改</span>{{/if}}</span>
                                 </div>
                             </div>
 
@@ -147,18 +147,6 @@
 
                             <div class="space-4"></div>
 
-                            <div class="form-group">
-
-                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 作业仓库 </label>
-
-                                <div class="col-sm-9">
-                                    {{foreach from=$data.res_list key=k1 item=v1}}
-                                    <input type="checkbox" name="w_ids[]" value="{{$v1.id}}"  {{if $v1.id|in_array:$w_list}}checked="checked"{{/if}}>{{$v1.warehouse}}&nbsp;&nbsp;&nbsp;
-                                    {{/foreach}}
-
-                                </div>
-
-                            </div>
                             <div class="space-4"></div>
 
                             <div class="col-md-offset-2 col-md-9">

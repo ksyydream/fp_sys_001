@@ -186,9 +186,7 @@ class Manager extends MY_Controller {
      */
     public function admin_add(){
         $groups = $this->manager_model->get_group_all();
-        $data['res_list'] = $this->manager_model->get_warehouse();
-        $this->assign('w_list', array());
-        $this->assign('data', $data);
+        $this->assign('data', array());
         $this->assign('groups', $groups);
         $this->display('manager/admin/form.html');
     }
@@ -323,7 +321,7 @@ class Manager extends MY_Controller {
      * @date 2018-04-01
      */
     public function personal_info(){
-        $data = $this->manager_model->get_admin($this->uid);
+        $data = $this->manager_model->get_admin($this->admin_id);
         if(!$data){
             $this->show_message('未找到信息!');
         }
