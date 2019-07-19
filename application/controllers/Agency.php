@@ -30,6 +30,9 @@ class Agency extends CI_Controller
         $this->display('agency/index.html');
     }
 
+    public function index(){
+        $this->display('agency/index.html');
+    }
 
     public function sendSms(){
         die('test....');
