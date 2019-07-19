@@ -11,7 +11,7 @@ class Wxjssdk_th {
         $this->wxjssdk_config_file_path = '/var/www/html/stock';*/
         $this->appId = $params['appid'];
         $this->appSecret = $params['appsecret'];
-        $this->wxjssdk_config_file_path = '/web/fp_sys';
+        $this->wxjssdk_config_file_path = '/web/fp_sys_001';
     }
 
     public function wxgetSignPackage() {
