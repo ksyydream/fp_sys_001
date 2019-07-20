@@ -202,9 +202,6 @@ class Manager extends MY_Controller {
             $this->show_message('未找到管理员信息!');
         }
         $groups = $this->manager_model->get_group_all();
-        $data['res_list'] = $this->manager_model->get_warehouse();
-        $w_list = $this->manager_model->get_admin_w_list($data['uid']);
-        $this->assign('w_list', $w_list);
         $this->assign('data', $data);
         $this->assign('groups', $groups);
         $this->display('manager/admin/form.html');
@@ -217,22 +214,10 @@ class Manager extends MY_Controller {
      */
     public function admin_save(){
         $res = $this->manager_model->admin_save();
-        if($res == 1){
-            $this->show_message('保存成功!', site_url('/manager/admin_list'));
-        }elseif($res == -2){
-            $this->show_message('信息不全,保存失败!');
-        }elseif($res == -3){
-            $this->show_message('需要选择用户组!');
-        }elseif($res == -4){
-            $this->show_message('新建用户需要设置密码!');
-        }elseif($res == -5){
-            $this->show_message('密码长度不可小于6位!');
-        }elseif($res == -6){
-            $this->show_message('密码不可是纯数字!');
-        }elseif($res == -7){
-            $this->show_message('新建或修改的用户名已存在!');
+        if($res['status'] == 1){
+            $this->show_message($res['msg'], site_url('/manager/admin_list'));
         }else{
-            $this->show_message('保存失败!');
+            $this->show_message($res['msg']);
         }
     }
 
@@ -336,16 +321,10 @@ class Manager extends MY_Controller {
      */
     public function personal_save(){
         $res = $this->manager_model->personal_save($this->admin_id);
-        if($res == 1){
-            $this->show_message('保存成功!', site_url('/manager/personal_info'));
-        }elseif($res == -2){
-            $this->show_message('信息不全,保存失败!');
-        }elseif($res == -3){
-            $this->show_message('密码长度不可小于6位!');
-        }elseif($res == -4){
-            $this->show_message('密码不可是纯数字!');
+        if($res['status'] == 1){
+            $this->show_message($res['msg'], site_url('/manager/personal_info'));
         }else{
-            $this->show_message('保存失败!');
+            $this->show_message($res['msg']);
         }
     }
 

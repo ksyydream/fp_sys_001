@@ -11,14 +11,6 @@ class Manager_model extends MY_Model
      * @date 2018-03-29
      * @Copyright (C) 2017, Tianhuan Co., Ltd.
      */
-    public $manager_rs = array(
-        'success' => true,
-        'error_msg' => ''
-    );
-    public $manager_err_rs = array(
-        'success' => false,
-        'error_msg' => ''
-    );
 
     public function __construct() {
         parent::__construct();
@@ -270,19 +262,19 @@ class Manager_model extends MY_Model
             't' => time()
         );
         if (!$data['user'] || !$data['head'] || !$data['phone'] || !$data['qq'] || !$data['email'] || !$data['birthday'])
-            return -2;//信息不全
-        if (!file_exists(dirname(SELF) . '/upload/head/' . $data['head'])) {
-            return -2;//信息不全 头像照片没有在服务器内发现
+            return $this->fun_fail('信息不全!');
+        if (!file_exists(dirname(SELF) . '/upload_files/head/' . $data['head'])) {
+            return $this->fun_fail('信息不全,头像异常!');
         }
         if (!$group_id = $this->input->post('group_id')) {
-            return -3;//需要选择用户组
+            return $this->fun_fail('需要选择用户组!');
         }
         if (trim($this->input->post('password'))) {
             if (strlen(trim($this->input->post('password'))) < 6) {
-                return -5;
+                return $this->fun_fail('密码长度不可小于6位!');
             }
             if (is_numeric(trim($this->input->post('password')))) {
-                return -6;
+                return $this->fun_fail('密码不可是纯数字!');
             }
             $data['password'] = password(trim($this->input->post('password')));
         }
@@ -293,37 +285,23 @@ class Manager_model extends MY_Model
                 ->where('admin_id <>', $admin_id)
                 ->get()->row_array();
             if ($check_) {
-                return -7;
+                return $this->fun_fail('新建或修改的用户名已存在!');
             }
             $this->db->where('admin_id', $admin_id)->update('admin', $data);
         } else {
             if (!trim($this->input->post('password'))) {
-                return -4;//新建用户需要设置密码
+                return $this->fun_fail('新建用户需要设置密码!');
             }
             $check_ = $this->db->select()->from('admin')->where('user', $data['user'])->get()->row_array();
             if ($check_) {
-                return -7;
+                return $this->fun_fail('新建或修改的用户名已存在!');
             }
             $this->db->insert('admin', $data);
             $admin_id = $this->db->insert_id();
         }
         $this->db->where('admin_id', $admin_id)->delete('auth_group_access');
         $this->db->insert('auth_group_access', array('admin_id' => $admin_id, 'group_id' => $group_id));
-        $w_list = $this->input->post('w_ids');
-        $this->db->where('admin_id', $admin_id)->delete('admin_warehouse');
-        if ($w_list) {
-            if (is_array($w_list)) {
-                foreach ($w_list as $item) {
-                    $this->db->insert('admin_warehouse', array('admin_id' => $admin_id, 'w_id' => $item));
-                }
-            }
-        }
-        return 1;
-    }
-
-    public function get_admin_w_list($id = -1) {
-        $w_list = $this->db->select('group_concat(distinct w_id ORDER BY w_id) w_list')->from('admin_warehouse')->where(array('admin_id' => $id))->get()->row_array();
-        return explode(",", $w_list['w_list']);
+        return $this->fun_success('保存成功');
     }
 
     /**
@@ -443,21 +421,21 @@ class Manager_model extends MY_Model
             'birthday' => trim($this->input->post('birthday')) ? trim($this->input->post('birthday')) : null,
         );
         if (!$data['user'] || !$data['head'] || !$data['phone'] || !$data['qq'] || !$data['email'] || !$data['birthday'])
-            return -2;//信息不全
+            return $this->fun_fail('信息不全!');
         if (!file_exists(dirname(SELF) . '/upload_files/head/' . $data['head'])) {
-            return -2;//信息不全 头像照片没有在服务器内发现
+            return $this->fun_fail('信息不全!');
         }
         if (trim($this->input->post('password'))) {
             if (strlen(trim($this->input->post('password'))) < 6) {
-                return -3;
+                return $this->fun_fail('密码长度不可小于6位!');
             }
             if (is_numeric(trim($this->input->post('password')))) {
-                return -4;
+                return $this->fun_fail('密码不可是纯数字!');
             }
             $data['password'] = password(trim($this->input->post('password')));
         }
         $this->db->where('admin_id', $admin_id)->update('admin', $data);
-        return 1;
+        return $this->fun_success('保存成功!');
     }
 
 
