@@ -36,7 +36,11 @@
 														</span>
                                             </label>
 
-                                            <div class="space"></div>
+                                            <span id="car_msg" class="lbl" style="color: red">
+                                                {{if $flag|default:0 == -1}}验证码错误{{/if}}
+                                                 {{if $flag|default:0 == -2}}账号或密码错误{{/if}}
+                                            </span>
+
                                             <label class="block clearfix">
 														<span class="block input-icon ">
 															<span class="inline"><input type="text" class="form-control"
