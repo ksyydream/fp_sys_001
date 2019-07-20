@@ -444,7 +444,7 @@ class Manager_model extends MY_Model
         );
         if (!$data['user'] || !$data['head'] || !$data['phone'] || !$data['qq'] || !$data['email'] || !$data['birthday'])
             return -2;//信息不全
-        if (!file_exists(dirname(SELF) . '/upload/head/' . $data['head'])) {
+        if (!file_exists(dirname(SELF) . '/upload_files/head/' . $data['head'])) {
             return -2;//信息不全 头像照片没有在服务器内发现
         }
         if (trim($this->input->post('password'))) {

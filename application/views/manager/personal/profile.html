@@ -50,7 +50,7 @@
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-4"> 头像 </label>
                                 <div class="col-sm-9">
                                     <div class="col-xs-10 col-sm-5">
-                                        <img style="width: 200px" id="imgShow" {{if !empty($data) }} src="/upload/head/{{$data.head}}"{{else}}src="/upload/head/28ebb9d608171016544fe1c97bc66e66.png"{{/if}}>
+                                        <img style="width: 200px" id="imgShow" {{if !empty($data) }} src="/upload_files/head/{{$data.head}}"{{else}}src="/manager_statics/images/touxiang.png"{{/if}}>
                                         <input type="hidden" id="hidImgName" name="head" value="{{$data.head|default:''}}" />
                                     </div>
                                     <span class="help-inline col-xs-12 col-sm-7">

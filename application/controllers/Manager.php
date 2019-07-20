@@ -335,7 +335,7 @@ class Manager extends MY_Controller {
      * @date 2018-04-01
      */
     public function personal_save(){
-        $res = $this->manager_model->personal_save($this->uid);
+        $res = $this->manager_model->personal_save($this->admin_id);
         if($res == 1){
             $this->show_message('保存成功!', site_url('/manager/personal_info'));
         }elseif($res == -2){
