@@ -563,14 +563,14 @@ class MY_Model extends CI_Model{
     /**
      * 检查权限
      * @param name string|array  需要验证的规则列表,支持逗号分隔的权限规则或索引数组
-     * @param uid  int           认证用户的id
+     * @param admin_id  int           认证用户的id
      * @param string mode        执行check的模式
      * @param relation string    如果为 'or' 表示满足任一条规则即通过验证;如果为 'and'则表示需满足所有规则才能通过验证
      * @return boolean           通过验证返回true;失败返回false
      */
-    public function check($name, $uid, $type=1, $mode='url', $relation='or') {
+    public function check($name, $admin_id, $type=1, $mode='url', $relation='or') {
 
-        $authList = $this->getAuthList($uid,$type); //获取用户需要验证的所有有效规则列表
+        $authList = $this->getAuthList($admin_id,$type); //获取用户需要验证的所有有效规则列表
 
         if (is_string($name)) {
 
@@ -642,25 +642,25 @@ class MY_Model extends CI_Model{
 
     /**
      * 获得权限列表
-     * @param integer $uid  用户id
+     * @param integer $admin_id  用户id
      * @param integer $type
      */
 
-    protected function getAuthList($uid,$type) {
+    protected function getAuthList($admin_id,$type) {
 
         static $_authList = array(); //保存用户验证通过的权限列表
 
         $t = implode(',',(array)$type);
 
-        if (isset($_authList[$uid.$t])) {
+        if (isset($_authList[$admin_id.$t])) {
 
-            return $_authList[$uid.$t];
+            return $_authList[$admin_id.$t];
 
         }
 
         //读取用户所属用户组
 
-        $groups = $this->getGroups($uid);
+        $groups = $this->getGroups($admin_id);
 
         $ids = array();//保存用户所属用户组设置的所有权限规则id
 
@@ -674,7 +674,7 @@ class MY_Model extends CI_Model{
 
         if (empty($ids)) {
 
-            $_authList[$uid.$t] = array();
+            $_authList[$admin_id.$t] = array();
 
             return array();
 
@@ -704,7 +704,7 @@ class MY_Model extends CI_Model{
 
         }
 
-        $_authList[$uid.$t] = $authList;
+        $_authList[$admin_id.$t] = $authList;
 
         return array_unique($authList);
 
@@ -712,20 +712,20 @@ class MY_Model extends CI_Model{
 
     /**
      * 根据用户id获取用户组,返回值为数组
-     * @param  uid int     用户id
+     * @param  admin_id int     用户id
      * @return array       用户所属的用户组 array(
-     *     array('uid'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
+     *     array('admin_id'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
      *     ...)
      */
 
-    public function getGroups($uid) {
-        $this->db->select('a.uid, a.group_id, b.title, b.rules');
+    public function getGroups($admin_id) {
+        $this->db->select('a.admin_id, a.group_id, b.title, b.rules');
 
         $this->db->from('auth_group_access a');
 
         $this->db->join('auth_group b','a.group_id = b.id','left');
 
-        $groups = $this->db->where('a.uid',$uid)->get()->result_array();
+        $groups = $this->db->where('a.admin_id',$admin_id)->get()->result_array();
 
         return $groups;
     }
