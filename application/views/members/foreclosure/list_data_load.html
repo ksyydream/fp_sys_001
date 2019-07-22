@@ -15,7 +15,7 @@
             </li>
         </ul>
         <div class="d-l-content">
-            <a href="/wx_members/foreclosure_detail1/{{$item.foreclosure_id}}">
+            <a herf="/wx_members/foreclosure_detail1/{{$item.foreclosure_id}}">
                 {{if $item.status != -1}}<p><span>借款金额：</span>{{$item.borrow_money|default:"-"}}万</p>{{/if}}
                 <p><span>借款人：</span>{{$item.borrower_name|default:"-"}}</p>
                 {{if $item.status != -1}}<p><span>用款时间：</span>{{$item.expect_use_time|default:"-"}}</p>{{/if}}
