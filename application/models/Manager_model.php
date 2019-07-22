@@ -536,7 +536,7 @@ class Manager_model extends MY_Model
             return array();
         $res['work'] = $info_;
         $res['property_img'] = $this->db->from('foreclosure_property_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
-        die(var_dump($res['property_img']));
+        //die(var_dump($res['property_img']));
         $res['credit_img'] = $this->db->from('foreclosure_credit_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
         return $res;
     }
