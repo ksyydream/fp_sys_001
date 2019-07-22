@@ -438,5 +438,104 @@ class Manager_model extends MY_Model
         return $this->fun_success('保存成功!');
     }
 
+    /**
+     *********************************************************************************************
+     * 以下代码为赎楼模块
+     *********************************************************************************************
+     */
 
+    /**
+     * 赎楼申请列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function foreclosure_list($page = 1) {
+        $data['limit'] = $this->limit;//每页显示多少调数据
+        $data['work_no'] = trim($this->input->get('work_no')) ? trim($this->input->get('work_no')) : null;
+        $data['status'] = trim($this->input->get('status')) ? trim($this->input->get('status')) : null;
+        $data['ml2_id'] = trim($this->input->get('ml2_id')) ? trim($this->input->get('ml2_id')) : null;
+        $data['s_s_date'] = trim($this->input->get('s_s_date')) ? trim($this->input->get('s_s_date')) : date('Y-m-d', strtotime("-1 month"));
+        $data['s_e_date'] = trim($this->input->get('s_e_date')) ? trim($this->input->get('s_e_date')) : date('Y-m-d');
+        $m_list_arr_ = array();
+        if($data['ml2_id']){
+            $m_list_ = $this->db->select('m_id')->from('members')->where('m_id', $data['ml2_id'])->get()->result_array();
+            foreach($m_list_ as $v){
+                $m_list_arr_[] = $v['m_id'];
+            }
+        }
+        $this->db->select('count(1) num');
+        $this->db->from('foreclosure f');
+        $this->db->join('members m', 'm.m_id = f.m_id', 'left');
+        $this->db->join('users us', 'us.user_id = f.user_id', 'left');
+        $this->db->where_in('f.status', array(2, 3, 4)); //后台只显示待审核,审核通过,终审通过
+        if ($data['work_no']) {
+            $this->db->like('f.work_no', $data['work_no']);
+        }
+        if ($data['status']) {
+            $this->db->where('f.status', $data['status']);
+        }
+        if ($data['s_s_date']) {
+            $this->db->where('f.submit_time >=', strtotime($data['s_s_date'] . " 00:00:00"));
+        }
+        if ($data['s_e_date']) {
+            $this->db->where('f.submit_time <=', strtotime($data['s_e_date'] . " 23:59:59"));
+        }
+        if($m_list_arr_){
+            $this->db->where_in('f.m_id', $m_list_arr_);
+        }
+
+        $rs_total = $this->db->get()->row();
+        //die(var_dump($this->db->last_query()));
+        //总记录数
+        $total_rows = $rs_total->num;
+        $data['total_rows'] = $total_rows;
+
+        //list
+        $this->db->select('f.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
+        $this->db->from('foreclosure f');
+        $this->db->join('members m', 'm.m_id = f.m_id', 'left');
+        $this->db->join('users us', 'us.user_id = f.user_id', 'left');
+        $this->db->where_in('f.status', array(2, 3, 4)); //后台只显示待审核,审核通过,终审通过
+        if ($data['work_no']) {
+            $this->db->like('f.work_no', $data['work_no']);
+        }
+        if ($data['status']) {
+            $this->db->where('f.status', $data['status']);
+        }
+        if ($data['s_s_date']) {
+            $this->db->where('f.submit_time >=', strtotime($data['s_s_date'] . " 00:00:00"));
+        }
+        if ($data['s_e_date']) {
+            $this->db->where('f.submit_time <=', strtotime($data['s_e_date'] . " 23:59:59"));
+        }
+        if($m_list_arr_){
+            $this->db->where_in('f.m_id', $m_list_arr_);
+        }
+        $this->db->limit($data['limit'], $offset = ($page - 1) * $data['limit']);
+        $this->db->order_by('f.submit_time', 'desc');
+        $data['res_list'] = $this->db->get()->result_array();
+        $data['m_level_2'] = $this->db->select('')->from('members')->where(array('level' => 2))->get()->result_array();
+        $data['m_level_2_3'] = $this->db->select('')->from('members')->where_in('level', array(2, 3))->get()->result_array();
+        return $data;
+    }
+
+    /**
+     * 赎楼申请详情
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function foreclosure_detail($id){
+        $this->db->select('f.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
+        $this->db->from('foreclosure f');
+        $this->db->join('members m', 'm.m_id = f.m_id', 'left');
+        $this->db->join('users us', 'us.user_id = f.user_id', 'left');
+        $this->db->where_in('f.status', array(2, 3, 4)); //后台只显示待审核,审核通过,终审通过
+        $info_ = $this->db->where('foreclosure_id', $id)->get()->row();
+        if(!$info_)
+            return array();
+        $res['work'] = $info_;
+        $res['property_img'] = $this->db->from('foreclosure_property_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
+        $res['credit_img'] = $this->db->from('foreclosure_credit_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
+        return $res;
+    }
 }

@@ -339,5 +339,41 @@ class Manager extends MY_Controller {
     }
 
 
+    /**
+     *********************************************************************************************
+     * 以下代码为赎楼模块
+     *********************************************************************************************
+     */
+
+    /**
+     * 赎楼申请列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function foreclosure_list($page = 1){
+        $data = $this->manager_model->foreclosure_list($page, 1);
+        $base_url = "/manager/foreclosure_list/";
+        $pager = $this->pagination->getPageLink4manager($base_url, $data['total_rows'], $data['limit']);
+        $this->assign('pager', $pager);
+        $this->assign('page', $page);
+        $this->assign('data', $data);
+        $this->display('manager/foreclosure/work_list.html');
+    }
+
+    /**
+     * 赎楼申请详情
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function foreclosure_detail($id){
+        $work = $this->manager_model->foreclosure_detail($id);
+        if(!$work){
+            $this->show_message('未找到赎楼申请信息!');
+        }
+        $this->assign('work', $work['work']);
+        $this->assign('property_img',$work['property_img']);
+        $this->assign('credit_img',$work['credit_img']);
+        $this->display('manager/foreclosure/work_detail.html');
+    }
 
 }
