@@ -60,6 +60,7 @@ class Manager_model extends MY_Model
     public function get_action_menu($controller = null, $action = null) {
         $action_new = str_replace('edit', 'list', $action);
         $action_new = str_replace('add', 'list', $action_new);
+        $action_new = str_replace('detail', 'list', $action_new);
         $this->db->select('s.id,s.title,s.name,s.tips,s.pid,p.pid as ppid,p.title as ptitle');
         $this->db->from('auth_rule s');
         $this->db->join('auth_rule p', 'p.id = s.pid', 'left');
@@ -535,6 +536,7 @@ class Manager_model extends MY_Model
             return array();
         $res['work'] = $info_;
         $res['property_img'] = $this->db->from('foreclosure_property_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
+        die(var_dump($res['property_img']));
         $res['credit_img'] = $this->db->from('foreclosure_credit_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
         return $res;
     }
