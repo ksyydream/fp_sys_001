@@ -315,14 +315,12 @@
       {{if $f_info.status != -1}}
       <a class="am-btn am-btn-register" href="/wx_members/foreclosure_detail3/{{$f_info.foreclosure_id}}">下一页</a>
       {{else}}
-      <div class="am-accu-btns">
-          <div class="am-u-sm-12 am-u-sm-centered">
+
       {{if $m_info.level == 2}}
-          <a class="am-btn am-fleft" id="save_btn" href="javascript:">绿色通道</a>
+          <a class="am-btn am-btn-register" id="save_btn" href="javascript:">绿色通道</a>
           {{/if}}
-          <a class="am-btn am-btn1 am-btn-register" href="/wx_members/foreclosure_list">回到列表</a>
-          </div>
-      </div>
+          <a class="am-btn am-btn-register am-back-list" href="/wx_members/foreclosure_list">返回列表</a>
+
       {{/if}}
   </form>
 
