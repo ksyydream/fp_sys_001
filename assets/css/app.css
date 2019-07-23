@@ -12,7 +12,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
     text-decoration: none;
 }
 .am-main{font-size: .8rem;padding-bottom: 4rem;}
-.am-g-menu{ padding:.25rem .1rem; background: #fff;bottom: 0; position: fixed; width: 100%;box-shadow: 0 10px 30px 20px #eee;}
+.am-g-menu{ padding:.25rem .1rem; background: #fff;bottom: 0; position: fixed; width: 100%;box-shadow: 0 10px 30px 20px #eee; text-align: center;}
 .am-spec{bottom: 0; position: absolute;left:35%;}
 .am-btn-home{width:1.8rem; display:inline-block; }.am-btn-home img{width: 100%;}.am-spec .am-btn-home{width:3rem;}
 .am-menu .am-u-sm-4{text-align: center;}
