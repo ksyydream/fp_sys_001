@@ -338,6 +338,26 @@ class Manager extends MY_Controller {
         redirect(base_url('/manager_login/index'));
     }
 
+    /**
+     *********************************************************************************************
+     * 以下代码为微信端账号模块
+     *********************************************************************************************
+     */
+
+    /**
+     * 会员列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-04-01
+     */
+    public function users_list($page = 1){
+        $data = $this->manager_model->users_list($page);
+        $base_url = "/manager/users_list/";
+        $pager = $this->pagination->getPageLink4manager($base_url, $data['total_rows'], $data['limit']);
+        $this->assign('pager', $pager);
+        $this->assign('page', $page);
+        $this->assign('data', $data);
+        $this->display('manager/users/index.html');
+    }
 
     /**
      *********************************************************************************************
