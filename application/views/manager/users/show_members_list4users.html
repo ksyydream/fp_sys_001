@@ -5,7 +5,7 @@
         <td><select name="sel_member_id" id="sel_member_id" style="width: 90%">
             <option value="">-请选择-</option>
             {{foreach from=$data key=k item=v}}
-            <option value="{{$v.id}}">{{$v.rel_name}}-{{$v.mobile}}</option>
+            <option value="{{$v.m_id}}">{{$v.rel_name}}-{{$v.mobile}}</option>
             {{/foreach}}
         </select></td>
     </tr>

@@ -513,7 +513,23 @@ class Manager_model extends MY_Model
         return $data;
     }
 
-
+    //会员改变所属管理员
+    public function users_m_change() {
+        $m_id = $this->input->post('sel_member_id');
+        $user_id = $this->input->post('user_id');
+        if(!$m_id){
+            return $this->fun_fail('请选择新管理员!');
+        }
+        $check_ = $this->db->select()->from('members')->where(array('m_id' => $m_id))->get()->row();
+        if(!$check_){
+            return $this->fun_fail('请选择新管理员!');
+        }
+        if(!$user_id){
+            return $this->fun_fail('请选择会员!');
+        }
+        $this->db->where(array('user_id' => $user_id))->update('users', array('invite' => $m_id));
+        return $this->fun_success('操作成功!');
+    }
     /**
      *********************************************************************************************
      * 以下代码为赎楼模块

@@ -25,7 +25,8 @@ class Manager extends MY_Controller {
         if ($admin['group_id'] != 1 && !$this->manager_model->check($this->uri->segment(1) . '/' . $this->uri->segment(2), $admin_info['admin_id'])){
             if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
             {
-              echo -99;exit();
+                $res_ = $this->manager_model->fun_fail('您无操作权限!');
+                $this->ajaxReturn($res_);
             }
             else {
                 $this->show_message('没有权限访问本页面!');
@@ -357,6 +358,12 @@ class Manager extends MY_Controller {
         $this->assign('page', $page);
         $this->assign('data', $data);
         $this->display('manager/users/index.html');
+    }
+
+    //会员改变所属管理员
+    public function users_m_change() {
+        $rs = $this->manager_model->users_m_change();
+        $this->ajaxReturn($rs);
     }
 
     /**
