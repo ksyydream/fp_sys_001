@@ -530,6 +530,24 @@ class Manager_model extends MY_Model
         $this->db->where(array('user_id' => $user_id))->update('users', array('invite' => $m_id));
         return $this->fun_success('操作成功!');
     }
+
+    /**
+     * 会员详情
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-07-22
+     */
+    public function users_edit($user_id){
+        $this->db->select('us.*,r1.name r1_name,r2.name r2_name,r3.name r3_name,r4.name r4_name, m.rel_name m_rel_name_,m.mobile m_mobile_');
+        $this->db->from('users us');
+        $this->db->join('region r1', 'us.province = r1.id', 'left');
+        $this->db->join('region r2', 'us.city = r2.id', 'left');
+        $this->db->join('region r3', 'us.district = r3.id', 'left');
+        $this->db->join('region r4', 'us.twon = r4.id', 'left');
+        $this->db->join('members m', 'm.m_id = us.invite', 'left');
+        $user_info = $this->db->where('user_id', $user_id)->get()->row();
+        return $user_info;
+    }
+
     /**
      *********************************************************************************************
      * 以下代码为赎楼模块

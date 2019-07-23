@@ -367,6 +367,20 @@ class Manager extends MY_Controller {
     }
 
     /**
+     * 会员详情
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-07-22
+     */
+    public function users_edit($user_id){
+        $data = $this->manager_model->users_edit($user_id);
+        if(!$data){
+            $this->show_message('未找到会员信息!');
+        }
+        $this->assign('data', $data);
+        $this->display('manager/users/form.html');
+    }
+
+    /**
      *********************************************************************************************
      * 以下代码为赎楼模块
      *********************************************************************************************
