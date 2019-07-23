@@ -666,7 +666,7 @@ class Foreclosure_model extends MY_Model
                 $this->db->where(array('fc_id' => $f_id))->delete('foreclosure_file_list');
                 $this->db->insert_batch('foreclosure_file_list', $file_);
                 break;
-            case -1:
+            case -2:
                 break;
             default:
                 return $this->fun_fail('请选择审核结果!');
