@@ -76,19 +76,19 @@
     <div class="am-form-group">
       <label for="borrower_name" class="am-u-sm-3 am-form-label">姓名</label>
       <div class="am-u-sm-9">
-       <input type="text" class="ip-txt" id="borrower_name" readonly="readonly" maxlength="4" name="borrower_name" value="{{$f_info.borrower_name|default:''}}" placeholder="请输入借款人姓名">
+          <p id="borrower_name" class="am-spec-input">{{$f_info.borrower_name|default:''}}</p>
       </div>
     </div>
     <div class="am-form-group">
       <label for="borrower_code" class="am-u-sm-3 am-form-label">身份证号</label>
       <div class="am-u-sm-9">
-         <input type="text" class="ip-txt js4IDcard" maxlength="18" readonly="readonly" id="borrower_code" name="borrower_code" value="{{$f_info.borrower_code|default:''}}" placeholder="请输入借款人身份证号码">
+          <p id="borrower_code" class="am-spec-input">{{$f_info.borrower_code|default:''}}</p>
       </div>
     </div>
    <div class="am-form-group">
       <label for="borrower_mobile" class="am-u-sm-3 am-form-label">手机号</label>
       <div class="am-u-sm-9">
-         <input type="text" class="ip-txt js4phone" id="borrower_mobile" readonly="readonly" name="borrower_mobile" value="{{$f_info.borrower_mobile|default:''}}" placeholder="请输入借款人手机号码">
+          <p id="borrower_mobile" class="am-spec-input">{{$f_info.borrower_mobile|default:''}}</p>
       </div>
     </div>
  </div>
@@ -99,19 +99,19 @@
               <div class="am-form-group">
                   <label for="borrower_spouse_name" class="am-u-sm-3 am-form-label">姓名</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt" readonly="readonly" maxlength="4" id="borrower_spouse_name" name="borrower_spouse_name" value="{{$f_info.borrower_spouse_name|default:''}}" placeholder="请输入借款人配偶姓名">
+                      <p id="borrower_spouse_name" class="am-spec-input">{{$f_info.borrower_spouse_name|default:''}}</p>
                   </div>
               </div>
               <div class="am-form-group">
                   <label for="borrower_spouse_code" class="am-u-sm-3 am-form-label">身份证号</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt js4IDcard" readonly="readonly" maxlength="18" id="borrower_spouse_code" name="borrower_spouse_code" value="{{$f_info.borrower_spouse_code|default:''}}" placeholder="请输入借款人配偶身份证号码">
+                      <p id="borrower_spouse_code" class="am-spec-input">{{$f_info.borrower_spouse_code|default:''}}</p>
                   </div>
               </div>
               <div class="am-form-group">
                   <label for="borrower_spouse_mobile" class="am-u-sm-3 am-form-label">手机号</label>
                   <div class="am-u-sm-9">
-                      <input type="text" class="ip-txt js4phone" readonly="readonly" id="borrower_spouse_mobile" name="borrower_spouse_mobile" value="{{$f_info.borrower_spouse_mobile|default:''}}" placeholder="请输入借款人配偶手机号码">
+                      <p id="borrower_spouse_mobile" class="am-spec-input">{{$f_info.borrower_spouse_mobile|default:''}}</p>
                   </div>
               </div>
           </div>
