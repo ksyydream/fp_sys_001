@@ -457,6 +457,7 @@ class Manager_model extends MY_Model
         $data['status'] = trim($this->input->get('status')) ? trim($this->input->get('status')) : null;
         $data['s_date'] = trim($this->input->get('s_date')) ? trim($this->input->get('s_date')) : '';
         $data['e_date'] = trim($this->input->get('e_date')) ? trim($this->input->get('e_date')) : '';
+        $data['ml23_id'] = trim($this->input->get('ml23_id')) ? trim($this->input->get('ml23_id')) : '';
         $this->db->select('count(1) num');
         $this->db->from('users us');
         if ($data['keyword']) {
@@ -476,6 +477,9 @@ class Manager_model extends MY_Model
         }
         if ($data['status']) {
             $this->db->where('us.status', $data['status']);
+        }
+        if ($data['ml23_id']) {
+            $this->db->where('us.invite', $data['ml23_id']);
         }
         $rs_total = $this->db->get()->row();
         //总记录数
@@ -507,9 +511,13 @@ class Manager_model extends MY_Model
         if ($data['status']) {
             $this->db->where('us.status', $data['status']);
         }
+        if ($data['ml23_id']) {
+            $this->db->where('us.invite', $data['ml23_id']);
+        }
         $this->db->limit($data['limit'], $offset = ($page - 1) * $data['limit']);
         $this->db->order_by('us.reg_time', 'desc');
         $data['res_list'] = $this->db->get()->result_array();
+        $data['m_level_2_3'] = $this->db->select('')->from('members')->where_in('level', array(2, 3))->get()->result_array();
         return $data;
     }
 
