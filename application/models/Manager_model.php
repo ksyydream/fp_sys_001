@@ -441,6 +441,81 @@ class Manager_model extends MY_Model
 
     /**
      *********************************************************************************************
+     * 以下代码为微信端账号模块
+     *********************************************************************************************
+     */
+
+    /**
+     * 会员列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-04-01
+     */
+    public function user_list($page = 1, $type = 0) {
+        $data['limit'] = $this->limit;//每页显示多少调数据
+        $data['keyword'] = trim($this->input->get('keyword')) ? trim($this->input->get('keyword')) : null;
+        $data['type_id'] = trim($this->input->get('type_id')) ? trim($this->input->get('type_id')) : null;
+        $data['status'] = trim($this->input->get('status')) ? trim($this->input->get('status')) : null;
+        $data['s_date'] = trim($this->input->get('s_date')) ? trim($this->input->get('s_date')) : '';
+        $data['e_date'] = trim($this->input->get('e_date')) ? trim($this->input->get('e_date')) : '';
+        $this->db->select('count(1) num');
+        $this->db->from('users us');
+        if ($data['keyword']) {
+            $this->db->group_start();
+            $this->db->like('us.rel_name', $data['keyword']);
+            $this->db->or_like('us.mobile', $data['keyword']);
+            $this->db->group_end();
+        }
+        if ($data['s_date']) {
+            $this->db->where('us.reg_time >=', strtotime($data['s_date'] . " 00:00:00"));
+        }
+        if ($data['e_date']) {
+            $this->db->where('us.reg_time <=', strtotime($data['e_date'] . " 23:59:59"));
+        }
+        if ($data['type_id']) {
+            $this->db->where('us.type_id', $data['type_id']);
+        }
+        if ($data['status']) {
+            $this->db->where('us.status', $data['status']);
+        }
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $total_rows = $rs_total->num;
+        $data['total_rows'] = $total_rows;
+        //list
+        $this->db->select('us.*,r1.name r1_name,r2.name r2_name,r3.name r3_name,r4.name r4_name, m.rel_name m_rel_name_,m.mobile m_mobile_');
+        $this->db->from('users us');
+        $this->db->join('region r1', 'us.province = r1.id', 'left');
+        $this->db->join('region r2', 'us.city = r2.id', 'left');
+        $this->db->join('region r3', 'us.district = r3.id', 'left');
+        $this->db->join('region r4', 'us.twon = r4.id', 'left');
+        $this->db->join('members m', 'm.m_id = us.invite', 'left');
+        if ($data['keyword']) {
+            $this->db->group_start();
+            $this->db->like('us.rel_name', $data['keyword']);
+            $this->db->or_like('us.mobile', $data['keyword']);
+            $this->db->group_end();
+        }
+        if ($data['s_date']) {
+            $this->db->where('us.reg_time >=', strtotime($data['s_date'] . " 00:00:00"));
+        }
+        if ($data['e_date']) {
+            $this->db->where('us.reg_time <=', strtotime($data['e_date'] . " 23:59:59"));
+        }
+        if ($data['type_id']) {
+            $this->db->where('us.type_id', $data['type_id']);
+        }
+        if ($data['status']) {
+            $this->db->where('us.status', $data['status']);
+        }
+        $this->db->limit($data['limit'], $offset = ($page - 1) * $data['limit']);
+        $this->db->order_by('us.reg_time', 'desc');
+        $data['res_list'] = $this->db->get()->result_array();
+        return $data;
+    }
+
+
+    /**
+     *********************************************************************************************
      * 以下代码为赎楼模块
      *********************************************************************************************
      */
