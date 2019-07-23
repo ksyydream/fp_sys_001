@@ -139,10 +139,11 @@ class Manager_login extends MY_Controller {
         echo json_encode($data);
     }
 
-    public function show_members_list4users($status = null){
+    public function show_members_list4users($user_id, $status = null){
         $data = $this->ajax_model->show_members_list4users($status);
+        $user_info = $this->ajax_model->get_users_info($user_id);
         $this->assign('data', $data);
-        $this->assign('status', $status);
+        $this->assign('user_info', $user_info);
         $this->display('manager/users/show_members_list4users.html');
     }
 }

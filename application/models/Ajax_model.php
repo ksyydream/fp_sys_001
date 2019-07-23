@@ -26,4 +26,13 @@ class Ajax_model extends MY_Model
         $data = $this->db->get()->result_array();
         return $data;
     }
+
+    public function get_users_info($user_id){
+        $this->db->select('us.*, m.rel_name m_rel_name_,m.mobile m_mobile_');
+        $this->db->from('users us');
+        $this->db->join('members m', 'm.m_id = us.invite', 'left');
+        $this->db->where(array('user_id' => $user_id));
+        $user_info = $this->db->get()->row_array();
+        return $user_info;
+    }
 }

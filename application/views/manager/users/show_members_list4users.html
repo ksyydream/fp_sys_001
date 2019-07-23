@@ -1,17 +1,36 @@
-<table style="width: 99%" id="temp_table_">
+
+<table style="width: 99%;border-collapse:separate; border-spacing:10px;" id="temp_table_">
     <tr>
-        <td style="width: 100px">管理员：</td>
-        <td><select name="sel_driver_id" id="sel_driver_id" style="width: 90%">
+        <td style="width: 100px">分配管理员：</td>
+        <td><select name="sel_member_id" id="sel_member_id" style="width: 90%">
             <option value="">-请选择-</option>
             {{foreach from=$data key=k item=v}}
             <option value="{{$v.id}}">{{$v.rel_name}}-{{$v.mobile}}</option>
             {{/foreach}}
         </select></td>
     </tr>
+    <tr>
+        <td style="width: 100px">会员姓名：</td>
+        <td>
+            {{$user_info.rel_name}}
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 100px">会员手机号码：</td>
+        <td>
+            {{$user_info.mobile}}
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 100px">原管理员：</td>
+        <td>
+            {{$user_info.m_rel_name_}}-{{$user_info.m_mobile_}}
+        </td>
+    </tr>
 </table>
 <script>
-$("#sel_driver_id").select2({
-    dropdownParent: $("#temp_table_"), //指定其父元素可避免z-index小于layer
+$("#sel_member_id").select2({
+    dropdownParent: $("#temp_table_")
 });
 </script>
 
