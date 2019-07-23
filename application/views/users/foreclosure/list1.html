@@ -59,9 +59,6 @@
 </head>
 <body>
 <div class="am-main">
-
-
-
 <form name="form1"  action="" class="am-form">
         <input id="status_type" type="hidden" value="{{$status_type|default:0}}">
       <ul class="am-form-slides">
@@ -71,12 +68,8 @@
         <li {{if $status_type == -1}}class="current"{{/if}}><a href="/wx_users/foreclosure_list/-1">未通过</a></li>
         <li {{if $status_type == 1}}class="current"{{/if}}><a href="/wx_users/foreclosure_list/1">草稿</a></li>
       </ul>
-
   <div class="am-flow3">
-
-
   <div id="is_end" class="nodata"><div class="wid100"><img src="/assets/i/list_bg.png" alt=""></div></div>
-
   </div>
 </form>
 

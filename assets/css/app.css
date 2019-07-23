@@ -12,7 +12,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
     text-decoration: none;
 }
 .am-main{font-size: .8rem;padding-bottom: 4rem;}
-.am-g-menu{ padding:.25rem .1rem; background: #fff;bottom: 0; position: fixed; width: 100%;box-shadow: 0 10px 30px 20px #eee;}
+.am-g-menu{ padding:.25rem .1rem; background: #fff;bottom: 0; position: fixed; width: 100%;box-shadow: 0 10px 30px 20px #eee; text-align: center;}
 .am-spec{bottom: 0; position: absolute;left:35%;}
 .am-btn-home{width:1.8rem; display:inline-block; }.am-btn-home img{width: 100%;}.am-spec .am-btn-home{width:3rem;}
 .am-menu .am-u-sm-4{text-align: center;}
@@ -387,23 +387,26 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-form-slides {height: 2.5rem;padding:.5rem 0; background: #fff;box-shadow: 10px 10px 30px 20px #eee;margin-bottom: .5rem;}
 .am-form-slides li{width:20%;float: left; display: block;text-align: center; height: 2rem;}.am-form-slides li a{width:100%;height: 2rem; display: block;}.am-form-slides1 li{width: 25%;}
 .am-form-slides .current{ color:#26304e;border-bottom: 2px solid #e15616;}.am-form-slides .current a{color:#26304e;}
-.data-list .d-l-content{margin: 0 1rem .3rem ; }.data-list .d-l-content a{color: #000;}
+.data-list .d-l-content{margin: 0 1rem .3rem; }.data-list .d-l-content a{color: #000;}
 .data-list .leftday{padding-bottom: 0;padding-top:.3rem;border-top: 1px solid #e5e9ed; color: #f91b21; height: 1.5rem;}
-.data-list .listid{border-bottom: 1px solid #e5e9ed;padding-bottom:.5rem;}
+
+.data-list .listid{ height:58px;border-bottom: 1px solid #e5e9ed;}
+.data-list .d-l-fl{float: left;}
 .data-list li{ color: #000;}.data-list .leftday span,.data-list .leftday li{color:#f91b21;}
 
-.data-list li .data-status{ float: right; color: #4693fb;}
+.data-list .data-status{ float: right; color: #4693fb; text-align: right;}
+.data-list .data-status .s-status{display: block;}
+.data-list .data-status .greenspec{color: #49b5a5; font-size: .7rem;}
+.data-list .data-status  .passok{ color: #49b5a5;}
+.data-list .data-status  .specok{color:#068e65;}
+.data-list .data-status  .unpass{color:#f90b0b;}
 
-.data-list li .passok{ color: #49b5a5;}
-.data-list li .specok{color:#068e65;}
-.data-list li .unpass{color:#f90b0b;}
-
-.data-list li .greenchannel{width:.8rem; height: .8rem;float: left; margin:.3rem .2rem 0 0;background: url(../../assets/i/greenchanel_icon.png) no-repeat; background-size: 100% 100%;}
+.data-list .greenchannel{width:.6rem; height: .6rem;float: left; margin:.25rem .2rem 0 0;background: url(../../assets/i/greenchanel_icon.png) no-repeat; background-size: 100% 100%;}
 .nodata{width: 80%;margin: 1rem 10% 0;}
 
 .div-list-data{position: relative;  background: #fff; margin-bottom: 1rem;}
 .option-div{ position: absolute; bottom: .5rem; right:.5rem;}
-.option-btn{ color: #5d5b5a; display: block; border:1px solid #ccccce; width:80px;text-align: center;border-radius: 15px; float: left; margin-right: .5rem; }
+.option-btn{ color: #5d5b5a; display: block; border:1px solid #ccccce; width:88px;text-align: center;border-radius: 15px; float: left; margin-right: .5rem; }
 
 .upload-credit{overflow: hidden;zoom:1;}
 
