@@ -520,9 +520,9 @@ class Manager_model extends MY_Model
         if(!$m_id){
             return $this->fun_fail('请选择新管理员!');
         }
-        $check_ = $this->db->select()->from('members')->where(array('m_id' => $m_id))->get()->row();
+        $check_ = $this->db->select()->from('members')->where(array('m_id' => $m_id, 'status' => 1))->where_in('level', array(2, 3))->get()->row();
         if(!$check_){
-            return $this->fun_fail('请选择新管理员!');
+            return $this->fun_fail('所选新管理员,不规范!');
         }
         if(!$user_id){
             return $this->fun_fail('请选择会员!');
@@ -544,8 +544,48 @@ class Manager_model extends MY_Model
         $this->db->join('region r3', 'us.district = r3.id', 'left');
         $this->db->join('region r4', 'us.twon = r4.id', 'left');
         $this->db->join('members m', 'm.m_id = us.invite', 'left');
-        $user_info = $this->db->where('user_id', $user_id)->get()->row();
+        $user_info = $this->db->where('user_id', $user_id)->get()->row_array();
+        if(!$user_info)
+            return $user_info;
+        $this->db->select()->from('members');
+        $this->db->group_start();
+        $this->db->where_in('level', array(2,3));
+        $this->db->where('status', 1);
+        $this->db->group_end();
+        $this->db->or_group_start();
+        $this->db->where('m_id', $user_info['invite']);
+        $this->db->group_end();
+        $user_info['sel_member_list'] = $this->db->get()->result_array();
         return $user_info;
+    }
+
+    /**
+     * 保存会员
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function users_save(){
+        $user_id = $this->input->post('user_id');
+        $update = array(
+            'status' => $this->input->post('status') ? $this->input->post('status') : -1,
+            'remark' => $this->input->post('remark'),
+            'invite' => $this->input->post('sel_member_id')
+        );
+        if(!$user_id){
+            return $this->fun_fail('操作失败');
+        }
+        if(!in_array($update['status'], array(1, -1))){
+            return $this->fun_fail('请选择状态');
+        }
+        if(!$update['invite']){
+            return $this->fun_fail('请选择所属管理员');
+        }
+        $check_ = $this->db->select()->from('members')->where(array('m_id' => $update['invite'], 'status' => 1))->where_in('level', array(2, 3))->get()->row();
+        if(!$check_){
+            return $this->fun_fail('所选新管理员,不规范!');
+        }
+        $this->db->where('user_id', $user_id)->update('users', $update);
+        return $this->fun_success('操作成功');
     }
 
     /**

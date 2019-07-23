@@ -381,6 +381,20 @@ class Manager extends MY_Controller {
     }
 
     /**
+     * 保存会员
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function users_save(){
+        $res = $this->manager_model->users_save();
+        if($res['status'] == 1){
+            $this->show_message('保存成功!', site_url('/manager/users_list'));
+        }else{
+            $this->show_message($res['msg']);
+        }
+    }
+
+    /**
      *********************************************************************************************
      * 以下代码为赎楼模块
      *********************************************************************************************

@@ -16,7 +16,7 @@ class Manager_login extends MY_Controller {
         $this->load->model('manager_model');
         $this->load->model('ajax_model');
         $ignore_methods = array(
-            'index', 'check_login', 'get_cap'
+            'index', 'check_login', 'get_cap', ''
         );
         //判断用户是否登录
         if(!$this->session->userdata('admin_info') && !in_array($this->uri->segment(2), $ignore_methods)){
