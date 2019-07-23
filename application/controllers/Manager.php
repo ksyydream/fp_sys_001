@@ -395,6 +395,20 @@ class Manager extends MY_Controller {
     }
 
     /**
+     * 会员列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-22
+     */
+    public function members_list($page = 1){
+        $data = $this->manager_model->members_list($page);
+        $base_url = "/manager/members_list/";
+        $pager = $this->pagination->getPageLink4manager($base_url, $data['total_rows'], $data['limit']);
+        $this->assign('pager', $pager);
+        $this->assign('page', $page);
+        $this->assign('data', $data);
+        $this->display('manager/members/index.html');
+    }
+    /**
      *********************************************************************************************
      * 以下代码为赎楼模块
      *********************************************************************************************

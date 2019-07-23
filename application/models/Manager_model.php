@@ -597,6 +597,79 @@ class Manager_model extends MY_Model
     }
 
     /**
+     * 会员列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-04-01
+     */
+    public function members_list($page = 1) {
+        $data['limit'] = $this->limit;//每页显示多少调数据
+        $data['keyword'] = trim($this->input->get('keyword')) ? trim($this->input->get('keyword')) : null;
+        $data['level'] = trim($this->input->get('level')) ? trim($this->input->get('level')) : null;
+        $data['status'] = trim($this->input->get('status')) ? trim($this->input->get('status')) : null;
+        $data['s_date'] = trim($this->input->get('s_date')) ? trim($this->input->get('s_date')) : '';
+        $data['e_date'] = trim($this->input->get('e_date')) ? trim($this->input->get('e_date')) : '';
+        $data['ml2_id'] = trim($this->input->get('ml2_id')) ? trim($this->input->get('ml2_id')) : '';
+        $this->db->select('count(1) num');
+        $this->db->from('members m');
+        if ($data['keyword']) {
+            $this->db->group_start();
+            $this->db->like('m.rel_name', $data['keyword']);
+            $this->db->or_like('m.mobile', $data['keyword']);
+            $this->db->group_end();
+        }
+        if ($data['s_date']) {
+            $this->db->where('m.add_time >=', strtotime($data['s_date'] . " 00:00:00"));
+        }
+        if ($data['e_date']) {
+            $this->db->where('m.add_time <=', strtotime($data['e_date'] . " 23:59:59"));
+        }
+        if ($data['level']) {
+            $this->db->where('m.level', $data['level']);
+        }
+        if ($data['ml2_id']) {
+            $this->db->where('m.parent_id', $data['ml2_id']);
+        }
+        if ($data['status']) {
+            $this->db->where('m.status', $data['status']);
+        }
+
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $total_rows = $rs_total->num;
+        $data['total_rows'] = $total_rows;
+        //list
+        $this->db->select('m.*, m1.rel_name m1_rel_name_,m1.mobile m1_mobile_');
+        $this->db->from('members m');
+        $this->db->join('members m1', 'm.parent_id = m1.m_id', 'left');
+        if ($data['keyword']) {
+            $this->db->group_start();
+            $this->db->like('m.rel_name', $data['keyword']);
+            $this->db->or_like('m.mobile', $data['keyword']);
+            $this->db->group_end();
+        }
+        if ($data['s_date']) {
+            $this->db->where('m.add_time >=', strtotime($data['s_date'] . " 00:00:00"));
+        }
+        if ($data['e_date']) {
+            $this->db->where('m.add_time <=', strtotime($data['e_date'] . " 23:59:59"));
+        }
+        if ($data['level']) {
+            $this->db->where('m.level', $data['level']);
+        }
+        if ($data['status']) {
+            $this->db->where('m.status', $data['status']);
+        }
+        if ($data['ml2_id']) {
+            $this->db->where('m.parent_id', $data['ml2_id']);
+        }
+        $this->db->limit($data['limit'], $offset = ($page - 1) * $data['limit']);
+        $this->db->order_by('m.add_time', 'desc');
+        $data['res_list'] = $this->db->get()->result_array();
+        $data['m_level_2'] = $this->db->select('')->from('members')->where(array('level' => 2))->get()->result_array();
+        return $data;
+    }
+
+    /**
      *********************************************************************************************
      * 以下代码为赎楼模块
      *********************************************************************************************
