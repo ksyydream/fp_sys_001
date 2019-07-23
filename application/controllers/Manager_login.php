@@ -14,7 +14,15 @@ class Manager_login extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('manager_model');
-
+        $this->load->model('ajax_model');
+        $ignore_methods = array(
+            'index', 'check_login', 'get_cap'
+        );
+        //判断用户是否登录
+        if(!$this->session->userdata('admin_info') && !in_array($this->uri->segment(2), $ignore_methods)){
+            echo -1;//如果没有登陆
+            die();
+        }
     }
 
     /**
@@ -129,5 +137,12 @@ class Manager_login extends MY_Controller {
         }
         $data['time'] = $time;
         echo json_encode($data);
+    }
+
+    public function show_members_list4users($status = null){
+        $data = $this->ajax_model->show_members_list4users($status);
+        $this->assign('data', $data);
+        $this->assign('status', $status);
+        $this->display('manager/users/show_members_list4users.html');
     }
 }

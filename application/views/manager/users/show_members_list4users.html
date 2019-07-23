@@ -1,0 +1,17 @@
+<table style="width: 99%" id="temp_table_">
+    <tr>
+        <td style="width: 100px">管理员：</td>
+        <td><select name="sel_driver_id" id="sel_driver_id" style="width: 90%">
+            <option value="">-请选择-</option>
+            {{foreach from=$data key=k item=v}}
+            <option value="{{$v.id}}">{{$v.rel_name}}-{{$v.mobile}}</option>
+            {{/foreach}}
+        </select></td>
+    </tr>
+</table>
+<script>
+$("#sel_driver_id").select2({
+    dropdownParent: $("#temp_table_"), //指定其父元素可避免z-index小于layer
+});
+</script>
+
