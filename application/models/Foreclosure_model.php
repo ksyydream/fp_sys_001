@@ -128,6 +128,7 @@ class Foreclosure_model extends MY_Model
                 if(!in_array($insert_['borrower_td_decision'], array('REVIEW', 'PASS'))){
                     $insert_['status'] = -1;
                     $insert_['td_status'] = -1;
+                    $insert_['submit_time'] = time();
                 }else{
                     $insert_['status'] = 1;
                     $insert_['td_status'] = 2;
@@ -137,6 +138,7 @@ class Foreclosure_model extends MY_Model
                 if(!in_array($insert_['borrower_td_decision'], array('REVIEW', 'PASS')) || !in_array($insert_['borrower_spouse_td_decision'], array('REVIEW', 'PASS'))){
                     $insert_['status'] = -1;
                     $insert_['td_status'] = -1;
+                    $insert_['submit_time'] = time();
                 }else{
                     $insert_['status'] = 1;
                     $insert_['td_status'] = 2;

@@ -450,7 +450,7 @@ class Manager_model extends MY_Model
      * @author yangyang <yang.yang@thmarket.cn>
      * @date 2018-04-01
      */
-    public function user_list($page = 1, $type = 0) {
+    public function users_list($page = 1) {
         $data['limit'] = $this->limit;//每页显示多少调数据
         $data['keyword'] = trim($this->input->get('keyword')) ? trim($this->input->get('keyword')) : null;
         $data['type_id'] = trim($this->input->get('type_id')) ? trim($this->input->get('type_id')) : null;
