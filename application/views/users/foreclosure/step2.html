@@ -159,13 +159,15 @@
 <script src="/assets/mobiscroll/js/mobiscroll_date.js"></script>
 <script src="/assets/mobiscroll/js/mobiscroll.js"></script>
 <script type="text/javascript">
+    $(function(){
+        $("#buyer_name").focus();
+    })
     //history.pushState(null, null, document.URL);
     //window.addEventListener('popstate', function () {
     //    layer.msg('不可回退');
     //    history.pushState(null, null, document.URL);
     //});
-    $("#buyer_name").focus();
-    var currYear = (new Date()).getFullYear(); // 获取年
+     var currYear = (new Date()).getFullYear(); // 获取年
     var currMonth = (new Date()).getMonth(); // 获取月
     var currDay = (new Date()).getDate(); // 获取日
     var opt={};

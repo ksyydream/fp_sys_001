@@ -5,6 +5,7 @@ input::-moz-placeholder{color:#c0c6cc;}
 input:-moz-placeholder{color:#c0c6cc;}
 input:-ms-input-placeholder{color:#c0c6cc;}
 body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:none;}p{margin:0;padding:0;}a{ color: #666361;}
+.am-modal-no-btn .am-modal-dialog{border-radius:5px;}
 .am-btn:hover,
 .am-btn:focus {
     color: #666361;
@@ -328,7 +329,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .am-form .am-spec-txt{padding: 0; text-align: left; color:#26304e;}
 .am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2.3rem; border-radius: 1.2rem; display: block;padding-top: .6rem;}
-
+.am-back-list{background: #fff; color:#333;border:1px solid #ccc;}
 .wid100 img{width: 100%;}
 
 .ind-btn{width: 80%; position: absolute; left:10%;top:13rem;}
@@ -424,8 +425,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .up-zx{overflow: hidden;zoom:1;}
 .submit_ok{ width:20%;margin-left:40%;}.submit_ok img{width: 100%;}
-.confrim-submit-bd{overflow: hidden; margin: 1rem 8% 0;}
-.confrim-submit-bd .am-btn{ width:100px; height: 28px; display: block; font-size: .7rem;border:1px solid #d9d9d9; color: #d9d9d9; line-height: 28px; border-radius: 15px; padding:0;}
+.confrim-submit-bd{overflow: hidden; margin: 1rem 8% .5rem;}
+.confrim-submit-bd .am-btn{ width:96px;  display: block; font-size: .7rem;border:1px solid #666; color: #666; line-height: 28px; border-radius: 15px; padding:0;}
 .confrim-submit-bd .am-btn-ind{float: left; }.confrim-submit-bd .am-btn-list{float: right; }
 
 .info-pic{background: #fff; text-align: center;margin-bottom: 1rem;height: 150px;padding:1rem 0;}
