@@ -64,7 +64,7 @@
 
 <form name="form1"  action="" class="am-form">
         <input id="status_type" type="hidden" value="{{$status_type|default:0}}">
-      <ul class="am-form-slides">
+      <ul class="am-form-slides am-form-slides1">
         <li {{if $status_type == 0}}class="current"{{/if}}><a href="/wx_members/foreclosure_list">全部</a></li>
         <li {{if $status_type == 2}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/2">待审核</a></li>
         <li {{if $status_type == 3}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/3">已通过</a></li>
