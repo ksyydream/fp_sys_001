@@ -145,7 +145,7 @@ class Wx_users extends Wx_controller {
         $this->check_foreclosure_edit($f_id); //检查权限
         $this->assign('f_info', $f_info);
         //查看总体同盾审核情况
-        if($f_info['td_status'] == 2){
+        if($f_info['td_status'] == 2 || $f_info['is_special'] == 1){
             $this->display('users/foreclosure/result_ok.html');
         }else{
             $this->display('users/foreclosure/result_fail.html');
