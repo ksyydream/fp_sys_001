@@ -400,6 +400,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .data-list .data-status  .passok{ color: #49b5a5;}
 .data-list .data-status  .specok{color:#068e65;}
 .data-list .data-status  .unpass{color:#f90b0b;}
+.data-list .data-status  .wait_submit{color:#f90b0b;}
 
 .data-list .greenchannel{width:.6rem; height: .6rem;float: left; margin:.25rem .2rem 0 0;background: url(../../assets/i/greenchanel_icon.png) no-repeat; background-size: 100% 100%;}
 .nodata{width: 80%;margin: 1rem 10% 0;}
