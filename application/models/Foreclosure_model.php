@@ -493,8 +493,43 @@ class Foreclosure_model extends MY_Model
         }else{
             $res = $this->db->where($where_)->update('foreclosure', $update_);
             if($res){
-                $foreclosure_info = $this->db->select('foreclosure_id')->from('foreclosure')->where($where_)->get()->row_array();
-                return $this->fun_success('操作成功', $foreclosure_info);
+                //如果是待审核提交,需要推送微信模板信息,告知总监
+                $foreclosure_info = $this->db->select('foreclosure_id, work_no, m_id, user_id')->from('foreclosure')->where($where_)->get()->row_array();
+                if($update_['status'] == 2){
+                    $user_info_ = $this->db->select()->from('users')->where('user_id', $foreclosure_info['user_id'])->get()->row_array();
+                    $member_info_ = $this->db->select()->from('members')->where('m_id', $foreclosure_info['m_id'])->get()->row_array();
+                    if($member_info_){
+                        $parent_id = $member_info_['m_id'];
+                        if($member_info_['parent_id'] != -1)
+                            $parent_id = $member_info_['parent_id'];
+                        $data_msg = array(
+                            'first' => array(
+                                'value' => "有新的赎楼业务提交审核!",
+                                'color' => '#FF0000'
+                            ),
+                            'keyword1' => array(
+                                'value' => $user_info_['rel_name'] . '-' . $user_info_['mobile'],
+                                'color' => '#FF0000'
+                            ),
+                            'keyword2' => array(
+                                'value' => $foreclosure_info['work_no'],
+                                'color' => '#FF0000'
+                            ),
+                            'keyword3' => array(
+                                'value' => date('Y-m-d H:i:s'),
+                                'color' => '#FF0000'
+                            ),
+                            'remark' => array(
+                                'value' => '请您及时处理。',
+                                'color' => '#FF0000'
+                            )
+                        );
+                        $this->wxpost4member($this->config->item('WX_DSH'), $data_msg, $parent_id, $this->config->item('img_url_DBY') . '/wx_members/foreclosure_detail1/' . $foreclosure_info['foreclosure_id']);
+                    }
+                }
+
+
+                return $this->fun_success('操作成功', array('foreclosure_id' => $fc_id));
             }else{
                 return $this->fun_fail('操作失败!');
             }
@@ -695,7 +730,7 @@ class Foreclosure_model extends MY_Model
                     'color' => '#FF0000'
                 )
             );
-            $this->wxpost($this->config->item('WX_YY'), $data_msg, $f_info['user_id'], $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . $f_id);
+            $this->wxpost4user($this->config->item('WX_YY'), $data_msg, $f_info['user_id'], $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . $f_id);
         }
         return $this->fun_success('审核成功', array('foreclosure_id' => $f_id));
     }

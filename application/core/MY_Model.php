@@ -258,33 +258,30 @@ class MY_Model extends CI_Model{
     	return file_get_contents($url, false, $context);
     }
 
-    public function wxpost($template_id,$post_data,$user_id,$url_www='www.funmall.com.cn'){
+    public function wxpost4user($template_id,$post_data,$user_id,$url_www='sys.ksls.com.cn'){
         $openid = $this->get_openidByUserid($user_id);
         if($openid == -1 || empty($openid)){
             return false;
         }
+        $this->wxpost($template_id,$post_data,$openid,$url_www);
+        return true;
+    }
+
+    public function wxpost4member($template_id,$post_data,$m_id,$url_www='sys.ksls.com.cn'){
+        $openid = $this->get_openidByMid($m_id);
+        if($openid == -1 || empty($openid)){
+            return false;
+        }
+        $this->wxpost($template_id,$post_data,$openid,$url_www);
+        return true;
+    }
+
+    public function wxpost($template_id,$post_data,$openid,$url_www='www.funmall.com.cn'){
+
         $this->load->library('wxjssdk_th',array('appid' => $this->config->item('appid'), 'appsecret' => $this->config->item('appsecret')));
         $access_token = $this->wxjssdk_th->wxgetAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;//access_token改成你的有效值
 
-        /*$data = array(
-            'first' => array(
-                'value' => '数据提交成功！',
-                'color' => '#FF0000'
-            ),
-            'keyword1' => array(
-                'value' => '休假单',
-                'color' => '#FF0000'
-            ),
-            'keyword2' => array(
-                'value' => date("Y-m-d H:i:s"),
-                'color' => '#FF0000'
-            ),
-            'remark' => array(
-                'value' => '请审核！',
-                'color' => '#FF0000'
-            )
-        );*/
         $template = array(
             'touser' => $openid,
             'template_id' => $template_id,
@@ -319,6 +316,15 @@ class MY_Model extends CI_Model{
 
     public function get_openidByUserid($user_id){
         $row = $this->db->select()->from('users')->where('user_id',$user_id)->get()->row_array();
+        if ($row){
+            return $row['openid'];
+        }else{
+            return -1;
+        }
+    }
+
+    public function get_openidByMid($m_id){
+        $row = $this->db->select()->from('members')->where('m_id',$m_id)->get()->row_array();
         if ($row){
             return $row['openid'];
         }else{
@@ -728,6 +734,19 @@ class MY_Model extends CI_Model{
         $groups = $this->db->where('a.admin_id',$admin_id)->get()->result_array();
 
         return $groups;
+    }
+
+    //通过门店会员user_id 获取 所属管理员 总监的ID,以便发送审核提醒
+    public function get_m_parent_idByuser_id($user_id){
+        $user_info = $this->db->select()->from('users')->where('user_id', $user_id)->get()->row_array();
+        if($user_info){
+            $member_info = $this->db->select()
+                ->from('members')->where(array('m_id' => $user_info['invite']))
+                ->where_in('level', array(2,3))
+                ->get()->row_array();
+            return $member_info;
+        }
+        return array();
     }
 }
 
