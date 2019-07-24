@@ -1,0 +1,36 @@
+
+<table style="width: 99%;border-collapse:separate; border-spacing:10px;" id="temp_table_">
+    <tr>
+        <td style="width: 100px">划分微管：</td>
+        <td><select name="sel_member_id" id="sel_member_id" style="width: 90%">
+            <option value="">-请选择-</option>
+            {{foreach from=$data key=k item=v}}
+            <option value="{{$v.m_id}}">{{$v.rel_name}}-{{$v.mobile}}</option>
+            {{/foreach}}
+        </select></td>
+    </tr>
+    <tr>
+        <td style="width: 100px">赎楼工作单号：</td>
+        <td>
+            {{$f_info.work_no}}
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 100px">借款人：</td>
+        <td>
+            {{$f_info.borrower_name}}
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 100px">原微管：</td>
+        <td>
+            {{$m_info.rel_name}}-{{$m_info.mobile}}
+        </td>
+    </tr>
+</table>
+<script>
+$("#sel_member_id").select2({
+    dropdownParent: $("#temp_table_")
+});
+</script>
+

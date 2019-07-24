@@ -504,4 +504,10 @@ class Manager extends MY_Controller {
         $this->display('manager/foreclosure/work_detail.html');
     }
 
+    //赎楼业务所属微管修改
+    public function foreclosure_m_change() {
+        $rs = $this->manager_model->foreclosure_m_change();
+        $this->ajaxReturn($rs);
+    }
+
 }

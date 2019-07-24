@@ -160,4 +160,20 @@ class Manager_login extends MY_Controller {
         $this->assign('m_info', $m_info);
         $this->display('manager/members/show_level2_list4members.html');
     }
+
+    //金融业务-赎楼列表-选择所属管理员时的弹窗
+    public function show_level23_list4f($f_id){
+        $data = $this->ajax_model->show_members_list4users(1);
+        $this->load->model('foreclosure_model');
+        $f_info = $this->foreclosure_model->get_foreclosure($f_id);
+        if(!$f_info){
+            echo '赎楼工作单不存在!';
+            exit();
+        }
+        $m_info = $this->ajax_model->get_members_info($f_info['m_id']);
+        $this->assign('data', $data);
+        $this->assign('f_info', $f_info);
+        $this->assign('m_info', $m_info);
+        $this->display('manager/foreclosure/show_level23_list4f.html');
+    }
 }

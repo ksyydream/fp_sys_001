@@ -579,6 +579,8 @@ class Manager_model extends MY_Model
             'remark' => $this->input->post('remark'),
             'invite' => $this->input->post('sel_member_id')
         );
+        if($update['status'] != 1)
+            $update['openid'] = '';
         if(!$user_id){
             return $this->fun_fail('操作失败');
         }
@@ -715,6 +717,8 @@ class Manager_model extends MY_Model
             'remark' => $this->input->post('remark'),
             'pic' => $this->input->post('head') ? $this->input->post('head') : null,
         );
+        if($data['status'] != 1)
+            $data['openid'] = '';
         if(!$data['rel_name'])
             return $this->fun_fail('请填写姓名');
         if(!$data['mobile'])
@@ -916,5 +920,23 @@ class Manager_model extends MY_Model
         //die(var_dump($res['property_img']));
         $res['credit_img'] = $this->db->from('foreclosure_credit_img')->where('fc_id', $id)->order_by('sort_id','asc')->get()->result();
         return $res;
+    }
+
+    //赎楼业务所属微管修改
+    public function foreclosure_m_change() {
+        $m_id = $this->input->post('sel_member_id');
+        $f_id = $this->input->post('f_id');
+        if(!$m_id){
+            return $this->fun_fail('请选择新微管!');
+        }
+        $check_ = $this->db->select()->from('members')->where(array('m_id' => $m_id, 'status' => 1))->where_in('level', array(2, 3))->get()->row();
+        if(!$check_){
+            return $this->fun_fail('所选新微管,不规范!');
+        }
+        if(!$f_id){
+            return $this->fun_fail('请选择赎楼业务!');
+        }
+        $this->db->where(array('foreclosure_id' => $f_id))->update('foreclosure', array('m_id' => $m_id));
+        return $this->fun_success('操作成功!');
     }
 }
