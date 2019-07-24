@@ -8,7 +8,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-modal-no-btn .am-modal-dialog{border-radius:5px;}
 .am-btn:hover,
 .am-btn:focus {
-    color: #fff;
+    color: #26304e;
     text-decoration: none; opacity: 0.9;
 }
 .am-main{font-size: .8rem;padding-bottom: 4rem;}
@@ -323,12 +323,16 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .am-form .yzcode-label{ float: left;}
 .am-yzcode{font-size: .8rem; color: #e15616;padding: 0 .3rem;border-left: 1px solid #e7e8e9;height:2.3rem;line-height: 2.3rem; float: right; width: 33%;}
+.am-yzcode:hover,.am-yzcode:focus { color: #e15616;}
+
 .am-form-group .register-style{ float: right;}
 /*.am-form .am-form-label{margin:0;padding:0 0 0 ;font-weight: normal;  font-size: .8rem;color:#000;}*/
 .p-tit{margin:.5rem 1rem;font-size: .7rem; color: #848890;}
 
 .am-form .am-spec-txt{padding: 0; text-align: left; color:#26304e;}
 .am-btn-register{font-size:.8rem;margin:1rem auto; width: 16rem; background: #4c33ff; color:#fff; height: 2.3rem; border-radius: 1.2rem; display: block;padding-top: .6rem;}
+.am-btn-register:hover,.am-btn-register:focus { color: #fff;}
+
 .am-back-list{background: #fff; color:#333;border:1px solid #ccc;}
 .wid100 img{width: 100%;}
 
