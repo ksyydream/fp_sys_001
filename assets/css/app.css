@@ -4,7 +4,7 @@ input::-webkit-input-placeholder{color:#c0c6cc;}
 input::-moz-placeholder{color:#c0c6cc;}
 input:-moz-placeholder{color:#c0c6cc;}
 input:-ms-input-placeholder{color:#c0c6cc;}
-body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:none;}p{margin:0;padding:0;}a{ color: #fff;}
+body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:none;}p{margin:0;padding:0;}a{ color: #26304e;}
 .am-modal-no-btn .am-modal-dialog{border-radius:5px;}
 .am-btn:hover,
 .am-btn:focus {
