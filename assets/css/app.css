@@ -4,12 +4,12 @@ input::-webkit-input-placeholder{color:#c0c6cc;}
 input::-moz-placeholder{color:#c0c6cc;}
 input:-moz-placeholder{color:#c0c6cc;}
 input:-ms-input-placeholder{color:#c0c6cc;}
-body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:none;}p{margin:0;padding:0;}a{ color: #666361;}
+body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:none;}p{margin:0;padding:0;}a{ color: #fff;}
 .am-modal-no-btn .am-modal-dialog{border-radius:5px;}
 .am-btn:hover,
 .am-btn:focus {
-    color: #666361;
-    text-decoration: none;
+    color: #fff;
+    text-decoration: none; opacity: 0.9;
 }
 .am-main{font-size: .8rem;padding-bottom: 4rem;}
 .am-g-menu{ padding:.25rem .1rem; background: #fff;bottom: 0; position: fixed; width: 100%;box-shadow: 0 10px 30px 20px #eee; text-align: center;}
@@ -381,7 +381,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .upid{padding:.8rem 0; background: #fff; height: 100%; text-align: center; position: relative;}
 .upid1{width: 50%; float: left;}
-.upload_click{ width:88%; display: inline-block;}.upload_click img{width: 100%;}
+.upload_click{ width:88%;height:10rem; display: inline-block; overflow: hidden}.upload_click img{height: 100%;}
 .upload_click1{width:90%; }
 
 .am-form-slides {height: 2.5rem;padding:.5rem 0; background: #fff;box-shadow: 10px 10px 30px 20px #eee;margin-bottom: .5rem;}
