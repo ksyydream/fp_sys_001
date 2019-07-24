@@ -5,7 +5,8 @@
         <div class="d-l-content listid">
             <ul class="d-l-fl">
                 <li>
-                     <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
+                    <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
+                    <div class="data-span"><span>创建时间：</span>{{$item.add_time|date_format:"%Y-%m-%d %H:%M:%S"}}</div>
                 </li>
             </ul>
             <div class="data-status">
