@@ -415,7 +415,17 @@ class Manager extends MY_Controller {
      * @date 2019-07-23
      */
     public function members_add(){
-        $data = $this->manager_model->members_work_add();
+        $data['m_level_2'] = $this->manager_model->members_work_add();
+        $this->assign('data', $data);
+        $this->display('manager/members/members_add.html');
+    }
+
+    public function members_edit($m_id){
+        $data = $this->manager_model->members_edit($m_id);
+        if(!$data){
+            $this->show_message('未找到微信管理员信息!');
+        }
+        $data['m_level_2'] = $this->manager_model->members_work_add();
         $this->assign('data', $data);
         $this->display('manager/members/members_add.html');
     }

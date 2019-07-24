@@ -670,7 +670,12 @@ class Manager_model extends MY_Model
     }
 
     public function members_work_add(){
-        $data['m_level_2'] = $this->db->select('')->from('members')->where(array('level' => 2, 'status' => 1))->get()->result_array();
+        $data = $this->db->select('')->from('members')->where(array('level' => 2, 'status' => 1))->get()->result_array();
+        return $data;
+    }
+
+    public function members_edit($m_id){
+        $data = $this->db->select()->from('members')->where('m_id', $m_id)->get()->row_array();
         return $data;
     }
 
@@ -681,6 +686,7 @@ class Manager_model extends MY_Model
      */
     public function members_save(){
         $data = array(
+            'parent_id' => -1, //默认-1
             'level' => $this->input->post('level'),
             'mobile' => $this->input->post('mobile'),
             'status' => $this->input->post('status') ? $this->input->post('status') : -1,
@@ -708,6 +714,7 @@ class Manager_model extends MY_Model
                 return $this->fun_fail('所选总监,已不可选择!');
             }
         }
+
         $m_id = $this->input->post('m_id');
         if($m_id){
             $m_info_ = $this->db->select()->from('members')->where(array('m_id' => $m_id))->get()->row_array();
