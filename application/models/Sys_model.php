@@ -40,6 +40,7 @@ class Sys_model extends MY_Model
         //检测是否是users
         $this->db->select('a.user_id,a.rel_name')->from('users a');
         $this->db->where('a.openid',$openid);
+        $this->db->where('a.status',1);
         $row = $this->db->get()->row_array();
         if($row){
             $res = $this->set_user_session_wx($row['user_id']);
@@ -50,6 +51,7 @@ class Sys_model extends MY_Model
         //检测是否是members
         $this->db->select('a.m_id,a.rel_name')->from('members a');
         $this->db->where('a.openid',$openid);
+        $this->db->where('a.status',1);
         $row = $this->db->get()->row_array();
         if($row){
             $res = $this->set_member_session_wx($row['m_id']);

@@ -675,6 +675,71 @@ class Manager_model extends MY_Model
     }
 
     /**
+     * 微信管理员保存页面
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-23
+     */
+    public function members_save(){
+        $data = array(
+            'level' => $this->input->post('level'),
+            'mobile' => $this->input->post('mobile'),
+            'status' => $this->input->post('status') ? $this->input->post('status') : -1,
+            'rel_name' => $this->input->post('rel_name'),
+            'remark' => $this->input->post('remark'),
+            'pic' => $this->input->post('pic') ? $this->input->post('pic') : null,
+        );
+        if(!$data['rel_name'])
+            return $this->fun_fail('请填写姓名');
+        if(!$data['mobile'])
+            return $this->fun_fail('请填写手机号');
+        if(!$data['pic'])
+            return $this->fun_fail('请设置头像');
+        if(!check_mobile($data['mobile']))
+            return $this->fun_fail('手机号不规范');
+        if(!$data['level'])
+            return $this->fun_fail('请选择职务');
+        if($data['level'] == 3){
+            $data['invite'] = $this->input->post('sel_member_id');
+            if(!$data['invite']){
+                return $this->fun_fail('请选择所属总监');
+            }
+            $check_ = $this->db->select()->from('memebers')->where(array('m_id' => $data['invite'], 'status' => 1, 'level' => 2))->get()->row();
+            if(!$check_){
+                return $this->fun_fail('所选总监,已不可选择!');
+            }
+        }
+        $m_id = $this->input->post('m_id');
+        if($m_id){
+            $m_info_ = $this->db->select()->from('members')->where(array('m_id' => $m_id))->get()->row_array();
+            if(!$m_info_)
+                return $this->fun_fail('所操作的微信管理员不存在');
+            //修改
+            //1,检查手机号是否被占用
+            $check_mobile_ = $this->db->select()->from('members')->where(array('mobile' => $data['mobile'], 'm_id <>' => $m_id))->get()->row();
+            if($check_mobile_)
+                return $this->fun_fail('手机号码已被占用');
+
+            //2,如果是总监, 变更职务或者停用时,必须将名下组员(启用状态)都划分
+            if($m_info_['level'] == 2 && ($data['level'] != 2 || $data['status'] != 1)){
+                $m_2_list_ = $this->db->select()->from('members')->where(array('parent_id' => $m_id, 'status' => 1))->get()->result_array();
+                if($m_2_list_)
+                    return $this->fun_fail('此账号下还有组员,请将组员划分完成后,再修改职务和状态!');
+            }
+            $this->db->where('m_id', $m_id)->update('members', $data);
+        }else{
+            //新增
+            //1,检查手机号是否被占用
+            $check_mobile_ = $this->db->select()->from('members')->where('mobile', $data['mobile'])->get()->row();
+            if($check_mobile_)
+                return $this->fun_fail('手机号码已被占用');
+            $data['add_time'] = time();
+            $this->db->insert('members', $data);
+
+        }
+        return $this->fun_success('操作成功');
+    }
+
+    /**
      *********************************************************************************************
      * 以下代码为赎楼模块
      *********************************************************************************************

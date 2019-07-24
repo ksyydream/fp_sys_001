@@ -412,12 +412,22 @@ class Manager extends MY_Controller {
     /**
      * 微信管理员新增页面
      * @author yangyang <yang.yang@thmarket.cn>
-     * @date 2018-04-18
+     * @date 2019-07-23
      */
     public function members_add(){
         $data = $this->manager_model->members_work_add();
         $this->assign('data', $data);
         $this->display('manager/members/members_add.html');
+    }
+
+    /**
+     * 微信管理员保存页面
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-23
+     */
+    public function members_save(){
+        $res = $this->manager_model->members_save();
+        $this->ajaxReturn($res);
     }
 
     /**
