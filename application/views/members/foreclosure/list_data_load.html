@@ -7,16 +7,17 @@
                 <li>
 
                     <div class="data-span"><span>编号：</span>{{$item.work_no}}</div>
+                    <div class="data-span"><span>创建时间：</span>2019-07-24 11:25:30</div>
                 </li>
             </ul>
             <div class="data-status">
-                {{if $item.is_special == 1}}<span class="s-status greenspec"><i class="greenchannel"></i>绿色通道</span>{{/if}}
                 {{if $item.status == 1}}待提交{{/if}}
                 {{if $item.status == 2}}<span class="s-status wait_submit">待审核</span>{{/if}}
                 {{if $item.status == 3}}<span class="s-status passok">已通过</span>{{/if}}
                 {{if $item.status == 4}}<span class="s-status passok">终审通过</span>{{/if}}
                 {{if $item.status == -1}}<span class="s-status unpass">同盾未通过</span>{{/if}}
                 {{if $item.status == -2}}<span class="s-status unpass">审核未通过</span>{{/if}}
+                {{if $item.is_special == 1}}<span class="s-status greenspec"><i class="greenchannel"></i>绿色通道</span>{{/if}}
             </div>
         </div>
         <div class="d-l-content">
