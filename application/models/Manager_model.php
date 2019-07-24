@@ -686,7 +686,7 @@ class Manager_model extends MY_Model
             'status' => $this->input->post('status') ? $this->input->post('status') : -1,
             'rel_name' => $this->input->post('rel_name'),
             'remark' => $this->input->post('remark'),
-            'pic' => $this->input->post('pic') ? $this->input->post('pic') : null,
+            'pic' => $this->input->post('head') ? $this->input->post('head') : null,
         );
         if(!$data['rel_name'])
             return $this->fun_fail('请填写姓名');
@@ -699,11 +699,11 @@ class Manager_model extends MY_Model
         if(!$data['level'])
             return $this->fun_fail('请选择职务');
         if($data['level'] == 3){
-            $data['invite'] = $this->input->post('sel_member_id');
-            if(!$data['invite']){
+            $data['parent_id'] = $this->input->post('sel_member_id');
+            if(!$data['parent_id']){
                 return $this->fun_fail('请选择所属总监');
             }
-            $check_ = $this->db->select()->from('memebers')->where(array('m_id' => $data['invite'], 'status' => 1, 'level' => 2))->get()->row();
+            $check_ = $this->db->select()->from('members')->where(array('m_id' => $data['parent_id'], 'status' => 1, 'level' => 2))->get()->row();
             if(!$check_){
                 return $this->fun_fail('所选总监,已不可选择!');
             }
@@ -724,6 +724,9 @@ class Manager_model extends MY_Model
                 $m_2_list_ = $this->db->select()->from('members')->where(array('parent_id' => $m_id, 'status' => 1))->get()->result_array();
                 if($m_2_list_)
                     return $this->fun_fail('此账号下还有组员,请将组员划分完成后,再修改职务和状态!');
+                $u_list_ = $this->db->select()->from('users')->where(array('invite' => $m_id, 'status' => 1))->get()->result_array();
+                if($u_list_)
+                    return $this->fun_fail('此账号下还有直属会员,请将会员划分完成后,再修改职务和状态!');
             }
             $this->db->where('m_id', $m_id)->update('members', $data);
         }else{
@@ -733,6 +736,8 @@ class Manager_model extends MY_Model
             if($check_mobile_)
                 return $this->fun_fail('手机号码已被占用');
             $data['add_time'] = time();
+            $title_ = 'KS';
+            $data['invite_code'] = $title_ . sprintf('%04s', $this->get_sys_num_auto($title_));
             $this->db->insert('members', $data);
 
         }
