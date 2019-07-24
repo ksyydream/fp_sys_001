@@ -448,7 +448,28 @@ class Manager extends MY_Controller {
 
     /**
      *********************************************************************************************
-     * 以下代码为赎楼模块
+     * 以下代码为系统记录模块
+     *********************************************************************************************
+     */
+
+    /**
+     * 短信日志列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-23
+     */
+    public function sms_list($page = 1){
+        $data = $this->manager_model->sms_list($page, 1);
+        $base_url = "/manager/sms_list/";
+        $pager = $this->pagination->getPageLink4manager($base_url, $data['total_rows'], $data['limit']);
+        $this->assign('pager', $pager);
+        $this->assign('page', $page);
+        $this->assign('data', $data);
+        $this->display('manager/log_list/sms_list.html');
+    }
+
+    /**
+     *********************************************************************************************
+     * 以下代码为金融业务模块
      *********************************************************************************************
      */
 
