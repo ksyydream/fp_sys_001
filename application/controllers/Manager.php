@@ -395,7 +395,7 @@ class Manager extends MY_Controller {
     }
 
     /**
-     * 会员列表
+     * 微信管理员列表
      * @author yangyang <yang.yang@thmarket.cn>
      * @date 2019-07-22
      */
@@ -408,6 +408,18 @@ class Manager extends MY_Controller {
         $this->assign('data', $data);
         $this->display('manager/members/index.html');
     }
+
+    /**
+     * 微信管理员新增页面
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2018-04-18
+     */
+    public function members_add(){
+        $data = $this->manager_model->members_work_add();
+        $this->assign('data', $data);
+        $this->display('manager/members/members_add.html');
+    }
+
     /**
      *********************************************************************************************
      * 以下代码为赎楼模块

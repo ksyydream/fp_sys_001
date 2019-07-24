@@ -663,9 +663,14 @@ class Manager_model extends MY_Model
             $this->db->where('m.parent_id', $data['ml2_id']);
         }
         $this->db->limit($data['limit'], $offset = ($page - 1) * $data['limit']);
-        $this->db->order_by('m.add_time', 'desc');
+        $this->db->order_by('m.level', 'asc')->order_by('m.add_time', 'desc');
         $data['res_list'] = $this->db->get()->result_array();
         $data['m_level_2'] = $this->db->select('')->from('members')->where(array('level' => 2))->get()->result_array();
+        return $data;
+    }
+
+    public function members_work_add(){
+        $data['m_level_2'] = $this->db->select('')->from('members')->where(array('level' => 2, 'status' => 1))->get()->result_array();
         return $data;
     }
 
