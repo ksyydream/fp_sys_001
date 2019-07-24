@@ -679,6 +679,27 @@ class Manager_model extends MY_Model
         return $data;
     }
 
+    //组员改变所属总监
+    public function members_m_change() {
+        $parent_id = $this->input->post('sel_member_id');
+        $m_id = $this->input->post('m_id');
+        if(!$parent_id){
+            return $this->fun_fail('请选择新总监!');
+        }
+        $check_ = $this->db->select()->from('members')->where(array('m_id' => $parent_id, 'status' => 1))->where_in('level', array(2))->get()->row();
+        if(!$check_){
+            return $this->fun_fail('所选新总监,不规范!');
+        }
+        if(!$m_id){
+            return $this->fun_fail('请选择组员!');
+        }
+        $m_info_ = $this->db->select()->from('members')->where('m_id', $m_id)->get()->row_array();
+        if($m_info_['level'] != 3)
+            return $this->fun_fail('所选择组员,职务发生改变!');
+        $this->db->where(array('m_id' => $m_id))->update('members', array('parent_id' => $parent_id));
+        return $this->fun_success('操作成功!');
+    }
+
     /**
      * 微信管理员保存页面
      * @author yangyang <yang.yang@thmarket.cn>

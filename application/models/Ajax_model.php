@@ -35,4 +35,21 @@ class Ajax_model extends MY_Model
         $user_info = $this->db->get()->row_array();
         return $user_info;
     }
+
+    public function show_level2_list4members(){
+        $this->db->select()->from('members');
+        $this->db->where_in('level', array(2));
+        $this->db->where(array('status' => 1));
+        $data = $this->db->get()->result_array();
+        return $data;
+    }
+
+    public function get_members_info($m_id){
+        $this->db->select('m.*, m1.rel_name m1_rel_name_, m1.mobile m1_mobile_');
+        $this->db->from('members m');
+        $this->db->join('members m1', 'm1.m_id = m.parent_id', 'left');
+        $this->db->where(array('m.m_id' => $m_id));
+        $user_info = $this->db->get()->row_array();
+        return $user_info;
+    }
 }

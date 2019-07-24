@@ -440,6 +440,12 @@ class Manager extends MY_Controller {
         $this->ajaxReturn($res);
     }
 
+    //组员改变所属总监
+    public function members_m_change() {
+        $rs = $this->manager_model->members_m_change();
+        $this->ajaxReturn($rs);
+    }
+
     /**
      *********************************************************************************************
      * 以下代码为赎楼模块
