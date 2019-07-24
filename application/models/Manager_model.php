@@ -869,7 +869,7 @@ class Manager_model extends MY_Model
         $data['total_rows'] = $total_rows;
 
         //list
-        $this->db->select('f.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
+        $this->db->select('f.*, us.rel_name us_rel_name_, us.mobile us_mobile_, m.rel_name m_rel_name_, m.mobile m_mobile_');
         $this->db->from('foreclosure f');
         $this->db->join('members m', 'm.m_id = f.m_id', 'left');
         $this->db->join('users us', 'us.user_id = f.user_id', 'left');
@@ -903,7 +903,7 @@ class Manager_model extends MY_Model
      * @date 2019-07-22
      */
     public function foreclosure_detail($id){
-        $this->db->select('f.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
+        $this->db->select('f.*, us.rel_name us_rel_name_, us.mobile us_mobile_, m.rel_name m_rel_name_, m.mobile m_mobile_');
         $this->db->from('foreclosure f');
         $this->db->join('members m', 'm.m_id = f.m_id', 'left');
         $this->db->join('users us', 'us.user_id = f.user_id', 'left');
