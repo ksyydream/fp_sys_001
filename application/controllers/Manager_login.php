@@ -139,11 +139,25 @@ class Manager_login extends MY_Controller {
         echo json_encode($data);
     }
 
+    //微信会员-门店/直客列表-选择所属管理员时的弹窗
     public function show_members_list4users($user_id, $status = null){
         $data = $this->ajax_model->show_members_list4users($status);
         $user_info = $this->ajax_model->get_users_info($user_id);
         $this->assign('data', $data);
         $this->assign('user_info', $user_info);
         $this->display('manager/users/show_members_list4users.html');
+    }
+
+    //微信会员-管理员列表-选择所属新总监时的弹窗
+    public function show_level2_list4members($m_id){
+        $data = $this->ajax_model->show_level2_list4members();
+        $m_info = $this->ajax_model->get_members_info($m_id);
+        if($m_info['level'] != 3){
+            echo '此微信管理员账号不可划分总监!';
+            exit();
+        }
+        $this->assign('data', $data);
+        $this->assign('m_info', $m_info);
+        $this->display('manager/members/show_level2_list4members.html');
     }
 }

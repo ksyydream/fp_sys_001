@@ -670,8 +670,34 @@ class Manager_model extends MY_Model
     }
 
     public function members_work_add(){
-        $data['m_level_2'] = $this->db->select('')->from('members')->where(array('level' => 2, 'status' => 1))->get()->result_array();
+        $data = $this->db->select('')->from('members')->where(array('level' => 2, 'status' => 1))->get()->result_array();
         return $data;
+    }
+
+    public function members_edit($m_id){
+        $data = $this->db->select()->from('members')->where('m_id', $m_id)->get()->row_array();
+        return $data;
+    }
+
+    //组员改变所属总监
+    public function members_m_change() {
+        $parent_id = $this->input->post('sel_member_id');
+        $m_id = $this->input->post('m_id');
+        if(!$parent_id){
+            return $this->fun_fail('请选择新总监!');
+        }
+        $check_ = $this->db->select()->from('members')->where(array('m_id' => $parent_id, 'status' => 1))->where_in('level', array(2))->get()->row();
+        if(!$check_){
+            return $this->fun_fail('所选新总监,不规范!');
+        }
+        if(!$m_id){
+            return $this->fun_fail('请选择组员!');
+        }
+        $m_info_ = $this->db->select()->from('members')->where('m_id', $m_id)->get()->row_array();
+        if($m_info_['level'] != 3)
+            return $this->fun_fail('所选择组员,职务发生改变!');
+        $this->db->where(array('m_id' => $m_id))->update('members', array('parent_id' => $parent_id));
+        return $this->fun_success('操作成功!');
     }
 
     /**
@@ -681,6 +707,7 @@ class Manager_model extends MY_Model
      */
     public function members_save(){
         $data = array(
+            'parent_id' => -1, //默认-1
             'level' => $this->input->post('level'),
             'mobile' => $this->input->post('mobile'),
             'status' => $this->input->post('status') ? $this->input->post('status') : -1,
@@ -708,6 +735,7 @@ class Manager_model extends MY_Model
                 return $this->fun_fail('所选总监,已不可选择!');
             }
         }
+
         $m_id = $this->input->post('m_id');
         if($m_id){
             $m_info_ = $this->db->select()->from('members')->where(array('m_id' => $m_id))->get()->row_array();
