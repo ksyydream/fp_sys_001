@@ -147,14 +147,23 @@
                     html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
                     html += '</div>';
                     $("#add_div").before(html);
+                    getCloseBtn();
                     if(localIds.length > 0){
                         syncUpload(localIds);
                     }
+
                 }
             });
         };
     })
-
+    function getCloseBtn () {
+        $(".close_btn").each(function () {
+            var x = $(this).parent(".upid").find(".upload_img").width(),
+                y = $(this).parent(".upid").find(".upload_img").height();
+            var cssRight = (($(".upid ").width() - x) / 2 - 5) + "px";
+            $(this).css("right", cssRight);
+        })
+    }
     $("#save_btn").click(function(){
         var index = layer.load(1, {
             time: 4*1000,
