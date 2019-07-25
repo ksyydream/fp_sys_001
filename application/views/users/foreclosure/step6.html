@@ -163,6 +163,7 @@
 
     $("#save_btn").click(function(){
         var index = layer.load(1, {
+            time: 4*1000,
             shade: [0.1,'#fff'] //0.1透明度的白色背景
         });
         var img_length = $("#save_form .DBY_img_div").length;
