@@ -960,7 +960,7 @@ class Manager_model extends MY_Model
 
     //同盾数据详情
     public function tongdun_info_detail($id){
-        $this->db->select();
+        $this->db->select('ti.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
         $this->db->from('tongdun_info ti');
         $this->db->join('users us', 'ti.user_id = us.user_id', 'left');
         $this->db->where('id', $id);
