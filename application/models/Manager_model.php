@@ -957,6 +957,17 @@ class Manager_model extends MY_Model
         }
         return $data;
     }
+
+    //同盾数据详情
+    public function tongdun_info_detail($id){
+        $this->db->select();
+        $this->db->from('tongdun_info ti');
+        $this->db->join('users us', 'ti.user_id = us.user_id', 'left');
+        $this->db->where('id', $id);
+        $data = $this->db->get()->row_array();
+        return $data;
+    }
+
     /**
      *********************************************************************************************
      * 以下代码为金融业务模块
