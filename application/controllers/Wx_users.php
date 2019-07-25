@@ -245,6 +245,8 @@ class Wx_users extends Wx_controller {
             $f_id = $this->input->post('fc_id');
             $this->check_foreclosure_edit($f_id); //检查权限
             $res = $this->foreclosure_model->edit_foreclosure4s6();
+            if($res['status'] == 1)
+                $this->foreclosure_model->wx_f_sf($f_id);
             $this->ajaxReturn($res);
         }
         $this->check_foreclosure_edit($f_id); //检查权限
