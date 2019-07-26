@@ -336,8 +336,8 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-back-list{background: #fff; color:#333;border:1px solid #ccc;}
 .wid100 img{width: 100%;}
 
-.ind-btn{width: 80%; position: absolute; left:10%;top:13rem;}
-.min-btn{height: 6rem;}
+.ind-btn{width: 80%; position: absolute; left:10%;top:11rem;}
+.min-btn{height:3.5rem;}
 
 
 .login-page{padding:1.2rem 2rem .5rem;}.login-page1{padding:.5rem 1rem;}
