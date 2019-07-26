@@ -157,8 +157,8 @@
     })
     function getCloseBtn () {
         $(".close_btn").each(function(){
-            var x = $(this).parent(".upid").find(".upload_img").width(),
-                y = $(this).parent(".upid").find(".upload_img").height();
+            var x = $(this).parent(".DBY_img_div").find(".upload_img").width(),
+                y = $(this).parent(".DBY_img_div").find(".upload_img").height();
             var cssRight =(($(".upload_click ").width() -x)/2+15)+"px";
             $(this).css("right",cssRight);
         })
