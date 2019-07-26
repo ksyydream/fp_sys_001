@@ -66,9 +66,9 @@
       <div class="upid DBY_img_div">
         <a href="javascript:;" class="upload_click">
             {{if $f_info.borrower_img_SFZ|strip == ''}}
-            <img src="{{$img_url_DBY}}/assets/i/id_upload.png" alt="">
+            <img src="{{$img_url_DBY}}/assets/i/id_upload.png" alt="" class="add_pic">
             {{else}}
-            <img src="{{$img_url_DBY}}/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_img_SFZ|default:''}}" alt="">
+            <img src="{{$img_url_DBY}}/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_img_SFZ|default:''}}" alt="" class="upload_img">
             {{/if}}
         </a>
       </div>

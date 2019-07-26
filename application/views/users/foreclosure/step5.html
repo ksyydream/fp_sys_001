@@ -66,7 +66,7 @@
         </div>
         {{foreach from=$property_img_list item=item}}
         <div class="upid DBY_img_div">
-            <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt=""></a>
+            <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt="" class="upload_img"></a>
             <a href="javascript:void(0)" class="close_btn"></a>
             <input value="{{$item.file_name}}" type="hidden" name="old_img[]">
         </div>
@@ -74,7 +74,7 @@
 
 
         <div id="add_div" class="upid add">
-            <a href="javascript:void(0)" id="add_img" class="upload_click"><img src="/assets/i/add_upload.png" alt=""></a>
+            <a href="javascript:void(0)" id="add_img" class="upload_click"><img src="/assets/i/add_upload.png" alt="" class="add_pic"></a>
         </div>
 
         <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
@@ -142,11 +142,12 @@
                     var serverId = res.serverId; // 返回图片的服务器端ID
                     var html = '';
                     html += '<div class="upid DBY_img_div">';
-                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt=""></a>';
+                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"></a>';
                     html += '<a href="javascript:void(0)" class="close_btn"></a>';
                     html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
                     html += '</div>';
                     $("#add_div").before(html);
+                    getCloseBtn();
                     if(localIds.length > 0){
                         syncUpload(localIds);
                     }
@@ -154,7 +155,14 @@
             });
         };
     })
-
+    function getCloseBtn () {
+        $(".close_btn").each(function(){
+            var x = $(this).parent(".upid").find(".upload_img").width(),
+                y = $(this).parent(".upid").find(".upload_img").height();
+            var cssRight =(($(".upload_click ").width() -x)/2+15)+"px";
+            $(this).css("right",cssRight);
+        })
+    }
     $("#save_btn").click(function(){
         var index = layer.load(1, {
             time: 4*1000,

@@ -66,13 +66,13 @@
    </div>
       {{foreach from=$credit_img_list item=item}}
       <div class="upid DBY_img_div">
-          <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt=""></a>
+          <a href="javascript:void(0)" class="upload_click"><img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$item.file_name}}" alt="" class="upload_img"></a>
           <a href="javascript:void(0)" class="close_btn"></a>
           <input value="{{$item.file_name}}" type="hidden" name="old_img[]">
       </div>
       {{/foreach}}
       <div class="upid" id="add_div">
-        <a href="javascript:void(0)" id="add_img" class="upload_click"><img src="/assets/i/add_upload.png" alt=""></a>
+        <a href="javascript:void(0)" id="add_img" class="upload_click"><img src="/assets/i/add_upload.png" alt="" class="add_pic"></a>
       </div>
 
        <a class="am-btn am-btn-register" id="save_btn" href="javascript:">保 存</a>
@@ -85,6 +85,17 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
+    $(function(){
+        getCloseBtn();
+    })
+    function getCloseBtn(){
+        $(".close_btn").each(function(){
+            var x = $(this).parent(".upid").find(".upload_img").width(),
+                y = $(this).parent(".upid").find(".upload_img").height();
+            var cssRight =(($(".upload_click ").width() -x)/2+15)+"px";
+            $(this).css("right",cssRight);
+        })
+    }
     $("#save_form").on("click",".close_btn",function(){
         var that = $(this);
         layer.confirm('是否确认删除？', {
@@ -138,11 +149,12 @@
                     var serverId = res.serverId; // 返回图片的服务器端ID
                     var html = '';
                     html += '<div class="upid DBY_img_div">';
-                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt=""></a>';
+                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"></a>';
                     html += '<a href="javascript:void(0)" class="close_btn"></a>';
                     html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
                     html += '</div>';
                     $("#add_div").before(html);
+                    getCloseBtn();
                     if(localIds.length > 0){
                         syncUpload(localIds);
                     }

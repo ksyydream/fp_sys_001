@@ -67,9 +67,9 @@
       <div class="upid">
         <a href="javascript:;" class="upload_click">
             {{if $f_info.borrower_img_SFZ|strip == ''}}
-            <img src="/assets/i/id_upload.png" alt="">
+            <img src="/assets/i/id_upload.png" alt="" class="add_pic">
             {{else}}
-            <img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_img_SFZ|default:''}}" alt="">
+            <img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_img_SFZ|default:''}}" alt="" class="upload_img">
             {{/if}}
         </a>
           <input type="hidden" value="" id="borrower_img_SFZ" name="borrower_img_SFZ">
@@ -147,7 +147,7 @@
                 isShowProgressTips: 1,
                 success: function (res) {
                     var serverId = res.serverId; // 返回图片的服务器端ID
-                    html = '<img src="' + localId + '" alt="">'
+                    html = '<img src="' + localId + '" alt="" class="upload_img">'
                     //html = "<img style='width: 14.8rem;height: 14.8rem' src='"+localId+"' alt='' class='upload-has-pic'>";
                     //html +="<em onclick='del_pic(this);' class='am-f-close'></em>"
                     my_.html(html);
@@ -156,7 +156,14 @@
             });
         };
     })
-
+    function getCloseBtn(){
+        $(".close_btn").each(function(){
+            var x = $(this).parent(".upid").find(".upload_img").width(),
+                y = $(this).parent(".upid").find(".upload_img").height();
+            var cssRight =(($(".upload_click ").width() -x)/2+15)+"px";
+            $(this).css("right",cssRight);
+        })
+    }
     $("#save_btn").click(function(){
         var index = layer.load(1, {
             time: 4*1000,
