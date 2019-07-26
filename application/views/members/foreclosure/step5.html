@@ -87,17 +87,29 @@
 <script src="/assets/js/animateBackground-plugin.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
+
     $(function(){
         getCloseBtn();
     })
-  function getCloseBtn(){
-      $(".close_btn").each(function(){
-          var x = $(this).parent(".upid").find(".upload_img").width(),
-              y = $(this).parent(".upid").find(".upload_img").height();
-          var cssRight =(($(".upload_click ").width() -x)/2+15)+"px";
-          $(this).css("right",cssRight);
-      })
-  }
+
+    function getCloseBtn(){
+        $('.upload_img').each(function(){
+            var _this =$(this);
+            _this.bind('load',function(){
+            }).bind('error',function(){
+                //图片加载错误，加入错误处理
+            })
+            if(this.complete) setTimeout(function(){
+                var closeHtml = '<a href="javascript:void(0)" class="close_btn"></a>';
+                _this.parent().parent(".upid").append(closeHtml);
+                var cssRight =(($(".upid ").width()-_this.width())/2-5)+"px"
+                _this.parents(".upid").find(".close_btn").css("right",cssRight);
+            },100);
+        })
+
+    }
+
+
     $("#save_form").on("click",".close_btn",function(){
         var that = $(this);
         layer.confirm('是否确认删除？', {

@@ -385,7 +385,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .upid{padding:.8rem 0; background: #fff; height: 100%; text-align: center; position: relative;}
 .upid1{width: 50%; float: left;}
-.upload_click{ width:88%;height:10rem; display: inline-block; overflow: hidden}.upload_click .upload_img{height: 100%;}   #add_img img{height: auto; width: 100%;}
+.upload_click{ width:88%;height:10rem; display: inline-block; overflow: hidden;}.upload_click .upload_img{height: 100%;}   #add_img img{height: auto; width: 100%;}
 .upload_click1{width:90%; }.upload_click .add_pic{width: 100%;}
 
 .am-form-slides {height: 2.5rem;padding:.5rem 0; background: #fff;box-shadow: 10px 10px 30px 20px #eee;margin-bottom: .5rem;}
