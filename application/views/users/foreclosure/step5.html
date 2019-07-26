@@ -144,8 +144,7 @@
                     var serverId = res.serverId; // 返回图片的服务器端ID
                     var html = '';
                     html += '<div class="upid DBY_img_div">';
-                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"></a>';
-                    html += '<a href="javascript:void(0)" class="close_btn"></a>';
+                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"><i class="close_btn"></i></a>';
                     html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
                     html += '</div>';
                     $("#add_div").before(html);
@@ -156,7 +155,6 @@
             });
         };
     })
-
     $("#save_btn").click(function(){
         var index = layer.load(1, {
             time: 4*1000,
