@@ -70,8 +70,10 @@
             <img src="/assets/i/id_upload.png" alt="" class="add_pic">
             {{else}}
             <img src="/upload_files/foreclosure/{{$f_info.work_no}}/{{$f_info.borrower_img_SFZ|default:''}}" alt="" class="upload_img">
+            <i class="close_btn"></i>
             {{/if}}
         </a>
+
           <input type="hidden" value="" id="borrower_img_SFZ" name="borrower_img_SFZ">
       </div>
       {{if $f_info.borrower_marriage == 1}}
@@ -122,8 +124,6 @@
         }
     });
     wx.ready(function () {
-
-
         $(".upload_click").click(function(){
             var my = $(this);
             var input_h = $(this).next();
@@ -156,14 +156,7 @@
             });
         };
     })
-    function getCloseBtn(){
-        $(".close_btn").each(function(){
-            var x = $(this).parent(".upid").find(".upload_img").width(),
-                y = $(this).parent(".upid").find(".upload_img").height();
-            var cssRight =(($(".upload_click ").width() -x)/2+15)+"px";
-            $(this).css("right",cssRight);
-        })
-    }
+
     $("#save_btn").click(function(){
         var index = layer.load(1, {
             time: 4*1000,
