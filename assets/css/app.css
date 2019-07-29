@@ -429,7 +429,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-btn-pass-on:before{background: url(../../assets/i/v_icon1.jpg) no-repeat;background-size: 100% 100%;}
 .am-btn-nopass-on{color: #e15616!important;border:1px solid #e15616;}
 .am-btn-nopass-on:before{background: url(../../assets/i/v_icon6.jpg) no-repeat;background-size: 100% 100%;}
-.close_btn{position: absolute; right:0;top:0; width:24px; height:24px;background: url(../../assets/i/delete.png) no-repeat;background-size: 100% 100%; top:8px; right:12px;}
+.close_btn{position: absolute; right:0;top:0; width:26px; height:26px;background: url(../../assets/i/delete.png) no-repeat;background-size: 100% 100%; top:8px; right:12px;}
 
 .up-zx{overflow: hidden;zoom:1;}
 .submit_ok{ width:20%;margin-left:40%;}.submit_ok img{width: 100%;}
