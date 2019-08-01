@@ -1025,7 +1025,7 @@ class Manager_model extends MY_Model
         $this->db->from('foreclosure f');
         $this->db->join('members m', 'm.m_id = f.m_id', 'left');
         $this->db->join('users us', 'us.user_id = f.user_id', 'left');
-        $this->db->where_in('f.status', array(2, 3, 4)); //后台只显示待审核,审核通过,终审通过
+        $this->db->where_in('f.status', array(2, 3, 4, -3)); //后台只显示待审核,审核通过,终审通过
         if ($data['work_no']) {
             $this->db->like('f.work_no', $data['work_no']);
         }
