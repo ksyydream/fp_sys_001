@@ -86,6 +86,7 @@ class Wx_service extends CI_controller {
             case "SCAN":
                 $content = "欢迎关注房猫微店公众账号!";
                 $invite_code = $object->EventKey;
+                $content .= $invite_code;
                 if(!$invite_code){
                     $member_info = $this->wx_index_model->getMemberByInvite($invite_code);
                     if($member_info){
