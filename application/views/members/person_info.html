@@ -63,9 +63,11 @@
    <div class="am-form am-form-horizontal">
     <div class="info-pic">
       <div class="info-pic-inner">
-        <div class="weixin-pic"><img src="/assets/i/touxiang.png"></div>
+        <div class="weixin-pic"><img {{if !empty($data.pic) }} src="/upload_files/head/{{$data.pic}}"{{else}}src="/assets/i/touxiang.png"{{/if}}></div>
         <span class="weixin-nick">{{$m_info.rel_name}}</span>
+          {{if $m_info.level == 2 || $m_info.level == 3}}
         <span class="weixin-adress">{{$m_info.invite_code}}</span>
+          {{/if}}
       </div>
     </div>
     <div class="am-fast-estimate am-fast-estimate1">
