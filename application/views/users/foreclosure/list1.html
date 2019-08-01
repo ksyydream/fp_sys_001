@@ -69,7 +69,7 @@
         <li {{if $status_type == 1}}class="current"{{/if}}><a href="/wx_users/foreclosure_list/1">草稿</a></li>
       </ul>
   <div class="am-flow3">
-  <div id="is_end" class="nodata"><div class="wid100"><img src="/assets/i/list_bg.png" alt=""></div></div>
+  <div id="is_end" style="display: none;" class="nodata"><div class="wid100"><img src="/assets/i/list_bg.png" alt=""></div></div>
   </div>
 </form>
 
@@ -114,7 +114,12 @@
         $.post("/wx_users/foreclosure_list_load",{page:page,status_type:status_type},function(data){
             if(data){
                 $("#is_end").before(data)
-                window.page += 1
+                window.page += 1;
+                var is_finish_ = $(data).find('is_finish').attr('data_value');
+                if(is_finish_ == 1){
+                    $("#is_end").show()
+                    window.is_end = true
+                }
                 $('#my-modal-loading').modal('close');
             }else{
                 $("#is_end").show()

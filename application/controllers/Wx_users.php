@@ -266,7 +266,8 @@ class Wx_users extends Wx_controller {
 
     public function foreclosure_list_load(){
         $res = $this->foreclosure_model->get_list4users();
-        $this->assign('list', $res);
+        $this->assign('list', $res['list']);
+        $this->assign('is_finish', $res['is_finish']);
         $this->display('users/foreclosure/list_data_load.html');
     }
 

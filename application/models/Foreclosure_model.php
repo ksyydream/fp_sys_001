@@ -587,7 +587,11 @@ class Foreclosure_model extends MY_Model
                 $res[$k_]['show_msg'] = '<span>剩余天数：</span>' . $day_ . '天' . $hours . '小时';
             }
         }
-        return $res;
+        $data['list'] = $res;
+        $data['is_finish'] = -1;
+        if(count($res) < $limit_)
+            $data['is_finish'] = 1;
+        return $data;
     }
 
     //获取赎楼列表信息 members专用
