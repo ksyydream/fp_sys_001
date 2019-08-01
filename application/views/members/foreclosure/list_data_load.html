@@ -17,6 +17,7 @@
                 {{if $item.status == 4}}<span class="s-status passok">终审通过</span>{{/if}}
                 {{if $item.status == -1}}<span class="s-status unpass">同盾未通过</span>{{/if}}
                 {{if $item.status == -2}}<span class="s-status unpass">审核未通过</span>{{/if}}
+                {{if $item.status == -3}}<span class="s-status unpass">终审未通过</span>{{/if}}
                 {{if $item.is_special == 1}}<span class="s-status greenspec"><i class="greenchannel"></i>绿色通道</span>{{/if}}
             </div>
         </div>

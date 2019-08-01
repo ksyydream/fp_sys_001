@@ -624,14 +624,14 @@ class Foreclosure_model extends MY_Model
                 break;
             case 3:
                 //审核通过
-                $this->db->where_in('fc.status', array(3, 4));
+                $this->db->where_in('fc.status', array(3, 4, -3));
                 break;
             case -1:
                 //审核失败 ,包括同盾审核失败 和 总监审核失败
                 $this->db->where_in('fc.status', array(-1, -2));
                 break;
             default:
-                $this->db->where_in('fc.status', array(2, 3, 4, -1, -2));
+                $this->db->where_in('fc.status', array(2, 3, 4, -1, -2, -3));
         }
         $this->db->limit($limit_, ($page - 1) * $limit_ );
         $res = $this->db->order_by('fc.submit_time', 'desc')->get()->result_array();
