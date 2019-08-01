@@ -115,7 +115,7 @@
             if(data){
                 $("#is_end").before(data)
                 window.page += 1;
-                var is_finish_ = $('#is_end').prev().arrt('data_value');
+                var is_finish_ = $('#is_end').prev().attr('data_value');
                 if(is_finish_ == 1){
                     $("#is_end").show()
                     window.is_end = true
