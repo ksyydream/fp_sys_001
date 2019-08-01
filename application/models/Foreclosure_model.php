@@ -561,14 +561,15 @@ class Foreclosure_model extends MY_Model
                 break;
             case 3:
                 //审核通过
-                $this->db->where_in('status', array(3, 4));
+                //终审失败 在门店账号处还是现实已通过
+                $this->db->where_in('status', array(3, 4, -3));
                 break;
             case -1:
                 //审核失败 ,包括同盾审核失败 和 总监审核失败
                 $this->db->where_in('status', array(-1, -2));
                 break;
             default:
-                $this->db->where_in('status', array(1, 2, 3, 4, -1, -2));
+                $this->db->where_in('status', array(1, 2, 3, 4, -1, -2, -3));
         }
         $this->db->limit($limit_, ($page - 1) * $limit_ );
         $res = $this->db->order_by('add_time', 'desc')->get()->result_array();
