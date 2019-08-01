@@ -332,4 +332,9 @@ class Wx_members extends Wx_controller {
         $res = $this->foreclosure_model->foreclosure_finish($this->m_info);
         $this->ajaxReturn($res);
     }
+
+    public function foreclosure_err_finish(){
+        $res = $this->foreclosure_model->foreclosure_err_finish($this->m_info);
+        $this->ajaxReturn($res);
+    }
 }

@@ -78,7 +78,7 @@
       {{/if}}
       {{if $f_info.status == 3 && $m_info.level == 1}}
       <a class="am-btn am-btn-register" id="finish_btn" href="javascript:">终审通过</a>
-      <a class="am-btn am-btn-register am-back-list" href="/wx_members/foreclosure_list">终审不通过</a>
+      <a class="am-btn am-btn-register am-back-list" id="err_btn" href="javascript:">终审不通过</a>
 
       {{/if}}
       {{if $f_info.status == -1 && $m_info.level == 2}}
@@ -163,7 +163,7 @@
     })
 
     $("#finish_btn").click(function(){
-        layer.confirm('是否确认终审？', {
+        layer.confirm('是否确认终审通过？', {
             btn: ['确认','取消']
         }, function(){
             var form = document.getElementById('save_form');
@@ -172,6 +172,41 @@
             $.ajax({
                 type : "POST",
                 url : "/wx_members/foreclosure_finish",
+                data : formdata,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success : function(data) {
+                    var return_ = JSON.parse(data)
+                    if(return_.status == 1){
+                        var url = '/wx_members/foreclosure_list' ;
+                        window.location.replace(url);
+                    }else{
+                        layer.msg(return_.msg);
+                    }
+                },
+                error:function(){
+                    layer.msg('网络异常!');
+                }
+            });
+        }, function(){
+            layer.closeAll();
+        });
+
+    })
+
+    $("#err_btn").click(function(){
+        layer.confirm('是否确认终审失败？', {
+            btn: ['确认','取消'],
+            icon: 2
+        }, function(){
+            var form = document.getElementById('save_form');
+
+            var formdata = new FormData(form);
+            $.ajax({
+                type : "POST",
+                url : "/wx_members/foreclosure_err_finish",
                 data : formdata,
                 async: false,
                 cache: false,
