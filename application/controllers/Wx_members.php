@@ -60,8 +60,8 @@ class Wx_members extends Wx_controller {
 
     public function foreclosure_list_load(){
         $res = $this->foreclosure_model->get_list4members();
-        //die(var_dump($res));
-        $this->assign('list', $res);
+        $this->assign('list', $res['list']);
+        $this->assign('is_finish', $res['is_finish']);
         $this->display('members/foreclosure/list_data_load.html');
     }
 
