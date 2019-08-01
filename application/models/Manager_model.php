@@ -884,6 +884,90 @@ class Manager_model extends MY_Model
         $data['res_list'] = $this->db->get()->result_array();
         return $data;
     }
+
+    /**
+     * 同盾数据列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-25
+     */
+    public function tongdun_info_list($page = 1){
+        $data['limit'] = $this->limit;//每页显示多少调数据
+        $data['keyword'] = trim($this->input->get('keyword')) ? trim($this->input->get('keyword')) : null;
+        $data['keyword2'] = trim($this->input->get('keyword2')) ? trim($this->input->get('keyword2')) : null;
+        $data['s_date'] = trim($this->input->get('s_date')) ? trim($this->input->get('s_date')) : '';
+        $data['e_date'] = trim($this->input->get('e_date')) ? trim($this->input->get('e_date')) : '';
+
+        $this->db->select('count(1) num');
+        $this->db->from('tongdun_info ti');
+        $this->db->join('users us', 'ti.user_id = us.user_id', 'left');
+        if ($data['keyword']) {
+            $this->db->group_start();
+            $this->db->like('ti.account_name', $data['keyword']);
+            $this->db->or_like('ti.id_number', $data['keyword']);
+            $this->db->group_end();
+        }
+        if ($data['keyword2']) {
+            $this->db->group_start();
+            $this->db->like('us.rel_name', $data['keyword2']);
+            $this->db->or_like('us.mobile', $data['keyword2']);
+            $this->db->group_end();
+        }
+        if ($data['s_date']) {
+            $this->db->where('ti.add_time >=', strtotime($data['s_date'] . " 00:00:00"));
+        }
+        if ($data['e_date']) {
+            $this->db->where('ti.add_time <=', strtotime($data['e_date'] . " 23:59:59"));
+        }
+        $rs_total = $this->db->get()->row();
+        //总记录数
+        $total_rows = $rs_total->num;
+        $data['total_rows'] = $total_rows;
+        //list
+        $this->db->select('ti.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
+        $this->db->from('tongdun_info ti');
+        $this->db->join('users us', 'ti.user_id = us.user_id', 'left');
+        if ($data['keyword']) {
+            $this->db->group_start();
+            $this->db->like('ti.account_name', $data['keyword']);
+            $this->db->or_like('ti.id_number', $data['keyword']);
+            $this->db->group_end();
+        }
+        if ($data['keyword2']) {
+            $this->db->group_start();
+            $this->db->like('us.rel_name', $data['keyword2']);
+            $this->db->or_like('us.mobile', $data['keyword2']);
+            $this->db->group_end();
+        }
+        if ($data['s_date']) {
+            $this->db->where('ti.add_time >=', strtotime($data['s_date'] . " 00:00:00"));
+        }
+        if ($data['e_date']) {
+            $this->db->where('ti.add_time <=', strtotime($data['e_date'] . " 23:59:59"));
+        }
+        $this->db->limit($data['limit'], $offset = ($page - 1) * $data['limit']);
+        $this->db->order_by('ti.add_time', 'desc');
+        $data['res_list'] = $this->db->get()->result_array();
+        $td_deadline_ = $this->config->item('td_deadline'); //缓存数据使用限期,这里是秒为单位的
+        foreach($data['res_list'] as $k_ => $item){
+            if($item['add_time'] + $td_deadline_ < time()){
+                $data['res_list'][$k_]['gq_flag'] = 1;   //过期标记位
+            }else{
+                $data['res_list'][$k_]['gq_flag'] = -1;  //过期标记位
+            }
+        }
+        return $data;
+    }
+
+    //同盾数据详情
+    public function tongdun_info_detail($id){
+        $this->db->select('ti.*, us.rel_name us_rel_name_, us.mobile us_mobile_');
+        $this->db->from('tongdun_info ti');
+        $this->db->join('users us', 'ti.user_id = us.user_id', 'left');
+        $this->db->where('id', $id);
+        $data = $this->db->get()->row_array();
+        return $data;
+    }
+
     /**
      *********************************************************************************************
      * 以下代码为金融业务模块

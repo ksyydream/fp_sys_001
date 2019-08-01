@@ -483,6 +483,30 @@ class Manager extends MY_Controller {
     }
 
     /**
+     * 同盾数据列表
+     * @author yangyang <yang.yang@thmarket.cn>
+     * @date 2019-07-23
+     */
+    public function tongdun_info_list($page = 1){
+        $data = $this->manager_model->tongdun_info_list($page, 1);
+        $base_url = "/manager/tongdun_info_list/";
+        $pager = $this->pagination->getPageLink4manager($base_url, $data['total_rows'], $data['limit']);
+        $this->assign('pager', $pager);
+        $this->assign('page', $page);
+        $this->assign('data', $data);
+        $this->display('manager/log_list/tongdun_info_list.html');
+    }
+
+    public function tongdun_info_detail($id){
+        $data = $this->manager_model->tongdun_info_detail($id);
+        if(!$data){
+            $this->show_message('未找到同盾信息!');
+        }
+        $this->assign('data', $data);
+        $this->display('manager/log_list/tongdun_info_detail.html');
+    }
+
+    /**
      *********************************************************************************************
      * 以下代码为金融业务模块
      *********************************************************************************************
