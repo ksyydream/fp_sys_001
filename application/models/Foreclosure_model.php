@@ -741,6 +741,7 @@ class Foreclosure_model extends MY_Model
                 )
             );
             $this->wxpost4user($this->config->item('WX_YY'), $data_msg, $f_info['user_id'], $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . $f_id);
+            $this->wxpost4user($this->config->item('WX_YY'), $data_msg, $f_info['m_id'], $this->config->item('img_url_DBY') . '/wx_members/foreclosure_detail7/' . $f_id);
         }
         return $this->fun_success('审核成功', array('foreclosure_id' => $f_id));
     }
