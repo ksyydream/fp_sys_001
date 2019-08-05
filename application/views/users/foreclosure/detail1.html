@@ -213,7 +213,6 @@
               </div>
           </div>
       </div>
-      {{if $f_info.bank_loan_type|default:0 == 2 || $f_info.bank_loan_type|default:0 == 3}}
       <p class="p-tit">老贷信息</p>
       <div class="am-fast-estimate">
           <div class="am-form-group">
@@ -234,7 +233,7 @@
                   <p class="am-spec-input">{{$f_info.deposit|default:'-'}}万</p>
               </div>
           </div>
-          {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+          {{if ($f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1) || $f_info.bank_loan_type == 1}}
           <div class="am-form-group">
               <label class="am-u-sm-6 am-form-label">首付是否进入还款</label>
               <div class="am-u-sm-6">
@@ -254,6 +253,7 @@
           {{/if}}
           {{/if}}
       </div>
+      {{if $f_info.bank_loan_type|default:0 == 2 || $f_info.bank_loan_type|default:0 == 3}}
       <p class="p-tit">按揭信息</p>
       <div class="am-fast-estimate">
           {{if $f_info.bank_loan_type|default:0 == 2 && $f_info.is_mortgage|default:0 == 1}}
