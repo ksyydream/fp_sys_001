@@ -89,7 +89,7 @@
        <i class="am-es-i">万</i>
       </div>
     </div>
-{{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+{{if ($f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1) || $f_info.bank_loan_type == 1}}
         <div class="am-form-group">
       <label class="am-u-sm-6 am-form-label">首付是否进入还款</label>
       <div class="am-u-sm-6 radio-input">
@@ -107,40 +107,43 @@
 
 {{/if}}
 </div>
- <p class="p-tit">按揭信息</p>
-      {{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
-      <div class="am-fast-estimate">
-          <div class="am-form-group">
-              <label class="am-u-sm-4 am-form-label">买家按揭银行</label>
-              <div class="am-u-sm-8">
-                  <input type="text" class="ip-txt" id="mortgage_bank" name="mortgage_bank" value="{{$f_info.mortgage_bank|default:''}}" placeholder="请输入按揭银行">
-              </div>
-          </div>
-          <div class="am-form-group">
-              <label class="am-u-sm-4 am-form-label">买家按揭金额</label>
-              <div class="am-u-sm-8">
-                  <input type="number" class="ip-txt ip-txt1" id="mortgage_money" name="mortgage_money" value="{{$f_info.mortgage_money|default:''}}" placeholder="请输入按揭金额">
-                  <i class="am-es-i">万</i>
-              </div>
-          </div>
-      </div>
-      {{else}}
-      <div class="am-fast-estimate">
-          <div class="am-form-group">
-              <label class="am-u-sm-5 am-form-label">买家预计按揭银行</label>
-              <div class="am-u-sm-7">
-                  <input type="text" class="ip-txt" id="expect_mortgage_bank" name="expect_mortgage_bank" value="{{$f_info.expect_mortgage_bank|default:''}}" placeholder="请输入预计按揭银行">
-              </div>
-          </div>
-          <div class="am-form-group">
-              <label class="am-u-sm-5 am-form-label">买家预计按揭金额</label>
-              <div class="am-u-sm-7">
-                  <input type="text" class="ip-txt ip-txt1 js4float1" id="expect_mortgage_money" name="expect_mortgage_money" value="{{$f_info.expect_mortgage_money|default:''}}" placeholder="请输入预计按揭金额">
-                  <i class="am-es-i">万</i>
-              </div>
-          </div>
-      </div>
-      {{/if}}
+{{if $f_info.bank_loan_type != 1}}
+<p class="p-tit">按揭信息</p>
+{{if $f_info.bank_loan_type == 2 && $f_info.is_mortgage == 1}}
+<div class="am-fast-estimate">
+    <div class="am-form-group">
+        <label class="am-u-sm-4 am-form-label">买家按揭银行</label>
+        <div class="am-u-sm-8">
+            <input type="text" class="ip-txt" id="mortgage_bank" name="mortgage_bank" value="{{$f_info.mortgage_bank|default:''}}" placeholder="请输入按揭银行">
+        </div>
+    </div>
+    <div class="am-form-group">
+        <label class="am-u-sm-4 am-form-label">买家按揭金额</label>
+        <div class="am-u-sm-8">
+            <input type="number" class="ip-txt ip-txt1" id="mortgage_money" name="mortgage_money" value="{{$f_info.mortgage_money|default:''}}" placeholder="请输入按揭金额">
+            <i class="am-es-i">万</i>
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="am-fast-estimate">
+    <div class="am-form-group">
+        <label class="am-u-sm-5 am-form-label">买家预计按揭银行</label>
+        <div class="am-u-sm-7">
+            <input type="text" class="ip-txt" id="expect_mortgage_bank" name="expect_mortgage_bank" value="{{$f_info.expect_mortgage_bank|default:''}}" placeholder="请输入预计按揭银行">
+        </div>
+    </div>
+    <div class="am-form-group">
+        <label class="am-u-sm-5 am-form-label">买家预计按揭金额</label>
+        <div class="am-u-sm-7">
+            <input type="text" class="ip-txt ip-txt1 js4float1" id="expect_mortgage_money" name="expect_mortgage_money" value="{{$f_info.expect_mortgage_money|default:''}}" placeholder="请输入预计按揭金额">
+            <i class="am-es-i">万</i>
+        </div>
+    </div>
+</div>
+{{/if}}
+{{/if}}
+
 
     <a class="am-btn am-btn-register" id="save_btn" href="javascript:">下一步</a>
   </form>
@@ -193,7 +196,8 @@
             layer.msg('请填写已付定金/首付');
             return false;
         }
-        if(bank_loan_type_ == 2 && is_mortgage_ == 1){
+        //当 贷款方式是 一次付款 或者 商业贷款已按揭时
+        if((bank_loan_type_ == 2 && is_mortgage_ == 1) || bank_loan_type_ == 1){
             var is_repayment = $("input[name='is_repayment']:checked").val();
             switch (is_repayment){
                 case '1':
@@ -210,18 +214,21 @@
                     layer.msg('请选择 首付是否进入还款');
                     return false;
             }
-            var mortgage_bank = $.trim($("#mortgage_bank").val());
-            var mortgage_money = $.trim($("#mortgage_money").val());
-            if(mortgage_bank == ''){
-                layer.close(index);
-                layer.msg('请完善买家按揭银行');
-                return false;
+            if(bank_loan_type_ == 2 && is_mortgage_ == 1){
+                var mortgage_bank = $.trim($("#mortgage_bank").val());
+                var mortgage_money = $.trim($("#mortgage_money").val());
+                if(mortgage_bank == ''){
+                    layer.close(index);
+                    layer.msg('请完善买家按揭银行');
+                    return false;
+                }
+                if(mortgage_money == '' || parseFloat(mortgage_money) == 0){
+                    layer.close(index);
+                    layer.msg('请完善买家按揭金额');
+                    return false;
+                }
             }
-            if(mortgage_money == '' || parseFloat(mortgage_money) == 0){
-                layer.close(index);
-                layer.msg('请完善买家按揭金额');
-                return false;
-            }
+
         }else{
             var expect_mortgage_bank = $.trim($("#expect_mortgage_bank").val());
             var expect_mortgage_money = $.trim($("#expect_mortgage_money").val());

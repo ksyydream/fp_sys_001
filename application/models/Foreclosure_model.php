@@ -213,9 +213,6 @@ class Foreclosure_model extends MY_Model
         $f_info_ = $this->get_foreclosure($fc_id);
         if(!$f_info_)
             return $this->fun_fail('工作单异常');
-        if($f_info_['bank_loan_type'] == 1){
-            return $this->fun_fail('一次性付款,不需要维护此页面,请退出后重新维护');
-        }
         $update_ = array(
             'old_loan_balance' => trim($this->input->post('old_loan_balance')),
             'old_loan_setup' => trim($this->input->post('old_loan_setup')),
@@ -240,7 +237,7 @@ class Foreclosure_model extends MY_Model
         if(!$update_['old_loan_balance'] || !$update_['old_loan_setup'] || !$update_['deposit'])
             return $this->fun_fail('信息不完善');
 
-        if($f_info_['bank_loan_type'] == 2 && $f_info_['is_mortgage'] == 1){
+        if(($f_info_['bank_loan_type'] == 2 && $f_info_['is_mortgage'] == 1) || $f_info_['bank_loan_type'] == 1){
             $update_['is_repayment'] = trim($this->input->post('is_repayment'));
             switch($update_['is_repayment']){
                 case 1:
@@ -254,14 +251,17 @@ class Foreclosure_model extends MY_Model
                 default:
                     return $this->fun_fail('请维护首付是否进入还款');
             }
-            $update_['mortgage_bank'] = trim($this->input->post('mortgage_bank'));
-            if(!$update_['mortgage_bank']){
-                return $this->fun_fail('请维护买家按揭银行!');
+            if($f_info_['bank_loan_type'] == 2 && $f_info_['is_mortgage'] == 1){
+                $update_['mortgage_bank'] = trim($this->input->post('mortgage_bank'));
+                if(!$update_['mortgage_bank']){
+                    return $this->fun_fail('请维护买家按揭银行!');
+                }
+                $update_['mortgage_money'] = trim($this->input->post('mortgage_money'));
+                if(!$update_['mortgage_money']){
+                    return $this->fun_fail('请维护买家按揭金额!');
+                }
             }
-            $update_['mortgage_money'] = trim($this->input->post('mortgage_money'));
-            if(!$update_['mortgage_money']){
-                return $this->fun_fail('请维护买家按揭金额!');
-            }
+
         }else{
             $update_['expect_mortgage_bank'] = trim($this->input->post('expect_mortgage_bank'));
             if(!$update_['expect_mortgage_bank']){
