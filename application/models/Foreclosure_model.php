@@ -623,12 +623,32 @@ class Foreclosure_model extends MY_Model
                 $this->db->where('fc.status', 2);
                 break;
             case 3:
-                //审核通过
-                $this->db->where_in('fc.status', array(3, 4, -3));
+                //审核通过 所有通过的
+                $this->db->where_in('fc.status', array(3, 4));
+                break;
+            case 4:
+                //总监通过
+                $this->db->where_in('fc.status', array(3));
+                break;
+            case 5:
+                //终审通过
+                $this->db->where_in('fc.status', array(4));
                 break;
             case -1:
                 //审核失败 ,包括同盾审核失败 和 总监审核失败
-                $this->db->where_in('fc.status', array(-1, -2));
+                $this->db->where_in('fc.status', array(-1, -2, -3));
+                break;
+            case -2:
+                //同盾审核失败
+                $this->db->where_in('fc.status', array(-1));
+                break;
+            case -3:
+                //总监审核失败
+                $this->db->where_in('fc.status', array(-2));
+                break;
+            case -4:
+                //终审审核失败
+                $this->db->where_in('fc.status', array(-3));
                 break;
             default:
                 $this->db->where_in('fc.status', array(2, 3, 4, -1, -2, -3));

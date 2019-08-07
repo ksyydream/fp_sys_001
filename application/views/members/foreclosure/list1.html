@@ -68,24 +68,37 @@
         <li {{if $status_type == 0}}class="current"{{/if}}><a href="/wx_members/foreclosure_list">全部</a></li>
         <li {{if $status_type == 2}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/2">待审核</a></li>
 <!--        <li {{if $status_type == 3}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/3">已通过</a></li>-->
-          <li {{if $status_type == 3}}class="current"{{/if}}>
+          <li {{if $status_type == 3 || $status_type == 4 || $status_type == 5}}class="current"{{/if}}>
               <div class="am-dropdown" data-am-dropdown>
-                  <a href="javascript:" class="am-btn am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>已通过<span class="am-icon-caret-down"></span></a>
+                  <a href="javascript:" class="am-btn am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+
+                      {{if $status_type == 4}}初审通过
+                      {{elseif $status_type == 5}}终审通过
+                      {{else}}已通过
+                      {{/if}}
+                      <span class="am-icon-caret-down"></span></a>
                   <div class="am-dropdown-content">
-                      <p><a href="">全部</a></p>
-                      <p><a href="">初审通过</a></p>
-                      <p><a href="">终审通过</a></p>
+                      <p><a href="/wx_members/foreclosure_list/3">全部</a></p>
+                      <p><a href="/wx_members/foreclosure_list/4">初审通过</a></p>
+                      <p><a href="/wx_members/foreclosure_list/5">终审通过</a></p>
                   </div>
               </div>
           </li>
 <!--          <li {{if $status_type == -1}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/-1">未通过</a></li>-->
-          <li {{if $status_type == -1}}class="current"{{/if}}> <div class="am-dropdown" data-am-dropdown>
-              <a href="javascript:" class="am-btn am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>未通过<span class="am-icon-caret-down"></span></a>
+          <li {{if $status_type == -1 || $status_type == -2 || $status_type == -3 || $status_type == -4}}class="current"{{/if}}> <div class="am-dropdown" data-am-dropdown>
+              <a href="javascript:" class="am-btn am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+                  {{if $status_type == -2}}同盾未通过
+                  {{elseif $status_type == -3}}初审未通过
+                  {{elseif $status_type == -4}}终审未通过
+                  {{elseif $status_type == -2}}同盾未通过
+                  {{else}}未通过
+                  {{/if}}
+                  <span class="am-icon-caret-down"></span></a>
               <div class="am-dropdown-content">
-                  <p><a href="">全部</a></p>
-                  <p><a href="">同盾未通过</a></p>
-                  <p><a href="">初审未通过</a></p>
-                  <p><a href="">终审未通过</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-1">全部</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-2">同盾未通过</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-3">初审未通过</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-4">终审未通过</a></p>
               </div>
           </div></li>
 
