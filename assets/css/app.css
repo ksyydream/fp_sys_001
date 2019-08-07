@@ -451,4 +451,4 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 
 .am-form-slides .am-btn-primary:active,.am-form-slides .am-btn-primary.am-active,.am-form-slides .am-dropdown.am-active .am-btn-primary.am-dropdown-toggle{background: none; border: none; font-size: 0.8rem; color: #333;}
 .am-form-slides .am-dropdown-content{min-width: 100px; font-size: .7rem;border:none; box-shadow: 0 5px 5px 3px #efefef;}
-.am-form-slides .am-dropdown-content p{text-align: center;padding: .12rem 0;}.am-form-slides li .am-btn-primary{ height: 1.5rem;}
+.am-form-slides .am-dropdown-content p{text-align: center;padding: .2rem 0;}.am-form-slides li .am-btn-primary{ height: 1.5rem;}
