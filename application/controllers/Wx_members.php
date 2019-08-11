@@ -348,4 +348,28 @@ class Wx_members extends Wx_controller {
         $this->assign('list', $res['list']);
         $this->display('members/users/customer-manger.html');
     }
+
+    //门店/直客 列表
+    public function zj_users_list($m_id = 0){
+        $show_m_info_ = array();
+        if($this->m_info['level'] == 1){
+            $show_m_info_ = $this->wx_members_model->get_member_info($m_id);
+        }
+        if($this->m_info['level'] == 2 || $this->m_info['level'] == 3){
+            $show_m_info_ = $this->wx_members_model->get_member_info($this->m_id);
+        }
+        if(!$show_m_info_){
+            redirect('wx_index/index');
+        }
+        $this->assign('show_m_info_', $show_m_info_);
+        $this->assign('keyword', $this->input->post('keyword'));
+        $this->display('members/users/customer-search.html');
+    }
+
+    public function zj_users_list_load(){
+        $res = $this->wx_members_model->zj_users_list_load($this->m_info);
+        $this->assign('list', $res['list']);
+        $this->assign('is_finish', $res['is_finish']);
+        $this->display('members/users/zj_users_list_load.html');
+    }
 }

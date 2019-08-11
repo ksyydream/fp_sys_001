@@ -1,0 +1,33 @@
+{{if $list}}
+{{foreach from=$list item=item}}
+<div class="div-list-data">
+    <div class="data-list">
+        <div class="d-l-content listid">
+            <ul class="d-l-fl">
+                <li><div class="data-span"><span>姓名：</span>{{$item.rel_name}}</div></li>
+                <li><div class="data-span"><span>手机号码：</span>{{$item.mobile}}</div></li>
+
+            </ul>
+        </div>
+        <div class="d-l-content"><p><span>对接人员：</span>{{$item.m_rel_name_}}</p>
+            <p><span>注册类型：</span>
+                {{if $item.type_id == 1}}门店{{/if}}
+                {{if $item.type_id == 2}}直客{{/if}}
+            </p>
+            {{if $item.type_id == 1}}
+            <p><span>门店名称：</span>{{$item.shop_name}}</p>
+            <p><span>门店地址：</span>{{$item.r1_name}} {{$item.r2_name}} {{$item.r3_name}} {{$item.r4_name}} {{$item.address}}</p>
+            {{/if}}
+            <p><span>绑定时间：</span>{{$item.reg_time|date_format:"%Y年%m月%d日"}}</p>
+        </div>
+        <ul class="d-l-content leftday">
+        </ul>
+    </div>
+    <div class="option-div">
+        <a href="" class="option-btn">编 辑</a>
+    </div>
+</div>
+{{/foreach}}
+<is_finish data_value="{{$is_finish}}"></is_finish>
+{{/if}}
+

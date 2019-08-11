@@ -63,52 +63,18 @@
    <div class="am-form am-form-horizontal am-form-mt20">
        {{foreach from=$list item=item}}
        <div class="am-fast-estimate am-fast-estimate1">
-           <div class="am-form-group">
-               <label class="am-u-sm-7 am-form-label">组别：{{$item.rel_name}}</label>
-               <div class="am-u-sm-5">
-                   <span class="peosum">{{$item.users_count_}}人</span>
-                   <i class="am-icon-chevron am-icon-chevron2"></i>
+           <a href="/wx_members/zj_users_list/{{$item.m_id}}">
+               <div class="am-form-group">
+                   <label class="am-u-sm-7 am-form-label">组别：{{$item.rel_name}}</label>
+                   <div class="am-u-sm-5">
+                       <span class="peosum">{{$item.users_count_}}人</span>
+                       <i class="am-icon-chevron am-icon-chevron2"></i>
+                   </div>
                </div>
-           </div>
+           </a>
+
        </div>
        {{/foreach}}
-
-  <div class="am-fast-estimate am-fast-estimate1">
-      <div class="am-form-group">
-        <label class="am-u-sm-7 am-form-label">组别：唐璐</label>
-        <div class="am-u-sm-5">   
-        <span class="peosum">105人</span>    
-        <i class="am-icon-chevron am-icon-chevron2"></i>
-        </div>
-      </div>
-    </div>  
-  <div class="am-fast-estimate am-fast-estimate1">
-      <div class="am-form-group">
-        <label class="am-u-sm-7 am-form-label">组别：王浩胜</label>
-        <div class="am-u-sm-5">   
-        <span class="peosum">105人</span>    
-        <i class="am-icon-chevron am-icon-chevron2"></i>
-        </div>
-      </div>
-    </div> 
-      <div class="am-fast-estimate am-fast-estimate1">
-      <div class="am-form-group">
-        <label class="am-u-sm-7 am-form-label">组别：何亚军</label>
-        <div class="am-u-sm-5">   
-        <span class="peosum">105人</span>    
-        <i class="am-icon-chevron am-icon-chevron2"></i>
-        </div>
-      </div>
-    </div> 
-      <div class="am-fast-estimate am-fast-estimate1">
-      <div class="am-form-group">
-        <label class="am-u-sm-7 am-form-label">组别：谢仁勇</label>
-        <div class="am-u-sm-5">   
-        <span class="peosum">105人</span>    
-        <i class="am-icon-chevron am-icon-chevron2"></i>
-        </div>
-      </div>
-    </div> 
    </div>
     {{include file='members/public/foot.html'}}
 </div>
