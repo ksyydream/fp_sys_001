@@ -39,6 +39,7 @@ class Wx_members_model extends MY_Model
         $page = $this->input->post('page') ? $this->input->post('page') : 1;
         $limit_ = 5;
         $m_id_ = $this->input->post('m_id') ? $this->input->post('m_id') : 0;
+        $keyword_ = $this->input->post('keyword') ? $this->input->post('keyword') : '';
         $this->db->select('us.*, m1.rel_name m_rel_name_, m1.mobile m_mobile_,r1.name r1_name,r2.name r2_name,r3.name r3_name,r4.name r4_name');
         $this->db->from('members m');
         $this->db->join('members m1', 'm1.parent_id = m.m_id or m1.m_id = m.m_id','inner');
@@ -55,6 +56,14 @@ class Wx_members_model extends MY_Model
         }
         if($member_info_['level'] == 3){
             $this->db->where('m1.m_id', $member_info_['m_id']);
+        }
+        if($keyword_){
+            $this->db->group_start();
+            $this->db->like('us.rel_name', $keyword_);
+            $this->db->or_like('us.mobile', $keyword_);
+            $this->db->or_like('m1.rel_name', $keyword_);
+            $this->db->or_like('m1.mobile', $keyword_);
+            $this->db->group_end();
         }
         $this->db->limit($limit_, ($page - 1) * $limit_ );
         $res = $this->db->order_by('us.reg_time', 'desc')->get()->result_array();
