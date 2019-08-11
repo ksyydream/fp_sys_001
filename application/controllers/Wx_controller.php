@@ -23,9 +23,9 @@ class Wx_controller extends MY_Controller
         if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
             $this->get_openid();
         }else{
-            $this->get_openid();
-            //$openid = '1234';
-            //$this->session->set_userdata('openid', $openid);
+            //$this->get_openid();
+            $openid = 'oFzKgwWsHE46a3a7-yaZ2ahdZqBI';
+            $this->session->set_userdata('openid', $openid);
         }
 
         $res = $this->sys_model->check_openid($this->session->userdata('openid')); //通过openid绑定session

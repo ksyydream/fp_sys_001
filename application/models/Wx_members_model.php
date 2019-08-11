@@ -49,6 +49,7 @@ class Wx_members_model extends MY_Model
         $this->db->join('region r3', 'us.district = r3.id', 'left');
         $this->db->join('region r4', 'us.twon = r4.id', 'left');
         $this->db->where('m.level', 3);
+        $this->db->where('us.status', 1);
         if($member_info_['level'] == 1){
             $this->db->where('m.m_id', $m_id_);
         }
