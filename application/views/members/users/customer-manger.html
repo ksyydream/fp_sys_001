@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>我的</title>
-  <meta name="description" content="我的">
+  <title>人数统计</title>
+  <meta name="description" content="人数统计">
   <meta name="keywords" content="index">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="renderer" content="webkit">
@@ -61,15 +61,18 @@
 <div class="am-main">
 
    <div class="am-form am-form-horizontal am-form-mt20">
-        <div class="am-fast-estimate am-fast-estimate1">
-      <div class="am-form-group">
-        <label class="am-u-sm-7 am-form-label">组别：王青组</label>
-        <div class="am-u-sm-5">
-          <span class="peosum">105人</span>    
-        <i class="am-icon-chevron am-icon-chevron2"></i>
-        </div>
-      </div>
-    </div>
+       {{foreach from=$list item=item}}
+       <div class="am-fast-estimate am-fast-estimate1">
+           <div class="am-form-group">
+               <label class="am-u-sm-7 am-form-label">组别：{{$item.rel_name}}</label>
+               <div class="am-u-sm-5">
+                   <span class="peosum">{{$item.users_count_}}人</span>
+                   <i class="am-icon-chevron am-icon-chevron2"></i>
+               </div>
+           </div>
+       </div>
+       {{/foreach}}
+
   <div class="am-fast-estimate am-fast-estimate1">
       <div class="am-form-group">
         <label class="am-u-sm-7 am-form-label">组别：唐璐</label>
@@ -107,11 +110,7 @@
       </div>
     </div> 
    </div>
-  <div class="am-menu am-g-fixed am-g-menu">
-      <div class="am-u-sm-4"><a href="/wx_index/main" class="am-btn-home"><img src="assets/i/home.png" alt=""></a></div>
-      <div class="am-u-sm-4 am-spec"><a href="" class="am-btn-home"><img src="assets/i/jj.png" alt=""></a></div>
-       <div class="am-u-sm-4"><a href="/wx_index/person_info" class="am-btn-home"><img src="assets/i/user_over.png" alt=""></a></div>
-  </div>
+    {{include file='members/public/foot.html'}}
 </div>
 
 

@@ -337,4 +337,15 @@ class Wx_members extends Wx_controller {
         $res = $this->foreclosure_model->foreclosure_err_finish($this->m_info);
         $this->ajaxReturn($res);
     }
+
+    //总监组 门店/直客人数
+    public function zj_users(){
+        //只有总经理可以查看
+        if($this->m_info['level'] != 1){
+            redirect('wx_index/index');
+        }
+        $res = $this->wx_members_model->zj_users();
+        $this->assign('list', $res['list']);
+        $this->display('members/users/customer-manger.html');
+    }
 }
