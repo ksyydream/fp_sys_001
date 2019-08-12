@@ -80,7 +80,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-form .am-userin-his:before{background-position:0 -69px;}
 .am-form .am-userin-feedback:before{background-position:0 -92px;}
 
-.am-form input[type=button],.am-form input[type=text],.am-form input[type=number],.am-form .am-spec-input,.am-form select
+.am-form input[type=button],.am-form input[type=text],.am-form input[type=number],.am-form input[type=search],.am-form .am-spec-input,.am-form select
 {padding:.65rem 0 .6rem .6rem;border:none;background:none;outline:none; text-align: right; width:100%;font-size: .8rem;}
 .am-form .am-spec-input{padding:0 0 0 .6rem; line-height: 2.3rem;}
 .am-form .am-spec-input .am-chooseradio1{margin-right: .5rem;}
@@ -147,7 +147,7 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 /*修改我的信息*/
 .am-form .am-edit-user-info{ font-size: .9rem;margin:0;}
 .am-form .am-edit-user-info label{padding:.6rem .6rem 0;}
-.am-form .am-edit-user-info input[type=text],.am-form .am-edit-user-info .am-textarea{font-size: .9rem;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5; text-align: left; background: #fff; border-left: none;border-right: none;}
+.am-form .am-edit-user-info input[type=text],.am-form .am-edit-user-info input[type=search].am-form .am-edit-user-info .am-textarea{font-size: .9rem;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5; text-align: left; background: #fff; border-left: none;border-right: none;}
 .am-form .am-btn-save{width: 100%;}
 .am-form .am-edit-tel[type=number]{text-align: left; background: #fff;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;}
 /*历史记录*/
@@ -265,13 +265,13 @@ body{background:#f4f4f8; color:#666;}input,input[type=number]:focus{ outline:non
 .am-main-flow .am-flow-s-current{ border-bottom-color:#ffa51d;color: #000;}
 .partner{display: none;}.partner-show{display: block;}
 .am-single-label{font-weight: normal;}
-.am-fin-step .am-form .ip-txt[type=number],.am-fin-step .am-form .ip-txt[type=text]{width: 100%;padding-right:0;}
+.am-fin-step .am-form .ip-txt[type=number],.am-fin-step .am-form .ip-txt[type=text],.am-fin-step .am-form .ip-txt[type=search]{width: 100%;padding-right:0;}
 .am-flow-p1{padding:1rem 0; text-align: center;}
 .img-status{text-align: center;}
 .am-res-status{padding:2rem 0;}
 .em-red{color: #f62222; width:10px; display: inline-block;}
 .am-flow3 {margin-bottom: .5rem;}.am-flow3:last-child{margin-bottom: 0;}
-.am-flow3 .am-form .ip-txt[type=text]{padding-right: .4rem;}
+.am-flow3 .am-form .ip-txt[type=text],.am-flow3 .am-form .ip-txt[type=search]{padding-right: .4rem;}
 .am-flow3 .am-form .ip-txt[readonly] {background: #fff;}
 .am-flow3 .am-form .ip-txt-w95[type=number]{width: 40%;padding-right: 0;padding-left: 0; }
 .am-flow3 .am-u-sm-7{padding-left: 0;}
