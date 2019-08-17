@@ -77,4 +77,75 @@ class Wx_members_model extends MY_Model
         return $data;
     }
 
+    public function user_info_edit($user_id){
+        $data = $this->input->post();
+        $update_ = array();
+        if(!$data['rel_name']){
+            return $this->fun_fail('请填写姓名!');
+        }
+        switch($data['type_id']){
+            case 1:
+                //门店注册需要保存门店信息
+                if(!$data['shop_name']){
+                    return $this->fun_fail('请填写门店名称!');
+                }
+
+                $area_value = $data['area_value'];
+                if(!$area_value){
+                    return $this->fun_fail('请选择区域!');
+                }
+                $area_arr = explode(',', $area_value);
+                if(!$area_arr[0] || !isset($area_arr[1]) || !isset($area_arr[2])){
+                    return $this->fun_fail('必须选择区域!');
+                }
+                //区域保存
+                $update_['shop_name'] = $data['shop_name'];
+                $update_['province'] = $area_arr[0];
+                $update_['city'] = isset($area_arr[1]) ? $area_arr[1] : 0;
+                $update_['district'] = isset($area_arr[2]) ? $area_arr[2] : 0;
+                $update_['twon'] = isset($area_arr[3]) ? $area_arr[3] : 0;
+                $update_['address'] = $data['address'];
+                if(!$update_['address']){
+                    return $this->fun_fail('必须选择区域!');
+                }
+                break;
+            case 2:
+                break;
+            default:
+                return $this->fun_fail('请选择注册类型!');
+        }
+        $update_['type_id'] = $data['type_id'];
+        $update_['rel_name'] = $data['rel_name'];
+        $this->db->where('user_id', $user_id)->update('users', $update_);
+        return $this->fun_success('操作成功');
+    }
+
+    public function check_user4m($member_info_, $user_id){
+        if(!in_array($member_info_['level'], array(1,2,3))){
+            return false;
+        }
+        $this->db->select('us.*, m1.rel_name m_rel_name_, m1.mobile m_mobile_');
+        $this->db->from('members m');
+        $this->db->join('members m1', 'm1.parent_id = m.m_id or m1.m_id = m.m_id','inner');
+        $this->db->join('users us', 'm1.m_id = us.invite', 'inner');
+        $this->db->where('m.level', 2);
+        $this->db->where('us.status', 1);
+        $this->db->where('us.user_id', $user_id);
+        if($member_info_['level'] == 1){
+            //$this->db->where('m.m_id', $m_id_);
+        }
+        if($member_info_['level'] == 2){
+            $this->db->where('m.m_id', $member_info_['m_id']);
+        }
+        if($member_info_['level'] == 3){
+            $this->db->where('m1.m_id', $member_info_['m_id']);
+        }
+        $res = $this->db->order_by('us.reg_time', 'desc')->get()->row_array();
+        if($res){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

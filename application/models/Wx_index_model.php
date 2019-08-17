@@ -122,7 +122,7 @@ class Wx_index_model extends MY_Model
         $province = $check_val2['parent_id'];
         $retrun_['value_arr'] = array('province_p' => 0, 'city_p' => $province, 'district_p' => $city, 'twon_p' => $district);
 
-        $region_1 = $this->db->select()->from('region')->where("parent_id", 0)->get()->result_array();
+        $region_1 = $this->db->select()->from('region')->where("parent_id", 0)->where_in('id', array(10543, 10808))->get()->result_array();
         foreach($region_1 as $k1 => $v1){
             if($v1['id'] == $province){
                 $index_1 = $k1;

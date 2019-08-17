@@ -372,4 +372,34 @@ class Wx_members extends Wx_controller {
         $this->assign('is_finish', $res['is_finish']);
         $this->display('members/users/zj_users_list_load.html');
     }
+
+    public function user_info_edit($user_id){
+        if(IS_POST){
+            $check_ = $this->wx_members_model->check_user4m($this->m_info,$user_id);
+            if(!$check_){
+                $res = $this->wx_users_model->fun_fail('无权限操作此用户!');
+                $this->ajaxReturn($res);
+            }
+            $res = $this->wx_members_model->user_info_edit($user_id);
+            $this->ajaxReturn($res);
+        }else{
+            $user_ = $this->wx_users_model->get_user_info($user_id);
+            if(!$user_ || $user_['status'] != 1){
+                redirect('wx_index/index');
+            }
+            $check_ = $this->wx_members_model->check_user4m($this->m_info, $user_id);
+            if(!$check_){
+                redirect('wx_index/index');
+            }
+            $this->assign('user_info', $user_);
+            $index_arr = $this->wx_index_model->new_region($user_['district'], $user_['twon']);
+            $this->assign('index_1', $index_arr['index_arr']['index_1']);
+            $this->assign('index_2', $index_arr['index_arr']['index_2']);
+            $this->assign('index_3', $index_arr['index_arr']['index_3']);
+            $this->assign('index_4', $index_arr['index_arr']['index_4']);
+            $user_info_ = $this->wx_users_model->get_user_info4region($user_id);
+            $this->assign('user_region', $user_info_);
+            $this->display('members/users/user_info_edit.html');
+        }
+    }
 }
