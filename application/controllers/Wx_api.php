@@ -90,4 +90,18 @@ class Wx_api extends CI_controller {
         );
         $this->wx_index_model->wxpost($this->config->item('WX_YY'), $data_msg, 8, $this->config->item('img_url_DBY') . '/wx_users/foreclosure_detail7/' . '1');
     }
+
+    public function test_img(){
+        //getThumb('./upload_files/foreclosure/SL20190710001/201907102206443807.jpg',300,300);
+    }
+
+    public function get_wx_img($media_id, $finance_num, $file){
+        if(!$this->session->userdata('openid')){
+            $this->ajaxReturn($this->return_fail);
+        }
+        $file_name = $this->wx_index_model->getmedia($media_id, $finance_num, $file);
+        $this->return_success['msg'] = '成功!';
+        $this->return_success['result'] = array('file_name' => $file_name);
+        $this->ajaxReturn($this->return_success);
+    }
 }

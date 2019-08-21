@@ -148,12 +148,23 @@
                 isShowProgressTips: 1,
                 success: function (res) {
                     var serverId = res.serverId; // 返回图片的服务器端ID
-                    var html = '';
-                    html += '<div class="upid DBY_img_div">';
-                    html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"><i class="close_btn"></i></a>';
-                    html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
-                    html += '</div>';
-                    $("#add_div").before(html);
+                    $.ajaxSettings.async = false;
+                    $.getJSON('/wx_api/get_wx_img/' + serverId + '/{{$f_info.work_no}}/foreclosure', function(data){
+                        if (data.status == 1) {
+                            var html = '';
+                            html += '<div class="upid DBY_img_div">';
+                            html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"><i class="close_btn"></i></a>';
+                            html += '<input type="hidden" value="' + data.result.file_name + '" name="old_img[]">';
+                            html += '</div>';
+                            $("#add_div").before(html);
+                        }
+                    });
+                    //var html = '';
+                    //html += '<div class="upid DBY_img_div">';
+                    //html += '<a href="javascript:void(0)" class="upload_click"><img src="' + localId + '" alt="" class="upload_img"><i class="close_btn"></i></a>';
+                    //html += '<input type="hidden" value="' + serverId + '" name="wx_img[]">';
+                    //html += '</div>';
+                    //$("#add_div").before(html);
                     if(localIds.length > 0){
                         syncUpload(localIds);
                     }
