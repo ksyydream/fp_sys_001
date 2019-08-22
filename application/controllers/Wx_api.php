@@ -96,11 +96,13 @@ class Wx_api extends CI_controller {
     }
 
     public function get_wx_img($media_id, $finance_num, $file){
-        die();
         if(!$this->session->userdata('openid')){
             $this->ajaxReturn($this->return_fail);
         }
         $file_name = $this->wx_index_model->getmedia($media_id, $finance_num, $file);
+        if(!$file_name){
+            $this->ajaxReturn($this->return_fail);
+        }
         $this->return_success['msg'] = '成功!';
         $this->return_success['result'] = array('file_name' => $file_name);
         $this->ajaxReturn($this->return_success);

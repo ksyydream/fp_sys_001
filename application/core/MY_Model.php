@@ -544,8 +544,9 @@ class MY_Model extends CI_Model{
         curl_exec($ch);
         curl_close($ch);
         fclose($fp);
-
-        return $file_name;
+        //更改逻辑,把保存的本地图片转存七牛,进行返回, 注意,这里返回的是图片网址
+        $url_path = $this->save_qiniu('fp_sys', $file_name, $finance_num, $file);
+        return $url_path;
     }
 
     //从服务器端上传图片

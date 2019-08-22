@@ -305,24 +305,36 @@ class Foreclosure_model extends MY_Model
         }
         if($borrower_img_SFZ = $this->input->post('borrower_img_SFZ')){
             $update_['borrower_img_SFZ'] = $this->getmedia($borrower_img_SFZ, $f_info_['work_no'], $file_);
-            if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_img_SFZ'])){
+            if(!$update_['borrower_img_SFZ']){
                 return $this->fun_fail('请上传借款人身份证');
             }
+            //if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_img_SFZ'])){
+            //    return $this->fun_fail('请上传借款人身份证');
+            //}
         }else{
-            if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_img_SFZ'])){
-                return $this->fun_fail('请上传借款人身份证!');
+            if(!$f_info_['borrower_img_SFZ']){
+                return $this->fun_fail('请上传借款人身份证');
             }
+            //if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_img_SFZ'])){
+            //    return $this->fun_fail('请上传借款人身份证!');
+            //}
         }
         if($f_info_['borrower_marriage'] == 1){
             if($borrower_spouse_img_SFZ = $this->input->post('borrower_spouse_img_SFZ')){
                 $update_['borrower_spouse_img_SFZ'] = $this->getmedia($borrower_spouse_img_SFZ, $f_info_['work_no'], $file_);
-                if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_spouse_img_SFZ'])){
+                if(!$update_['borrower_spouse_img_SFZ']){
                     return $this->fun_fail('请上传配偶身份证');
                 }
+                //if(!@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $update_['borrower_spouse_img_SFZ'])){
+                //    return $this->fun_fail('请上传配偶身份证');
+                //}
             }else{
-                if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_spouse_img_SFZ'])){
-                    return $this->fun_fail('请上传配偶身份证!');
+                if(!$f_info_['borrower_spouse_img_SFZ']){
+                    return $this->fun_fail('请上传配偶身份证');
                 }
+                //if(!@file_get_contents('./upload_files/' . $file_ . '/'. $f_info_['work_no'] . '/'  . $f_info_['borrower_spouse_img_SFZ'])){
+                //    return $this->fun_fail('请上传配偶身份证!');
+                //}
             }
         }
 
@@ -380,7 +392,7 @@ class Foreclosure_model extends MY_Model
         $sort_id_ = 1;
         if($old_imgs){
             foreach($old_imgs as $img_){
-                if(@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $img_)){
+                if($img_){
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $img_,
@@ -393,7 +405,7 @@ class Foreclosure_model extends MY_Model
         if($wx_imgs){
             foreach($wx_imgs as $media_){
                 $wx_img_ = $this->getmedia($media_, $f_info_['work_no'], $file_);
-                if(@file_get_contents('./upload_files/' . $file_. '/'. $f_info_['work_no'] . '/' . $wx_img_)){
+                if($wx_img_){
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $wx_img_,
