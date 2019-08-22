@@ -108,14 +108,7 @@ class Wx_api extends CI_controller {
         $this->ajaxReturn($this->return_success);
     }
 
-    public function save_qiniu(){
-        die();
-        $insert_arr = array(
-            'type' => 1,
-            'add_time' => time(),
-            'err_msg' => "oss上传文件失败，"
-        );
-        $this->db->insert('log', $insert_arr);
-        echo $this->wx_index_model->save_qiniu('fp_sys', '201907102206443807.jpg', 'SL20190710001', 'foreclosure');
+    public function do_img(){
+        //$this->wx_index_model->do_img();
     }
 }

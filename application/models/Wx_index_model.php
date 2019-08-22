@@ -330,4 +330,32 @@ class Wx_index_model extends MY_Model
         $this->set_user_session_wx($check_reg_['m_id']);
         return $this->fun_success('登录成功!');
     }
+
+    public function do_img(){
+        die();
+        //处理图片
+        $f_list = $this->db->from('foreclosure')->where(array('foreclosure_id <' => 106))->get()->result_array();
+        foreach($f_list as $value){
+            $path_ = 'http://sys.ksls.com.cn/upload_files/foreclosure/' . $value['work_no'] . '/';
+            $update_ = array();
+            if($value['borrower_img_SFZ']){
+                $update_['borrower_img_SFZ'] = 'http://sys.ksls.com.cn/upload_files/foreclosure/' . $value['work_no'] . '/' . $value['borrower_img_SFZ'];
+            }
+            if($value['borrower_img_SFZ']){
+                $update_['borrower_spouse_img_SFZ'] = 'http://sys.ksls.com.cn/upload_files/foreclosure/' . $value['work_no'] . '/' . $value['borrower_spouse_img_SFZ'];
+            }
+            if($update_){
+                //$this->db->where(array('foreclosure_id' => $value['foreclosure_id']))->update('foreclosure', $update_);
+            }
+            $f_img1_ = $this->db->from('foreclosure_property_img')->where('fc_id', $value['foreclosure_id'])->order_by('sort_id','asc')->get()->result_array();
+            //die(var_dump($f_img1_));
+            foreach($f_img1_ as $v1){
+                //$this->db->where(array('img_id' => $v1['img_id']))->update('foreclosure_property_img', array('file_name' => $path_ . $v1['file_name']));
+            }
+            $f_img2_ = $this->db->from('foreclosure_credit_img')->where('fc_id', $value['foreclosure_id'])->order_by('sort_id','asc')->get()->result_array();
+            foreach($f_img2_ as $v2){
+                //$this->db->where(array('img_id' => $v2['img_id']))->update('foreclosure_credit_img', array('file_name' => $path_ . $v2['file_name']));
+            }
+        }
+    }
 }
