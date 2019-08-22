@@ -69,7 +69,7 @@
             {{if $f_info.borrower_img_SFZ|strip == ''}}
             <img src="/assets/i/id_upload.png?time=20190805" alt="" class="add_pic">
             {{else}}
-            <img src="{{$f_info.borrower_img_SFZ|default:''}}" alt="" class="upload_img">
+            <img src="{{$f_info.borrower_img_SFZ|default:''}}/imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img">
             <i class="close_btn"></i>
             {{/if}}
         </a>
@@ -85,7 +85,7 @@
             {{if $f_info.borrower_spouse_img_SFZ|strip == ''}}
             <img src="/assets/i/id_upload.png?time=20190805" alt="" class="add_pic">
             {{else}}
-            <img src="{{$f_info.borrower_spouse_img_SFZ|default:''}}" alt="" class="upload_img">
+            <img src="{{$f_info.borrower_spouse_img_SFZ|default:''}}/imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img">
             <i class="close_btn"></i>
             {{/if}}
         </a>
