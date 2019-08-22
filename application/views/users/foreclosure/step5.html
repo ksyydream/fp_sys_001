@@ -67,7 +67,7 @@
         {{foreach from=$property_img_list item=item}}
         <div class="upid DBY_img_div">
             <a href="javascript:void(0)" class="upload_click">
-                <img src="{{$item.file_name}}/imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img">
+                <img src="{{$item.file_name}}?imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img">
                 <i class="close_btn"></i>
             </a>
             <input value="{{$item.file_name}}" type="hidden" name="old_img[]">
@@ -147,7 +147,7 @@
                         if (data.status == 1) {
                             var html = '';
                             html += '<div class="upid DBY_img_div">';
-                            html += '<a href="javascript:void(0)" class="upload_click"><img src="' + data.result.file_name + '/imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img"><i class="close_btn"></i></a>';
+                            html += '<a href="javascript:void(0)" class="upload_click"><img src="' + data.result.file_name + '?imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img"><i class="close_btn"></i></a>';
                             html += '<input type="hidden" value="' + data.result.file_name + '" name="old_img[]">';
                             html += '</div>';
                             $("#add_div").before(html);

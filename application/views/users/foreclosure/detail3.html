@@ -68,7 +68,7 @@
             {{if $f_info.borrower_img_SFZ|strip == ''}}
             <img src="{{$img_url_DBY}}/assets/i/id_upload.png?time=20190805" alt="" class="add_pic">
             {{else}}
-            <img src="{{$f_info.borrower_img_SFZ|default:''}}/imageView2/0/w/200/h/200/q/75|imageslim" data-src-img="{{$f_info.borrower_img_SFZ|default:''}}" alt="" class="upload_img">
+            <img src="{{$f_info.borrower_img_SFZ|default:''}}?imageView2/0/w/200/h/200/q/75|imageslim" data-src-img="{{$f_info.borrower_img_SFZ|default:''}}" alt="" class="upload_img">
             {{/if}}
         </a>
       </div>
@@ -82,7 +82,7 @@
             {{if $f_info.borrower_spouse_img_SFZ|strip == ''}}
             <img src="{{$img_url_DBY}}/assets/i/id_upload.png" alt="" class="add_pic">
             {{else}}
-            <img src="{{$f_info.borrower_spouse_img_SFZ|default:''}}/imageView2/0/w/200/h/200/q/75|imageslim" data-src-img="{{$f_info.borrower_spouse_img_SFZ|default:''}}" alt="" class="upload_img">
+            <img src="{{$f_info.borrower_spouse_img_SFZ|default:''}}?imageView2/0/w/200/h/200/q/75|imageslim" data-src-img="{{$f_info.borrower_spouse_img_SFZ|default:''}}" alt="" class="upload_img">
             {{/if}}
         </a>
       </div>
