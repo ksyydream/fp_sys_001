@@ -96,6 +96,7 @@ class Wx_api extends CI_controller {
     }
 
     public function get_wx_img($media_id, $finance_num, $file){
+        die();
         if(!$this->session->userdata('openid')){
             $this->ajaxReturn($this->return_fail);
         }
@@ -103,5 +104,16 @@ class Wx_api extends CI_controller {
         $this->return_success['msg'] = '成功!';
         $this->return_success['result'] = array('file_name' => $file_name);
         $this->ajaxReturn($this->return_success);
+    }
+
+    public function save_qiniu(){
+        die();
+        $insert_arr = array(
+            'type' => 1,
+            'add_time' => time(),
+            'err_msg' => "oss上传文件失败，"
+        );
+        $this->db->insert('log', $insert_arr);
+        echo $this->wx_index_model->save_qiniu('fp_sys', '201907102206443807.jpg', 'SL20190710001', 'foreclosure');
     }
 }

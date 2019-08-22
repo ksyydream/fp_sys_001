@@ -548,6 +548,40 @@ class MY_Model extends CI_Model{
         return $file_name;
     }
 
+    //从服务器端上传图片
+    function save_qiniu($bucket, $file_name , $finance_num, $file){
+        $this->load->library('Qiniu');
+        $accessKey = $this->config->item('qiniu_AccessKey');
+        $secretKey = $this->config->item('qiniu_SecretKey');
+        $auth = new Qiniu\Auth($accessKey, $secretKey);
+        $ossSupportPath = array('fp_sys');
+        if(!in_array($bucket, $ossSupportPath)){
+            return '';
+        }
+        $token = $auth->uploadToken($bucket);
+        $bucketMgr = new Qiniu\Storage\UploadManager();
+        $object = 'public/upload/'. $finance_num . '/' .md5(time().mt_rand(100000,999999)).'.'.pathinfo($file_name, PATHINFO_EXTENSION);
+        $filePath = './upload_files/'.$file.'/'.$finance_num.'/'.$file_name;
+        if(file_exists($filePath)){
+            list($ret, $err) = $bucketMgr->putFile($token, $object, $filePath);
+            if ($err !== null) {
+                $insert_arr = array(
+                    'type' => 1,
+                    'add_time' => time(),
+                    'err_msg' => "oss上传文件失败，".$err
+                );
+                $this->db->insert('log', $insert_arr);
+                return '';
+            } else {
+                @unlink($filePath);
+                return "http://"  . $this->config->item('qiniu_url') . '/' . $ret['key'];
+            }
+        }else{
+            return '';
+        }
+
+    }
+
     /**
      *********************************************************************************************
      * 以下代码后台公共调用

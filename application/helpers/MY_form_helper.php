@@ -515,3 +515,4 @@ function resizeImage($im, $dest, $maxwidth, $maxheight) {
         imagejpeg($im, $dest);
     }
 }
+
