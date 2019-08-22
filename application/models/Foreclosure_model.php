@@ -472,7 +472,7 @@ class Foreclosure_model extends MY_Model
         $img_path_ = './upload_files/' . $file_. '/'. $f_info_['work_no'] . '/';
         if($old_imgs){
             foreach($old_imgs as $img_){
-                if(@file_get_contents($img_path_ . $img_)){
+                if($img_){
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $img_,
@@ -485,7 +485,7 @@ class Foreclosure_model extends MY_Model
         if($wx_imgs){
             foreach($wx_imgs as $media_){
                 $wx_img_ = $this->getmedia($media_, $f_info_['work_no'], $file_);
-                if(@file_get_contents($img_path_ . $wx_img_)){
+                if($wx_img_){
                     $img_insert_[] = array(
                         'fc_id'         => $fc_id,
                         'file_name'     => $wx_img_,
