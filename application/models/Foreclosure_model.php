@@ -477,7 +477,6 @@ class Foreclosure_model extends MY_Model
                         'fc_id'         => $fc_id,
                         'file_name'     => $img_,
                         'add_time'      => time(),
-                        'thumb_file_name' => getThumb($img_path_, $img_, 300, 300),
                         'sort_id'       => $sort_id_++
                     );
                 }
@@ -491,7 +490,6 @@ class Foreclosure_model extends MY_Model
                         'fc_id'         => $fc_id,
                         'file_name'     => $wx_img_,
                         'add_time'      => time(),
-                        'thumb_file_name' => getThumb($img_path_, $wx_img_, 300, 300),
                         'sort_id'       => $sort_id_++
                     );
                 }
