@@ -341,7 +341,7 @@ class Wx_members extends Wx_controller {
     //总监组 门店/直客人数
     public function zj_users(){
         //只有总经理 和 总监可以查看
-        if(!in_array($this->m_info['level'], array(1, 2))){
+        if(!in_array($this->m_info['level'], array(1, 2, 3))){
             redirect('wx_index/index');
         }
         $res = $this->wx_members_model->zj_users($this->m_info);

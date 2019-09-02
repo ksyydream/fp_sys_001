@@ -33,6 +33,10 @@ class Wx_members_model extends MY_Model
         if($member_info_ && $member_info_['level'] == 2){
             $this->db->where('m.m_id', $member_info_['m_id']);
         }
+        if($member_info_ && $member_info_['level'] == 3){
+            $this->db->where('m.m_id', $member_info_['parent_id']);
+            $this->db->where('m1.m_id', $member_info_['m_id']);
+        }
         $this->db->group_by('m.m_id');
         $res['list'] = $this->db->get()->result_array();
         foreach($res['list'] as $k => $v){
@@ -42,6 +46,9 @@ class Wx_members_model extends MY_Model
             //$this->db->where('m.level', 2);
             $this->db->where('us.status', 1);
             $this->db->where(" (m.parent_id = {$v['m_id']} or m.m_id = {$v['m_id']})");
+            if($member_info_ && $member_info_['level'] == 3){
+                $this->db->where('m.m_id', $member_info_['m_id']);
+            }
             $this->db->order_by('m.level asc');
             $this->db->group_by('m.m_id');
             $res['list'][$k]['m_list'] = $this->db->get()->result_array();
