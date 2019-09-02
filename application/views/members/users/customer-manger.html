@@ -76,7 +76,7 @@
                 <div class="am-panel-bd ">
                     {{foreach from=$item.m_list item=v}}
                     <div class="am-form-group">
-                        <div class="am-u-sm-7"><a href=""> 组员：{{$v.rel_name}}</a></div>
+                        <div class="am-u-sm-7"><a href="/wx_members/zj_users_list/{{$item.m_id}}/{{$v.m_id}}"> 组员：{{$v.rel_name}}</a></div>
                         <div class="am-u-sm-5  am-u-right">
                             <a href="/wx_members/zj_users_list/{{$item.m_id}}/{{$v.m_id}}">  {{$v.users_count_}}人
                                 <i class="am-icon-chevron am-icon-chevron3"></i></a>
