@@ -32,6 +32,19 @@ class Wx_members_model extends MY_Model
         $this->db->where('us.status', 1);
         $this->db->group_by('m.m_id');
         $res['list'] = $this->db->get()->result_array();
+        foreach($res['list'] as $k => $v){
+            $this->db->select('m.m_id, m.rel_name,count(us.user_id) users_count_');
+            $this->db->from('members m');
+            $this->db->join('users us', 'us.invite = m.m_id', 'left');
+            //$this->db->where('m.level', 2);
+            $this->db->where('us.status', 1);
+            $this->db->where(" (m.parent_id = {$v['m_id']} or m.m_id = {$v['m_id']})");
+            $this->db->order_by('m.level asc');
+            $this->db->group_by('m.m_id');
+            $res['list'][$k]['m_list'] = $this->db->get()->result_array();
+            //die(var_dump($this->db->last_query()));
+        }
+        //die(var_dump($res));
         return $res;
     }
 
@@ -39,6 +52,7 @@ class Wx_members_model extends MY_Model
         $page = $this->input->post('page') ? $this->input->post('page') : 1;
         $limit_ = 5;
         $m_id_ = $this->input->post('m_id') ? $this->input->post('m_id') : 0;
+        $parent_id_ = $this->input->post('parent_id') ? $this->input->post('parent_id') : 0;
         $keyword_ = $this->input->post('keyword') ? $this->input->post('keyword') : '';
         $this->db->select('us.*, m1.rel_name m_rel_name_, m1.mobile m_mobile_,r1.name r1_name,r2.name r2_name,r3.name r3_name,r4.name r4_name');
         $this->db->from('members m');
@@ -51,10 +65,16 @@ class Wx_members_model extends MY_Model
         $this->db->where('m.level', 2);
         $this->db->where('us.status', 1);
         if($member_info_['level'] == 1){
-            $this->db->where('m.m_id', $m_id_);
+            $this->db->where('m.m_id', $parent_id_);
+            if($m_id_){
+                $this->db->where('m1.m_id', $m_id_);
+            }
         }
         if($member_info_['level'] == 2){
             $this->db->where('m.m_id', $member_info_['m_id']);
+            if($m_id_){
+                $this->db->where('m1.m_id', $m_id_);
+            }
         }
         if($member_info_['level'] == 3){
             $this->db->where('m1.m_id', $member_info_['m_id']);
@@ -146,6 +166,14 @@ class Wx_members_model extends MY_Model
         }else{
             return false;
         }
+    }
+
+    //获取总监及其组员信息
+    public function get_m_select_list($m_id = 0){
+        $this->db->from('members m');
+        $this->db->where(" (m.parent_id = {$m_id} or m.m_id = {$m_id})");
+        $this->db->order_by('m.level asc');
+        return $this->db->get()->result_array();
     }
 
 }

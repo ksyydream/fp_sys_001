@@ -66,13 +66,23 @@
 
 
 
-<form name="form1"  action="/wx_members/zj_users_list/{{$show_m_info_.m_id|default:0}}" method="post" class="am-form">
-    <input id="m_id" type="hidden" value="{{$show_m_info_.m_id|default:0}}">
+<form name="form1" id="select_form"  action="/wx_members/zj_users_list" method="post" class="am-form">
+    <input id="parent_id" name="parent_id" type="hidden" value="{{$show_m_info_.m_id|default:0}}">
+    <input id="m_id" type="hidden" value="{{$m_id|default:0}}">
       <div class="am-form-slides am-form-search">
         <div class="search-div">
-            <div class="am-input-group am-input-group-search am-input-group-search1">
-            <input type="search" name="keyword" id="keyword" value="{{$keyword|default:''}}" class="am-form-field" placeholder="关键字搜索">
-            <i class="am-icon-search"></i>
+            <div class="sel-option">
+                <select id="select_id_" name="m_id">
+                    <option value = "">全部</option>
+                    {{foreach from=$select_list item=v}}
+                    <option value = "{{$v.m_id}}" {{if $v.m_id == $m_id}} selected="selected"{{/if}}">{{$v.rel_name}}</option>
+                    {{/foreach}}
+                </select>
+                <i class="am-icon-angle-down"></i>
+            </div>
+            <div class="am-input-group am-input-group-search">
+            <input type="text" name="keyword" id="keyword" value="{{$keyword|default:''}}" class="am-form-field" placeholder="关键字搜索">
+            <i class="am-icon-search" id="select_btn"></i>
           </div>
         </div>
       </div>
@@ -123,9 +133,10 @@
     function get_data(){
         var page = 1;
         page = window.page
-        var m_id = $("#m_id").val();
+        var parent_id = $("#parent_id").val();
+        var m_id = $("#select_id_").val();
         var keyword = $("#keyword").val();
-        $.post("/wx_members/zj_users_list_load",{page:page,m_id:m_id,keyword:keyword},function(data){
+        $.post("/wx_members/zj_users_list_load",{page:page,parent_id:parent_id,m_id:m_id,keyword:keyword},function(data){
             if(data){
                 $("#is_end").before(data)
                 window.page += 1
@@ -143,6 +154,10 @@
         });
     }
     get_data();
+
+    $("#select_id_").change(function(){
+            $("#select_form").submit();
+    })
 </script>
 </body>
 </html>

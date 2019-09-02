@@ -350,18 +350,26 @@ class Wx_members extends Wx_controller {
     }
 
     //门店/直客 列表
-    public function zj_users_list($m_id = 0){
+    public function zj_users_list($parent_id = 0, $m_id = 0){
         $show_m_info_ = array();
+        $select_list = array();
+        $m_id = $this->input->post('m_id') ? $this->input->post('m_id') : $m_id;
+        $parent_id = $this->input->post('parent_id') ? $this->input->post('parent_id') : $parent_id;
         if($this->m_info['level'] == 1){
-            $show_m_info_ = $this->wx_members_model->get_member_info($m_id);
+            $show_m_info_ = $this->wx_members_model->get_member_info($parent_id);
+            $select_list = $this->wx_members_model->get_m_select_list($parent_id);
         }
         if($this->m_info['level'] == 2 || $this->m_info['level'] == 3){
             $show_m_info_ = $this->wx_members_model->get_member_info($this->m_id);
+            $select_list = $this->wx_members_model->get_m_select_list($this->m_id);
         }
         if(!$show_m_info_){
             redirect('wx_index/index');
         }
         $this->assign('show_m_info_', $show_m_info_);
+        $this->assign('select_list', $select_list);
+        $this->assign('parent_id', $parent_id);
+        $this->assign('m_id', $m_id);
         $this->assign('keyword', $this->input->post('keyword'));
         $this->display('members/users/customer-search.html');
     }
