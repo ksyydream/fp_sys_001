@@ -304,7 +304,7 @@ class Foreclosure_model extends MY_Model
                 return $this->fun_fail('登录状态异常');
         }
         if($borrower_img_SFZ = $this->input->post('borrower_img_SFZ')){
-            $update_['borrower_img_SFZ'] = $this->getmedia($borrower_img_SFZ, $f_info_['work_no'], $file_);
+            $update_['borrower_img_SFZ'] = $borrower_img_SFZ;
             if(!$update_['borrower_img_SFZ']){
                 return $this->fun_fail('请上传借款人身份证');
             }
@@ -321,7 +321,7 @@ class Foreclosure_model extends MY_Model
         }
         if($f_info_['borrower_marriage'] == 1){
             if($borrower_spouse_img_SFZ = $this->input->post('borrower_spouse_img_SFZ')){
-                $update_['borrower_spouse_img_SFZ'] = $this->getmedia($borrower_spouse_img_SFZ, $f_info_['work_no'], $file_);
+                $update_['borrower_spouse_img_SFZ'] = $borrower_spouse_img_SFZ;
                 if(!$update_['borrower_spouse_img_SFZ']){
                     return $this->fun_fail('请上传配偶身份证');
                 }

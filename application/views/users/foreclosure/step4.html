@@ -147,11 +147,15 @@
                 isShowProgressTips: 1,
                 success: function (res) {
                     var serverId = res.serverId; // 返回图片的服务器端ID
-                    html = '<img src="' + localId + '" alt="" class="upload_img">'
-                    //html = "<img style='width: 14.8rem;height: 14.8rem' src='"+localId+"' alt='' class='upload-has-pic'>";
-                    //html +="<em onclick='del_pic(this);' class='am-f-close'></em>"
-                    my_.html(html);
-                    input_h_.val(serverId);
+                    $.ajaxSettings.async = false;
+                    $.getJSON('/wx_api/get_wx_img/' + serverId + '/{{$f_info.work_no}}/foreclosure', function(data){
+                        if (data.status == 1) {
+                            var html = '';
+                            html = '<img src="' + data.result.file_name + '?imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img">'
+                            my_.html(html);
+                            input_h_.val(data.result.file_name);
+                        }
+                    });
                 }
             });
         };
