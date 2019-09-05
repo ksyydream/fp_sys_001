@@ -151,7 +151,7 @@
                     $.getJSON('/wx_api/get_wx_img/' + serverId + '/{{$f_info.work_no}}/foreclosure', function(data){
                         if (data.status == 1) {
                             var html = '';
-                            html = '<img src="' + data.result.file_name + '?imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img">'
+                            html = '<img src="' + data.result.file_name + '?imageView2/0/w/200/h/200/q/75|imageslim" alt="" class="upload_img"> <i class="close_btn"></i>'
                             my_.html(html);
                             input_h_.val(data.result.file_name);
                         }
