@@ -55,7 +55,15 @@ class Wx_members extends Wx_controller {
     //赎楼列表
     public function foreclosure_list($status_type = 0, $m_id = 0){
         $this->assign('status_type', $status_type);
-        $this->assign('m_id', $m_id);
+        $show_m_info_ = $this->wx_members_model->get_member_info($m_id);
+        if($show_m_info_){
+            $this->assign('m_id', $m_id);
+            $this->assign('show_m_info_', $show_m_info_);
+        }else{
+            $this->assign('m_id', 0);
+            $this->assign('show_m_info_', '我的');
+        }
+
         $this->display('members/foreclosure/list1.html');
     }
 

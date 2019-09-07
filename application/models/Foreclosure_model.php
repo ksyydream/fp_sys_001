@@ -617,6 +617,7 @@ class Foreclosure_model extends MY_Model
         if(!$member_info_)
             return array();
         $page = $this->input->post('page') ? $this->input->post('page') : 1;
+        $sel_m_id = $this->input->post('m_id') ? $this->input->post('m_id') : 0;
         $limit_ = 5;
         $status_type_ = $this->input->post('status_type') ? $this->input->post('status_type') : 0;
         $this->db->select('fc.*, us.mobile us_mobile_, us.rel_name us_rel_name_');
@@ -629,7 +630,9 @@ class Foreclosure_model extends MY_Model
             $this->db->join('members m', 'm.m_id = fc.m_id', 'left');
             $this->db->where("(fc.m_id = $m_id  or m.parent_id = $m_id)");
         }
-
+        if($sel_m_id){
+            $this->db->where('fc.m_id', $sel_m_id);
+        }
         switch($status_type_){
             case 2:
                 //待审核

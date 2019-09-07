@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>我的</title>
+  <title>
+      {{if $m_id == 0}}
+      我的
+      {{else}}
+      {{$show_m_info_.rel_name}}
+      {{/if}}
+  </title>
   <meta name="description" content="我的">
   <meta name="keywords" content="index">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
@@ -64,9 +70,10 @@
 
 <form name="form1"  action="" class="am-form">
         <input id="status_type" type="hidden" value="{{$status_type|default:0}}">
+    <input id="m_id" type="hidden" value="{{$m_id|default:0}}">
       <ul class="am-form-slides am-form-slides1">
-        <li {{if $status_type == 0}}class="current"{{/if}}><a href="/wx_members/foreclosure_list">全部</a></li>
-        <li {{if $status_type == 2}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/2">待审核</a></li>
+        <li {{if $status_type == 0}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/0/{{$m_id|default:0}}">全部</a></li>
+        <li {{if $status_type == 2}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/2/{{$m_id|default:0}}">待审核</a></li>
 <!--        <li {{if $status_type == 3}}class="current"{{/if}}><a href="/wx_members/foreclosure_list/3">已通过</a></li>-->
           <li {{if $status_type == 3 || $status_type == 4 || $status_type == 5}}class="current"{{/if}}>
               <div class="am-dropdown" data-am-dropdown>
@@ -78,9 +85,9 @@
                       {{/if}}
                       <span class="am-icon-caret-down"></span></a>
                   <div class="am-dropdown-content">
-                      <p><a href="/wx_members/foreclosure_list/3">全部</a></p>
-                      <p><a href="/wx_members/foreclosure_list/4">初审通过</a></p>
-                      <p><a href="/wx_members/foreclosure_list/5">终审通过</a></p>
+                      <p><a href="/wx_members/foreclosure_list/3/{{$m_id|default:0}}">全部</a></p>
+                      <p><a href="/wx_members/foreclosure_list/4/{{$m_id|default:0}}">初审通过</a></p>
+                      <p><a href="/wx_members/foreclosure_list/5/{{$m_id|default:0}}">终审通过</a></p>
                   </div>
               </div>
           </li>
@@ -95,10 +102,10 @@
                   {{/if}}
                   <span class="am-icon-caret-down"></span></a>
               <div class="am-dropdown-content">
-                  <p><a href="/wx_members/foreclosure_list/-1">全部</a></p>
-                  <p><a href="/wx_members/foreclosure_list/-2">同盾未通过</a></p>
-                  <p><a href="/wx_members/foreclosure_list/-3">初审未通过</a></p>
-                  <p><a href="/wx_members/foreclosure_list/-4">终审未通过</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-1/{{$m_id|default:0}}">全部</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-2/{{$m_id|default:0}}">同盾未通过</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-3/{{$m_id|default:0}}">初审未通过</a></p>
+                  <p><a href="/wx_members/foreclosure_list/-4/{{$m_id|default:0}}">终审未通过</a></p>
               </div>
           </div></li>
 
@@ -151,7 +158,8 @@
         var page = 1;
         page = window.page
         var status_type = $("#status_type").val();
-        $.post("/wx_members/foreclosure_list_load",{page:page,status_type:status_type},function(data){
+        var m_id = $("#m_id").val();
+        $.post("/wx_members/foreclosure_list_load",{page:page,status_type:status_type,m_id:m_id},function(data){
             if(data){
                 $("#is_end").before(data)
                 window.page += 1
