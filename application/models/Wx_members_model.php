@@ -225,4 +225,28 @@ class Wx_members_model extends MY_Model
         return $res;
     }
 
+    public function zj_shop_list_load(){
+        $page = $this->input->post('page') ? $this->input->post('page') : 1;
+        $limit_ = 20;
+        $keyword_ = $this->input->post('keyword') ? $this->input->post('keyword') : '';
+        $this->db->select('u.shop_name,count(DISTINCT u.user_id) u_count_,count(f.foreclosure_id) f_count_', false);
+        $this->db->from('users u');
+        $this->db->join('foreclosure f', 'u.user_id = f.user_id and f.status in (2,3,4,-2,-3)', 'left');
+        if($keyword_){
+            //$this->db->group_start();
+            $this->db->like('u.shop_name', $keyword_);
+            //$this->db->group_end();
+        }
+        $this->db->where('u.type_id', 1);
+        $this->db->group_by('u.shop_name');
+        $this->db->limit($limit_, ($page - 1) * $limit_ );
+        $res = $this->db->order_by('count(f.foreclosure_id)', 'desc')->get()->result_array();
+        //die(var_dump($this->db->last_query()));
+        $data['list'] = $res;
+        $data['is_finish'] = -1;
+        if(count($res) < $limit_)
+            $data['is_finish'] = 1;
+        return $data;
+    }
+
 }

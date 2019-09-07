@@ -1,0 +1,16 @@
+{{if $list}}
+{{foreach from=$list item=item k=k}}
+<div class="am-panel-title am-collapsed am-panel-bgno">
+    <div class="am-u-sm-6">{{$item.shop_name}}</div>
+    <div class="am-u-sm-3">
+        {{$item.f_count_}}
+    </div>
+    <div class="am-u-sm-3">
+        {{$item.u_count_}}
+    </div>
+</div>
+
+{{/foreach}}
+<is_finish data_value="{{$is_finish}}"></is_finish>
+{{/if}}
+

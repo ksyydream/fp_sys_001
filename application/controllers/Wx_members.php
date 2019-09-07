@@ -430,4 +430,21 @@ class Wx_members extends Wx_controller {
         $this->assign('list', $res['list']);
         $this->display('members/users/customer-manger-3.html');
     }
+
+    //门店/直客 列表
+    public function zj_shop_list(){
+        //只有总经理可以查看
+        if(!in_array($this->m_info['level'], array(1))){
+            redirect('wx_index/index');
+        }
+        $this->assign('keyword', $this->input->post('keyword'));
+        $this->display('members/users/customer-manger-2.html');
+    }
+
+    public function zj_shop_list_load(){
+        $res = $this->wx_members_model->zj_shop_list_load($this->m_info);
+        $this->assign('list', $res['list']);
+        $this->assign('is_finish', $res['is_finish']);
+        $this->display('members/users/zj_shop_list_load.html');
+    }
 }
