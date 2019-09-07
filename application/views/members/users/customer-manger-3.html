@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我的</title>
+  <meta name="description" content="我的">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="/assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="/assets/css/app.css">
+
+
+  <script type="text/javascript">
+    (function() {
+        var rem, dpr, time, doc = window.document,
+        docEl = doc.documentElement,
+        viewport = doc.querySelector('meta[name="viewport"]'),
+        zoomScale,
+        zoomScaleNum;
+        if (viewport) {            
+            zoomScale = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
+            if(zoomScale){
+              zoomScaleNum = parseFloat(zoomScale[2]);
+              dpr = parseInt(1 / zoomScaleNum);
+            }
+        }
+        if (!dpr && !zoomScaleNum) {
+            var os = (window.navigator.appVersion.match(/android/gi), window.navigator.appVersion.match(/iphone/gi)),
+            dpr = window.devicePixelRatio;
+            dpr = os ? dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1 : 1;
+            zoomScaleNum = 1 / dpr;
+        }
+        window.addEventListener("resize",
+            function() {
+                clearTimeout(time);
+                time = setTimeout(changeRem, 300);
+            },false);
+      //改变基准rem
+        function changeRem(){
+            var docWidth = docEl.getBoundingClientRect().width;
+            if(docWidth / dpr > 540){
+              docWidth = 540 * dpr;
+            }
+            //rem字号以320下的16px为基线进行等比缩放
+            rem = docWidth/320 * 16;
+            docEl.style.fontSize = rem + "px";
+        }
+        changeRem();
+
+    })();
+  </script> 
+  
+</head>
+<body>
+<div class="am-main">
+
+<div class="am-panel-group" id="accordion">
+    {{foreach from=$list item=item}}
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">
+            <div class="am-panel-title am-collapsed" data-am-collapse="{parent: '#accordion', target: '#do-not-say-{{$item.m_id}}'}">
+                <div class="am-u-sm-7">组别：{{$item.rel_name}}组</div>
+                <div class="am-u-sm-5  am-u-right">
+                    {{$item.f_count_}}单
+                    <i class="am-icon-chevron am-icon-chevron4"></i>
+                </div>
+            </div>
+        </div>
+        <div id="do-not-say-{{$item.m_id}}" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd ">
+                {{foreach from=$item.m_list item=v}}
+                <div class="am-form-group">
+                    <div class="am-u-sm-7"><a href="/wx_members/zj_users_list/{{$item.m_id}}/{{$v.m_id}}"> 组员：{{$v.rel_name}}</a></div>
+                    <div class="am-u-sm-5  am-u-right">
+                        <a href="/wx_members/zj_users_list/{{$item.m_id}}/{{$v.m_id}}">  {{$v.f_count_}}单
+                            <i class="am-icon-chevron am-icon-chevron3"></i></a>
+                    </div>
+                </div>
+                {{/foreach}}
+            </div>
+        </div>
+    </div>
+    {{/foreach}}
+
+</div>
+    {{include file='members/public/foot.html'}}
+</div>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/amazeui.min.js"></script>
+<script type="text/javascript">
+// $(function() {
+//   $('#do-not-say-1').on('open:collapse:amui', function() {
+//     $('.am-icon-chevron').addClass('am-icon-chevron-on');
+//   })
+
+// })
+
+// $('#accordion').collapse({
+//   toggle: false
+// })
+</script>
+
+</body>
+</html>

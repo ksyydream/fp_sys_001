@@ -186,4 +186,43 @@ class Wx_members_model extends MY_Model
         return $this->db->get()->result_array();
     }
 
+    //总监组 组员签单数量
+    public function zj_fs($member_info_){
+        $this->db->select('m.m_id, m.rel_name,count(f.foreclosure_id) f_count_');
+        $this->db->from('members m');
+        $this->db->join('members m1', 'm1.parent_id = m.m_id or m1.m_id = m.m_id','left');
+        $this->db->join('users us', 'us.invite = m1.m_id', 'left');
+        $this->db->join('foreclosure f', 'us.user_id = f.user_id and f.status in (2,3,4,-2,-3)', 'left');
+        $this->db->where('m.level', 2);
+        $this->db->where('us.status', 1);
+        //$this->db->where_in('f.status', array(2,3,4,-2,-3));
+        if($member_info_ && $member_info_['level'] == 2){
+            $this->db->where('m.m_id', $member_info_['m_id']);
+        }
+        if($member_info_ && $member_info_['level'] == 3){
+            $this->db->where('m.m_id', $member_info_['parent_id']);
+            $this->db->where('m1.m_id', $member_info_['m_id']);
+        }
+        $this->db->group_by('m.m_id');
+        $res['list'] = $this->db->get()->result_array();
+        foreach($res['list'] as $k => $v){
+            $this->db->select('m.m_id, m.rel_name,count(f.foreclosure_id) f_count_');
+            $this->db->from('members m');
+            $this->db->join('users us', 'us.invite = m.m_id', 'left');
+            $this->db->join('foreclosure f', 'us.user_id = f.user_id  and f.status in (2,3,4,-2,-3)', 'left');
+           // $this->db->where_in('f.status', array(2,3,4,-2,-3));
+            $this->db->where('us.status', 1);
+            $this->db->where(" (m.parent_id = {$v['m_id']} or m.m_id = {$v['m_id']})");
+            if($member_info_ && $member_info_['level'] == 3){
+                $this->db->where('m.m_id', $member_info_['m_id']);
+            }
+            $this->db->order_by('m.level asc');
+            $this->db->group_by('m.m_id');
+            $res['list'][$k]['m_list'] = $this->db->get()->result_array();
+            //die(var_dump($this->db->last_query()));
+        }
+        //die(var_dump($res));
+        return $res;
+    }
+
 }

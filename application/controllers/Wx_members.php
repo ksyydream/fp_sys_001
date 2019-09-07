@@ -53,8 +53,9 @@ class Wx_members extends Wx_controller {
     }
 
     //赎楼列表
-    public function foreclosure_list($status_type = 0){
+    public function foreclosure_list($status_type = 0, $m_id = 0){
         $this->assign('status_type', $status_type);
+        $this->assign('m_id', $m_id);
         $this->display('members/foreclosure/list1.html');
     }
 
@@ -409,5 +410,16 @@ class Wx_members extends Wx_controller {
             $this->assign('user_region', $user_info_);
             $this->display('members/users/user_info_edit.html');
         }
+    }
+
+    //总监组 组员签单数量
+    public function zj_fs(){
+        //只有总经理 和 总监可以查看
+        if(!in_array($this->m_info['level'], array(1, 2))){
+            redirect('wx_index/index');
+        }
+        $res = $this->wx_members_model->zj_fs($this->m_info);
+        $this->assign('list', $res['list']);
+        $this->display('members/users/customer-manger-3.html');
     }
 }
