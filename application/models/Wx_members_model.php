@@ -233,11 +233,10 @@ class Wx_members_model extends MY_Model
         $this->db->from('users u');
         $this->db->join('foreclosure f', 'u.user_id = f.user_id and f.status in (2,3,4,-2,-3)', 'left');
         if($keyword_){
-            //$this->db->group_start();
             $this->db->like('u.shop_name', $keyword_);
-            //$this->db->group_end();
         }
         $this->db->where('u.type_id', 1);
+        $this->db->where('u.status', 1);
         $this->db->group_by('u.shop_name');
         $this->db->limit($limit_, ($page - 1) * $limit_ );
         $res = $this->db->order_by('count(f.foreclosure_id)', 'desc')->get()->result_array();
