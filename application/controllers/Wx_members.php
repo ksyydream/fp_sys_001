@@ -364,7 +364,7 @@ class Wx_members extends Wx_controller {
         $select_list = array();
         $m_id = $this->input->post('m_id') ? $this->input->post('m_id') : $m_id;
         $parent_id = $this->input->post('parent_id') ? $this->input->post('parent_id') : $parent_id;
-        if($this->m_info['level'] == 1){
+        if($this->m_info['level'] == 1 || $this->m_info['level'] == 4){
             $show_m_info_ = $this->wx_members_model->get_member_info($parent_id);
             $select_list = $this->wx_members_model->get_m_select_list($parent_id);
         }
