@@ -350,7 +350,7 @@ class Wx_members extends Wx_controller {
     //总监组 门店/直客人数
     public function zj_users(){
         //只有总经理 和 总监可以查看
-        if(!in_array($this->m_info['level'], array(1, 2, 3))){
+        if(!in_array($this->m_info['level'], array(1, 2, 3, 4))){
             redirect('wx_index/index');
         }
         $res = $this->wx_members_model->zj_users($this->m_info);
@@ -423,7 +423,7 @@ class Wx_members extends Wx_controller {
     //总监组 组员签单数量
     public function zj_fs(){
         //只有总经理 和 总监可以查看
-        if(!in_array($this->m_info['level'], array(1, 2))){
+        if(!in_array($this->m_info['level'], array(1, 2, 4))){
             redirect('wx_index/index');
         }
         $res = $this->wx_members_model->zj_fs($this->m_info);
@@ -434,7 +434,7 @@ class Wx_members extends Wx_controller {
     //门店/直客 列表
     public function zj_shop_list(){
         //只有总经理可以查看
-        if(!in_array($this->m_info['level'], array(1))){
+        if(!in_array($this->m_info['level'], array(1, 4))){
             redirect('wx_index/index');
         }
         $this->assign('keyword', $this->input->post('keyword'));
