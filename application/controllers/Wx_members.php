@@ -385,6 +385,7 @@ class Wx_members extends Wx_controller {
 
     public function zj_users_list_load(){
         $res = $this->wx_members_model->zj_users_list_load($this->m_info);
+        $this->assign('m_info', $this->m_info);
         $this->assign('list', $res['list']);
         $this->assign('is_finish', $res['is_finish']);
         $this->display('members/users/zj_users_list_load.html');
