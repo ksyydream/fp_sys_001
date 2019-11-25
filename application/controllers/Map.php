@@ -36,13 +36,13 @@ class Map extends CI_Controller
     }
 
     public function index(){
-        die('asd');
+        die('加油');
         $this->display("dby_test/excel.html");
     }
 
     public function upload_excel(){
 
-        die('asd');
+        die('开发中...');
         $this->map_model->upload_excel();
     }
 
